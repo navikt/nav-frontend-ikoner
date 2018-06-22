@@ -2,6 +2,7 @@
   "name": "nav-frontend-ikoner",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/nav-frontend-ikoner",
   "dependencies": {
     "@nutgaard/react-scripts": "0.0.7",
     "react": "^16.4.1",
