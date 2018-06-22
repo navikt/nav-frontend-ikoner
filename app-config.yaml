@@ -1,0 +1,14 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: docker.adeo.no:5000/fo/nav-frontend-ikoner
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 80
+healthcheck:
+  liveness:
+    path: isAlive
+    initialDelay: 10
+  readiness:
+    path: isReady
+    initialDelay: 10
