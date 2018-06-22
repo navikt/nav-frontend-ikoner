@@ -20,6 +20,7 @@
     "@types/node": "^9.6.7",
     "@types/react": "^16.4.1",
     "@types/react-dom": "^16.0.6",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "yet-another-fetch-mock": "^2.3.3"
   }
 }
