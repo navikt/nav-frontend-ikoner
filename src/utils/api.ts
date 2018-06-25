@@ -1,10 +1,22 @@
-function fetchAllIcons() {
-    return fetch("/nav-frontend-ikoner-backend/api/test").then(res => res.json().catch(error => console.log(error)));
+import {Dispatch} from "redux";
+import {receiveIcons} from "../redux/actions";
+
+function fetchIcons(): (dispatch: Dispatch<any>) => Promise<any> {
+    return (dispatch: Dispatch<any>) => {
+        return fetch(`/nav-frontend-ikoner-backend/api/icons`)
+            .then(
+                response => response.json(),
+                error => console.log('An error occurred.', error)
+            )
+            .then(json => dispatch(receiveIcons(json))
+            );
+
+    }
 }
 
 
 const api = {
-    fetchAllIcons,
+    fetchIcons,
 };
 
 export default api;
