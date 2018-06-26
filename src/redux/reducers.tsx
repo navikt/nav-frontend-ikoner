@@ -14,8 +14,8 @@ export function icons(state = initialState, action: any) {
             return Object.assign({}, state, {
                 icons: {
                     fetching: false,
-                    icons: action.icons,
-                    lastUpdated: Date.now()
+                    lastUpdated: Date.now(),
+                    list: action.icons,
                 }
             })
         default:

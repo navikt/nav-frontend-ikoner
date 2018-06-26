@@ -8,7 +8,6 @@ class SidePanel extends React.Component {
         return (
             <div className="side-panel">
                 <p>[side-panel]</p>
-                <p>....................................................................</p>
             </div>
         );
     }
