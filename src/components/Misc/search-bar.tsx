@@ -25,7 +25,7 @@ class SearchBar extends React.Component<{fetchIcons: any}, {searchText: any}> {
             <div className="row">
                 <div className="search-bar">
                     <label className="search-bar-label"/>
-                    <Input label='Inputfelt-label' value={this.state.searchText} onChange={ (event) => this.handleChange(event) } className="search-bar-input" />
+                    <Input label='Søk' value={this.state.searchText} onChange={ (event) => this.handleChange(event) } className="search-bar-input" />
                     <div aria-live="assertive" role="alert"/>
                 </div>
             </div>
