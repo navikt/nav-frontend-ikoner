@@ -7,7 +7,7 @@ class SidePanel extends React.Component {
     public render() {
         return (
             <div className="side-panel">
-                <p>[side-panel]</p>
+                <h2>ToDo: Informasjon</h2>
             </div>
         );
     }

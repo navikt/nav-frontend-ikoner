@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import * as React from 'react';
 import './app.less';
 import IconList from './components/lists/icon-list';
-import SearchBar from "./components/Misc/search-bar";
-import SidePanel from "./components/Misc/side-panel";
+import SearchBar from "./components/misc/search-bar";
+import SidePanel from "./components/misc/side-panel";
 import api from "./utils/api";
 
 class App extends React.Component {
@@ -18,7 +18,7 @@ class App extends React.Component {
         return (
             <div className="app">
                 <header className="app-header">
-                    <h1 className="app-title">Ikoner</h1>
+                    <h1 className="app-title">NAV ikon-base</h1>
                 </header>
                 <div className="container-search-bar">
                     <SearchBar/>

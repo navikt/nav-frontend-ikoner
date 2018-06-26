@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {connect} from "react-redux";
 import api from "../../utils/api";
-import Icon from "../Misc/icon";
+import Icon from "../misc/icon";
 import './lists.less';
 
 class IconList extends React.Component <{icons: any}, {}>{
