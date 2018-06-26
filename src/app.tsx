@@ -2,11 +2,9 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 import './app.less';
-import SearchButton from "./components/buttons/search-button";
 import IconList from './components/lists/icon-list';
-import SearchBar from "./components/Misc/search-bar";
-import SidePanel from "./components/Misc/side-panel";
-import logo from './logo.svg';
+import SearchBar from "./components/misc/search-bar";
+import SidePanel from "./components/misc/side-panel";
 import api from "./utils/api";
 
 class App extends React.Component {
@@ -20,14 +18,18 @@ class App extends React.Component {
         return (
             <div className="app">
                 <header className="app-header">
-                    <img src={logo} className="app-logo" alt="logo" />
-                    <h1 className="app-title">Liste av ikoner</h1>
+                    <h1 className="app-title">NAV ikon-base</h1>
                 </header>
-                <SearchBar/>
-                <SearchButton/>
-                <div className="row">
-                    <IconList/>
-                    <SidePanel/>
+                <div className="icon-row">
+                    <div className="container-icon-list">
+                        <div className="container-search-bar">
+                            <SearchBar/>
+                        </div>
+                        <IconList/>
+                    </div>
+                    <div className="container-side-panel">
+                        <SidePanel/>
+                    </div>
                 </div>
             </div>
         );
@@ -41,7 +43,7 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-    fetchIcons : ()  => dispatch(api.fetchIcons())
+    fetchIcons : (searchText: string)  => dispatch(api.fetchIcons(searchText))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
