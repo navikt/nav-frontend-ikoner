@@ -12,7 +12,6 @@ class IconList extends React.Component <{icons: any}, {}>{
     }
 
     public render() {
-        console.log(this.props.icons.list);
         if (this.props.icons.list){
             return (
                 <div className="icon-list">
