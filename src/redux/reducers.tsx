@@ -4,7 +4,7 @@ const initialState = {
     icons: {
         fetching: false,
         lastUpdated: null,
-        list: [{title:"icon1", link: "https://lol"}],
+        list: [],
     }
 }
 
