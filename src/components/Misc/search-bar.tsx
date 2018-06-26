@@ -1,3 +1,5 @@
+/* tslint:disable */
+import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
 import {connect} from 'react-redux';
 import api from "../../utils/api";
@@ -8,7 +10,7 @@ class SearchBar extends React.Component<{fetchIcons: any}, {searchText: any}> {
     constructor(props: any) {
         super(props)
         this.state = {
-            searchText: 'random text'
+            searchText: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -18,13 +20,12 @@ class SearchBar extends React.Component<{fetchIcons: any}, {searchText: any}> {
         this.props.fetchIcons(this.state.searchText);
     }
 
-    /* tslint:disable */
     public render() {
         return (
             <div className="row">
                 <div className="search-bar">
                     <label className="search-bar-label"/>
-                    <input value={this.state.searchText} onChange={ (event) => this.handleChange(event) } className="search-bar-input" type="text"/>
+                    <Input label='Inputfelt-label' value={this.state.searchText} onChange={ (event) => this.handleChange(event) } className="search-bar-input" />
                     <div aria-live="assertive" role="alert"/>
                 </div>
             </div>
