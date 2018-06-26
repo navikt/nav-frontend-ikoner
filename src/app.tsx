@@ -43,7 +43,7 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-    fetchIcons : ()  => dispatch(api.fetchIcons())
+    fetchIcons : (searchText: string)  => dispatch(api.fetchIcons(searchText))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
