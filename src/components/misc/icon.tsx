@@ -1,11 +1,10 @@
 import * as React from 'react';
 import './misc.less';
 
-interface IconProps { src: string; title: string };
+interface PropTypes { src: string; title: string };
 
-class Icon extends React.Component <{src: any, title: any}> {
+class Icon extends React.Component <PropTypes> {
 
-    public props: IconProps;
     public render() {
 
         const style = {

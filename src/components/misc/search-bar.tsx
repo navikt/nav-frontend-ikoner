@@ -1,39 +1,43 @@
 /* tslint:disable */
 import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
-import {connect} from 'react-redux';
-import './misc.less';
+import * as Redux from 'react-redux';
 import {setSearchText} from "../../redux/actions";
+import {SearchText, Store} from "../../redux/store-interfaces";
+import './misc.less';
 
-class SearchBar extends React.Component<{searchText: any, setSearchText: any}, {}> {
 
-    constructor(props: any) {
+interface PropTypes {searchText: SearchText, setSearchText: typeof setSearchText}
+
+class SearchBar extends React.Component<PropTypes> {
+
+    constructor(props: PropTypes) {
         super(props)
-        this.handleChange = this.handleChange.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
-    public handleChange (e: any) {
-        this.props.setSearchText(e.target.value);
+    public handleSearchChange (searchText: string) {
+        this.props.setSearchText(searchText);
     }
 
     public render() {
         return <div className="icon-search-bar">
             <label className="search-bar-label"/>
             <Input label='Søk' value={this.props.searchText} onChange={
-                (event) => this.handleChange(event)} className="search-bar-input"/>
+                (event) => this.handleSearchChange(event.target.value)} className="search-bar-input"/>
             <div aria-live="assertive" role="alert"/>
         </div>;
     }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: Store) => {
     return {
         searchText: state.iconsStore.searchText,
     };
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
     setSearchText : (searchText:string)  => dispatch(setSearchText(searchText))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default Redux.connect(mapStateToProps, mapDispatchToProps)(SearchBar);

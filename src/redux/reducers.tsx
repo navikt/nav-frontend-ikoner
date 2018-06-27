@@ -1,3 +1,4 @@
+import * as Redux from 'redux';
 import {RECEIVE_ICONS, SET_SEARCH_TEXT} from "./actions";
 
 const initialState = {
@@ -7,7 +8,7 @@ const initialState = {
     searchText: '',
 }
 
-export function iconsReducer(state = initialState, action: any) {
+export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
 
     switch (action.type) {
         case SET_SEARCH_TEXT:
