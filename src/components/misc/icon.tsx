@@ -1,8 +1,5 @@
-// import * as PropTypes from 'prop-types';
 import * as React from 'react';
-// import api from '../../utils/api';
 import './misc.less';
-
 
 interface IconProps { src: string; title: string };
 
