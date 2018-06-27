@@ -31,7 +31,7 @@ export function receiveIcons(icons: Icons): ReceiveIconsAction {
 }
 
 export function setSelectedIcon(icon: Icon): SelectedIconAction {
-    return { type: SET_SEARCH_TEXT, icon }
+    return { type: SET_SELECTED_ICON, icon }
 }
 
 export function setSearchText(searchText: string): SearchTextAction {
