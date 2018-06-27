@@ -15,7 +15,7 @@ class IconList extends React.Component <{icons: any}, {}>{
         return (
             <div className="icon-list">
                 {this.props.icons.map((icon:any, index:any) =>
-                    <Icon key={index} title={icon.filename} src={icon.link} />
+                    <Icon key={index} title={icon.title} src={icon.link} />
                 )}
             </div>
         );
