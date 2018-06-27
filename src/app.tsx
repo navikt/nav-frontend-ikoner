@@ -12,8 +12,8 @@ class App extends React.Component {
                 <header className="app-header">
                     <h1 className="app-title">NAV ikon-base</h1>
                 </header>
-                <div className="container-content">
-                    <div className="container-icon-list">
+                <div className="app-content">
+                    <div className="column-icon-list">
                         <SearchBar/>
                         <IconList/>
                     </div>
