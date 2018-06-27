@@ -16,27 +16,26 @@ class SearchBar extends React.Component<{fetchIcons: any}, {searchText: any}> {
     }
 
     public handleChange (e: any) {
+        this.props.fetchIcons(e.target.value);
         this.setState({searchText: e.target.value});
-        this.props.fetchIcons(this.state.searchText);
     }
 
     public render() {
         return (
-            <div className="row">
+            <div className="row container-search-bar">
                 <div className="search-bar">
                     <label className="search-bar-label"/>
                     <Input label='Søk' value={this.state.searchText} onChange={ (event) => this.handleChange(event) } className="search-bar-input" />
                     <div aria-live="assertive" role="alert"/>
                 </div>
             </div>
-
         );
     }
 }
 
 const mapStateToProps = (state: any) => {
     return {
-        icons: state.icons,
+        icons: state.iconsStore.icons,
     };
 };
 

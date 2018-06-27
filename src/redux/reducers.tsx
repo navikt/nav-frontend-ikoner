@@ -1,23 +1,21 @@
 import {RECEIVE_ICONS} from "./actions";
 
 const initialState = {
-    icons: {
-        fetching: false,
-        lastUpdated: null,
-        list: [],
-    }
+    fetching: false,
+    icons: [],
+    lastUpdated: null,
+    search: '',
 }
 
-export function icons(state = initialState, action: any) {
+export function iconsReducer(state = initialState, action: any) {
     switch (action.type) {
         case RECEIVE_ICONS:
-            return Object.assign({}, state, {
-                icons: {
-                    fetching: false,
-                    lastUpdated: Date.now(),
-                    list: action.icons,
-                }
-            })
+            const data = {
+                fetching: false,
+                icons: action.icons,
+                lastUpdated: Date.now(),
+            };
+            return {...state, ...data};
         default:
             return state
     }

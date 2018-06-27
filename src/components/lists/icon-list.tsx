@@ -12,23 +12,19 @@ class IconList extends React.Component <{icons: any}, {}>{
     }
 
     public render() {
-        if (this.props.icons.list){
-            return (
-                <div className="icon-list">
-                    {this.props.icons.list.map((icon:any, index:any) =>
-                        <Icon key={index} title={icon.filename} src={icon.link} />
-                    )}
-                </div>
-            );
-        }
-
-        return null;
+        return (
+            <div className="icon-list">
+                {this.props.icons.map((icon:any, index:any) =>
+                    <Icon key={index} title={icon.filename} src={icon.link} />
+                )}
+            </div>
+        );
     }
 }
 
 const mapStateToProps = (state: any) => {
     return {
-        icons: state.icons,
+        icons: state.iconsStore.icons,
     };
 };
 
