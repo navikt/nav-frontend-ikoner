@@ -1,7 +1,11 @@
+/* tslint:disable */
 import * as React from 'react';
+import * as Redux from 'react-redux';
+import {setSelectedIcon} from "../../redux/actions";
+import {Icon as IIcon} from '../../redux/store-interfaces';
 import './misc.less';
 
-interface PropTypes { src: string, title: string, columnWidth: number, space: number  };
+interface PropTypes { icon:IIcon, columnWidth: number, space: number, setSelectedIcon: typeof setSelectedIcon };
 
 class Icon extends React.Component <PropTypes> {
 
@@ -9,7 +13,7 @@ class Icon extends React.Component <PropTypes> {
 
         const style = {
             icon: {
-                backgroundImage: `url(${this.props.src})`,
+                backgroundImage: `url(${this.props.icon.link})`,
             },
             iconContainer:{
                 padding: this.props.space,
@@ -18,14 +22,18 @@ class Icon extends React.Component <PropTypes> {
         }
 
         return (
-            <div style={style.iconContainer}>
+            <div style={style.iconContainer}  onClick={(event) => this.props.setSelectedIcon(this.props.icon)}>
                 <div className="icon" style={style.icon} />
                 <div className="icon-description">
-                    <p>{this.props.title}</p>
+                    <p>{this.props.icon.title}</p>
                 </div>
             </div>
         );
     }
 }
 
-export default Icon;
+const mapDispatchToProps = () => ({
+    setSelectedIcon : (icon:IIcon)  => setSelectedIcon(icon),
+});
+
+export default Redux.connect(mapDispatchToProps)(Icon);

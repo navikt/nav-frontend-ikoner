@@ -4,6 +4,7 @@ export interface Store{
         icons: Icons,
         lastUpdated: Date,
         searchText: string,
+        selectedIcon: Icon,
     }
 }
 
