@@ -4,11 +4,17 @@ import api from "../../utils/api";
 import Icon from "../misc/icon";
 import './lists.less';
 
-class IconList extends React.Component <{icons: any}, {}>{
+class IconList extends React.Component <{icons: any, searchText: any}, {}>{
 
     constructor(props: any){
         super(props);
         props.fetchIcons();
+    }
+
+    public componentWillReceiveProps(props:any){
+        if (this.props.searchText !== props.searchText) {
+            props.fetchIcons(props.searchText);
+        }
     }
 
     public render() {
@@ -25,11 +31,12 @@ class IconList extends React.Component <{icons: any}, {}>{
 const mapStateToProps = (state: any) => {
     return {
         icons: state.iconsStore.icons,
+        searchText: state.iconsStore.searchText,
     };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-    fetchIcons : ()  => dispatch(api.fetchIcons())
+    fetchIcons : (searchText:string)  => dispatch(api.fetchIcons(searchText)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IconList);

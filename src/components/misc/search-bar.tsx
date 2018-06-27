@@ -2,44 +2,38 @@
 import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
 import {connect} from 'react-redux';
-import api from "../../utils/api";
 import './misc.less';
+import {setSearchText} from "../../redux/actions";
 
-class SearchBar extends React.Component<{fetchIcons: any}, {searchText: any}> {
+class SearchBar extends React.Component<{searchText: any, setSearchText: any}, {}> {
 
     constructor(props: any) {
         super(props)
-        this.state = {
-            searchText: ''
-        }
         this.handleChange = this.handleChange.bind(this);
     }
 
     public handleChange (e: any) {
-        this.props.fetchIcons(e.target.value);
-        this.setState({searchText: e.target.value});
+        this.props.setSearchText(e.target.value);
     }
 
     public render() {
-        return (
-            <div className="icon-search-bar">
-                <label className="search-bar-label"/>
-                <Input label='Søk' value={this.state.searchText} onChange={
-                    (event) => this.handleChange(event) } className="search-bar-input" />
-                <div aria-live="assertive" role="alert"/>
-            </div>
-        );
+        return <div className="icon-search-bar">
+            <label className="search-bar-label"/>
+            <Input label='Søk' value={this.props.searchText} onChange={
+                (event) => this.handleChange(event)} className="search-bar-input"/>
+            <div aria-live="assertive" role="alert"/>
+        </div>;
     }
 }
 
 const mapStateToProps = (state: any) => {
     return {
-        icons: state.iconsStore.icons,
+        searchText: state.iconsStore.searchText,
     };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-    fetchIcons : (searchText:string)  => dispatch(api.fetchIcons(searchText))
+    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

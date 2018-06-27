@@ -1,21 +1,25 @@
-import {RECEIVE_ICONS} from "./actions";
+import {RECEIVE_ICONS, SET_SEARCH_TEXT} from "./actions";
 
 const initialState = {
     fetching: false,
     icons: [],
     lastUpdated: null,
-    search: '',
+    searchText: '',
 }
 
 export function iconsReducer(state = initialState, action: any) {
+
     switch (action.type) {
+        case SET_SEARCH_TEXT:
+            return {...state, ...{
+                    searchText: action.searchText,
+                }};
         case RECEIVE_ICONS:
-            const data = {
-                fetching: false,
-                icons: action.icons,
-                lastUpdated: Date.now(),
-            };
-            return {...state, ...data};
+            return {...state, ...{
+                    fetching: false,
+                    icons: action.icons,
+                    lastUpdated: Date.now(),
+                }};
         default:
             return state
     }
