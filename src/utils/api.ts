@@ -1,8 +1,9 @@
-import {Dispatch} from "redux";
-import {receiveIcons} from "../redux/actions";
+import * as Redux from "redux";
+import {receiveIcons, ReceiveIconsAction} from "../redux/actions";
+import {SearchText} from "../redux/store-interfaces";
 
-function fetchIcons(searchText: any = null): (dispatch: Dispatch<any>) => Promise<any> {
-    return (dispatch: Dispatch<any>) => {
+function fetchIcons(searchText: SearchText): (dispatch: Redux.Dispatch<ReceiveIconsAction>) => Promise<ReceiveIconsAction> {
+    return (dispatch: Redux.Dispatch<ReceiveIconsAction>) => {
         return fetch(searchText ? `/nav-frontend-ikoner-backend/api/icons?search=${searchText}` : `/nav-frontend-ikoner-backend/api/icons`)
             .then(
                 response => response.json(),

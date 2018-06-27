@@ -1,23 +1,26 @@
-import {RECEIVE_ICONS} from "./actions";
+import * as Redux from 'redux';
+import {RECEIVE_ICONS, SET_SEARCH_TEXT} from "./actions";
 
 const initialState = {
-    icons: {
-        fetching: false,
-        lastUpdated: null,
-        list: [],
-    }
+    fetching: false,
+    icons: [],
+    lastUpdated: null,
+    searchText: '',
 }
 
-export function icons(state = initialState, action: any) {
+export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
+
     switch (action.type) {
+        case SET_SEARCH_TEXT:
+            return {...state, ...{
+                    searchText: action.searchText,
+                }};
         case RECEIVE_ICONS:
-            return Object.assign({}, state, {
-                icons: {
+            return {...state, ...{
                     fetching: false,
+                    icons: action.icons,
                     lastUpdated: Date.now(),
-                    list: action.icons,
-                }
-            })
+                }};
         default:
             return state
     }

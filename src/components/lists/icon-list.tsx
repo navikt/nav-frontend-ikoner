@@ -1,39 +1,45 @@
 import * as React from 'react';
-import {connect} from "react-redux";
+import * as Redux from "react-redux";
+import {Icon as IIcon, Icons, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import Icon from "../misc/icon";
 import './lists.less';
 
-class IconList extends React.Component <{icons: any}, {}>{
+interface PropTypes { icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons}
+
+class IconList extends React.Component <PropTypes>{
 
     constructor(props: any){
         super(props);
         props.fetchIcons();
     }
 
-    public render() {
-        if (this.props.icons.list){
-            return (
-                <div className="icon-list">
-                    {this.props.icons.list.map((icon:any, index:any) =>
-                        <Icon key={index} title={icon.filename} src={icon.link} />
-                    )}
-                </div>
-            );
+    public componentWillReceiveProps(props: PropTypes){
+        if (this.props.searchText !== props.searchText) {
+            props.fetchIcons(props.searchText);
         }
+    }
 
-        return null;
+    public render() {
+        return (
+            <div className="icon-list">
+                {this.props.icons.map((icon:IIcon, index: number) =>
+                    <Icon key={index} title={icon.title} src={icon.link} />
+                )}
+            </div>
+        );
     }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: Store) => {
     return {
-        icons: state.icons,
+        icons: state.iconsStore.icons,
+        searchText: state.iconsStore.searchText,
     };
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
-    fetchIcons : ()  => dispatch(api.fetchIcons())
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    fetchIcons : (searchText:string)  => api.fetchIcons(searchText)(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(IconList);
+export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconList);
