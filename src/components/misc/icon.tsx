@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './misc.less';
 
-interface PropTypes { src: string; title: string };
+interface PropTypes { src: string, title: string, columnWidth: number, space: number  };
 
 class Icon extends React.Component <PropTypes> {
 
@@ -10,11 +10,15 @@ class Icon extends React.Component <PropTypes> {
         const style = {
             icon: {
                 backgroundImage: `url(${this.props.src})`,
+            },
+            iconContainer:{
+                padding: this.props.space,
+                width: this.props.columnWidth
             }
         }
 
         return (
-            <div className="iconContainer">
+            <div style={style.iconContainer}>
                 <div className="icon" style={style.icon} />
                 <div className="icon-description">
                     <p>{this.props.title}</p>
