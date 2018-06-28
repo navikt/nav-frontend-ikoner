@@ -26,7 +26,9 @@ class SidePanel extends React.Component<PropTypes>{
                 <div className="selected-icon-color-container">
                     <BlockPicker width="100%" />
                 </div>
-                <button type="submit" className="knapp knapp--hoved selected-icon-download ">Last ned ikon</button>
+                <a download={true} href={selectedIcon.link} className="selected-icon-download-link">
+                    <button type="submit" className="knapp knapp--hoved selected-icon-download-button">Last ned ikon</button>
+                </a>
             </div>
         );
     }
