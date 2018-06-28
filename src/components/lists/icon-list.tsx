@@ -24,7 +24,7 @@ class IconList extends React.Component <PropTypes>{
         return (
             <div className="icon-list">
                 {this.props.icons.map((icon:IIcon, index: number) =>
-                    <Icon key={index} icon={icon} columnWidth={70} space={20} />
+                    <Icon key={index} icon={icon} iconClass="icon" iconContainerClass="icon-container" iconShowDescription={true} />
                 )}
             </div>
         );
