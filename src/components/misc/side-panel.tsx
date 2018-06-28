@@ -22,11 +22,11 @@ class SidePanel extends React.Component<PropTypes>{
         return (
             <div className="icon-side-panel">
                 <h2>{selectedIcon.title}</h2>
-                <Icon icon={selectedIcon} iconClass="selected-icon" iconContainerClass="" iconShowDescription={false}/>
+                <Icon icon={selectedIcon} iconClass="selected-icon" iconContainerClass="selected-icon-container" iconShowDescription={false}/>
                 <div className="selected-icon-color-container">
-                    <BlockPicker width="220px" />
+                    <BlockPicker width="100%" />
                 </div>
-                <button type="submit" className="knapp knapp--standard">Last ned ikon</button>
+                <button type="submit" className="knapp knapp--hoved selected-icon-download ">Last ned ikon</button>
             </div>
         );
     }
