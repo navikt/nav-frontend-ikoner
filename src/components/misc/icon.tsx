@@ -4,9 +4,8 @@ import * as Redux from 'react-redux';
 import {setSelectedIcon} from "../../redux/actions";
 import {Icon as IIcon, Store} from '../../redux/store-interfaces';
 import './misc.less';
-import './interaction.less';
 
-interface PropTypes { icon:IIcon,  iconClass: string, iconContainerClass: string, iconShowDescription: boolean, setSelectedIcon: typeof setSelectedIcon};
+interface PropTypes { icon:IIcon,  iconClass: string, iconContainerClass: string, iconShowDescription: boolean, iconColor: string, setSelectedIcon: typeof setSelectedIcon};
 
 class Icon extends React.Component <PropTypes> {
 
@@ -25,7 +24,7 @@ class Icon extends React.Component <PropTypes> {
         const {icon, iconClass, iconContainerClass, iconShowDescription} = this.props;
         const style = {
             icon: {
-                backgroundImage: `url(${this.props.icon.link})`,
+                backgroundImage: `url(${icon.link})`,
             },
         }
 
@@ -42,7 +41,9 @@ class Icon extends React.Component <PropTypes> {
 }
 
 const mapStateToProps = (state: Store) => {
-    return {};
+    return {
+        iconColor: state.iconsStore.iconColor,
+    };
 };
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({

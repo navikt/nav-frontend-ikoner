@@ -5,6 +5,7 @@ export interface Store{
         lastUpdated: Date,
         searchText: string,
         selectedIcon: Icon,
+        iconColor: string,
     }
 }
 
