@@ -23,6 +23,7 @@ class SidePanel extends React.Component<PropTypes>{
                 <h2>{selectedIcon.title}</h2>
                 <Icon icon={selectedIcon} iconClass="selected-icon" iconContainerClass="selected-icon-container" iconShowDescription={false}/>
             </div>
+
         );
     }
 }
