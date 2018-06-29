@@ -13,7 +13,7 @@ export interface Store{
 
 export interface Icon{
     title: string,
-    fileName: string,
+    filename: string,
     link: string,
 }
 

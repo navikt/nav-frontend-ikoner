@@ -22,7 +22,7 @@ class SidePanel extends React.Component<PropTypes>{
             <div className="icon-side-panel">
                 <h2>{selectedIcon.title}</h2>
                 <Icon icon={selectedIcon} iconClickTrigger={undefined} iconClass="selected-icon" iconContainerClass="selected-icon-container" iconColor="black"/>
-                <a download={true} href={selectedIcon.link} className="selected-icon-download-link">
+                <a download={true} href={"/nav-frontend-ikoner-backend/api/icon/download?title=" + selectedIcon.title} className="selected-icon-download-link">
                     <button type="submit" className="knapp knapp--hoved selected-icon-download-button">Last ned ikon</button>
                 </a>
             </div>
