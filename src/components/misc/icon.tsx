@@ -1,20 +1,30 @@
 /* tslint:disable */
 import * as React from 'react';
-import {Icon as IIcon} from '../../redux/store-interfaces';
+import {Icon as IIcon, IconType} from '../../redux/store-interfaces';
 import './misc.less';
 
-interface PropTypes { icon:IIcon,  iconClass: string, iconContainerClass: string, iconColor: string, iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void};
+interface PropTypes { icon:IIcon, iconType: IconType, iconColor: string, iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void};
 
 class Icon extends React.Component <PropTypes> {
 
     public render() {
 
-        const {icon, iconClass, iconContainerClass, iconClickTrigger} = this.props;
+        const {icon, iconClickTrigger, iconType} = this.props;
 
         const style = {
             icon: {
                 backgroundImage: `url(${icon.link})`,
             },
+        }
+
+        let iconClass = 'icon';
+        let iconContainerClass = 'icon-container';
+
+        switch(iconType){
+            case "inPanel":
+                iconClass = 'selected-icon';
+                iconContainerClass = 'selected-icon-container';
+                break
         }
 
         return (

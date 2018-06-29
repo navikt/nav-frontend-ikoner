@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
+import {config} from '../../appconfig';
 import {Icon as IIcon, Store} from "../../redux/store-interfaces";
 import Icon from './icon';
 import './misc.less';
 
 interface PropTypes { selectedIcon: IIcon };
 
-class SidePanel extends React.Component<PropTypes>{
+class InformationPanel extends React.Component<PropTypes>{
 
     public render() {
 
@@ -21,8 +22,8 @@ class SidePanel extends React.Component<PropTypes>{
         return (
             <div className="icon-side-panel">
                 <h2>{selectedIcon.title}</h2>
-                <Icon icon={selectedIcon} iconClickTrigger={undefined} iconClass="selected-icon" iconContainerClass="selected-icon-container" iconColor="black"/>
-                <a download={true} href={"/nav-frontend-ikoner-backend/api/icon/download?title=" + selectedIcon.title} className="selected-icon-download-link">
+                <Icon icon={selectedIcon} iconClickTrigger={undefined} iconType="inPanel" iconColor="black"/>
+                <a download={true} href={config.NAV_ICONS_API_LINK + "icon/download?title=" + selectedIcon.title} className="selected-icon-download-link">
                     <button type="submit" className="knapp knapp--hoved selected-icon-download-button">Last ned ikon</button>
                 </a>
             </div>
@@ -37,4 +38,4 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-export default Redux.connect(mapStateToProps)(SidePanel);
+export default Redux.connect(mapStateToProps)(InformationPanel);

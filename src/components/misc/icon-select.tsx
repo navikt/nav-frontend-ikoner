@@ -22,7 +22,7 @@ class IconSelect extends React.Component <PropTypes> {
 
     public render() {
         return (
-            <Icon icon={this.props.icon} iconClickTrigger={this.onIconClick} iconClass="icon" iconContainerClass="icon-container" iconColor="black"/>
+            <Icon icon={this.props.icon} iconType="inList" iconClickTrigger={this.onIconClick} iconColor="black"/>
         );
     }
 }

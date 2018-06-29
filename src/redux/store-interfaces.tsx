@@ -19,3 +19,4 @@ export interface Icon{
 
 export type Icons = Icon[];
 export type SearchText = string;
+export type IconType = 'inList' | 'inPanel';
