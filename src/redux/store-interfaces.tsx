@@ -1,12 +1,15 @@
-export interface Store{
-    iconsStore:{
-        fetching: boolean,
+export interface IconsStore {
+    fetching: boolean,
         icons: Icons,
-        lastUpdated: Date,
+        lastUpdated?: Date,
         searchText: string,
-    }
+        selectedIcon?: Icon,
+        iconColor: string,
 }
 
+export interface Store{
+    iconsStore: IconsStore
+}
 
 export interface Icon{
     title: string,
