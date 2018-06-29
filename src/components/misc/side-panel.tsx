@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {BlockPicker} from 'react-color';
 import * as Redux from "react-redux";
 import {Icon as IIcon, Store} from "../../redux/store-interfaces";
 import Icon from './icon';
