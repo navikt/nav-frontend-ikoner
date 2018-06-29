@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from "react-redux";
 import {Icon as IIcon, Icons, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
-import Icon from "../misc/icon";
+import IconSelect from '../misc/icon-select';
 import './lists.less';
 
 interface PropTypes { icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons}
@@ -24,7 +24,7 @@ class IconList extends React.Component <PropTypes>{
         return (
             <div className="icon-list">
                 {this.props.icons.map((icon:IIcon, index: number) =>
-                    <Icon key={index} icon={icon} iconClass="icon" iconContainerClass="icon-container" iconShowDescription={false} />
+                    <IconSelect key={index} icon={icon} />
                 )}
             </div>
         );
