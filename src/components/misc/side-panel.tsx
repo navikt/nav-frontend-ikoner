@@ -11,7 +11,7 @@ class SidePanel extends React.Component<PropTypes>{
     public render() {
 
         const {selectedIcon} = this.props;
-        if(selectedIcon == null){
+        if(!selectedIcon){
             return (
                 <div className="icon-side-panel">
                     <h2>Ikke selektert</h2>

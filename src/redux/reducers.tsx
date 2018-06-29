@@ -1,13 +1,14 @@
 import * as Redux from 'redux';
 import {RECEIVE_ICONS, SET_ICON_COLOR, SET_SEARCH_TEXT, SET_SELECTED_ICON} from "./actions";
+import {IconsStore} from "./store-interfaces";
 
-const initialState = {
+const initialState : IconsStore = {
     fetching: false,
     iconColor: 'black',
     icons: [],
-    lastUpdated: null,
+    lastUpdated: undefined,
     searchText: '',
-    selectedIcon: {"title":"address-book","filename":"address-book.svg","link":"/nav-frontend-ikoner-backend/api/icons/address-book.svg"},
+    selectedIcon: undefined,
 }
 
 export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
