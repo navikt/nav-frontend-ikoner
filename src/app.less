@@ -10,13 +10,14 @@ body {
 }
 
 .app {
-  text-align: center;
+  text-align: left;
 }
 
 .app-header {
   background-color: #e7e9e9;
   padding: 48px 64px 32px 64px;
   margin: 0px;
+  max-width:100%;
 }
 
 .app-title {
@@ -31,8 +32,36 @@ body {
   min-height: 100%;
 }
 
+.icon-side-panel {
+  width: 25%;
+  min-height: 100%;
+  padding-top: 30px;
+  border-left: 2px solid #e7e9e9;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+}
+
+
 .column-icon-list {
-  width: 70%;
-  margin-left: 30px;
-  margin-right: 30px
+  flex: 75%;
+  padding: 5px 0px 0px 64px;
+}
+
+
+/* Responsive layout */
+@media screen and (max-width: 700px) {
+  .column-icon-list {
+    order: 2;
+    width:100%;
+  }
+  .icon-side-panel{
+    order: 1;
+    width:100%;
+  }
+  .app-content {
+    flex-direction: column;
+    order: 2;
+  }
+
 }

@@ -1,23 +1,68 @@
 .icon-search-bar {
-  width: 40%;
-  margin: auto;
+  width: 30%;
   padding-top: 30px;
   margin-bottom:40px;
 }
 
 .icon {
   height: 70px;
+  padding:0px 20px 0px 20px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-.icon-side-panel {
-  justify-content: center;
-  width: 30%;
-  min-height: 100%;
-  padding-top: 30px;
-  margin-right: 30px;
-  border-left: 2px solid #e7e9e9;
+.icon-container{
+  width:70px;
+  padding: 20px;
 }
 
+.icon-description{
+  padding: 15px 0px 6px 0px;
+  text-align: center;
+}
+
+.icon-container:hover{
+  background-color: #f3f3f3;
+  cursor:pointer;
+  border-radius:5px;
+  -webkit-box-shadow: 0px 0px 1px 1px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    0px 0px 1px 1px #ccc;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         0px 0px 1px 1px #ccc;
+}
+
+.selected-icon {
+  height: 220px;
+  width:100%;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px ;
+  border-color: #e7e9e9;
+}
+
+.selected-icon-container{
+  width:70%;
+}
+
+.selected-icon-tools-container{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  padding:40px 0px;
+}
+
+.selected-icon-color-container{
+  padding:20px;
+  width:70%;
+}
+
+.selected-icon-download-link {
+  width: 70%;
+  padding: 20px 0px;
+}
+
+.selected-icon-download-button {
+  width: 100%;
+}
