@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # nav-frontend-ikoner
 
 >>>>>>> api
@@ -996,7 +994,7 @@ These variables will act as the defaults if the machine does not explicitly set 
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
 >Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
-these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/appconfig-vars).
+these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
 #### Expanding Environment Variables In `.env`
 
@@ -1500,7 +1498,7 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 #### Configuration
 
-The default Jest coverage configuration can be overriden by adding any of the following supported keys to a Jest appconfig in your package.json.
+The default Jest coverage configuration can be overriden by adding any of the following supported keys to a Jest config in your package.json.
 
 Supported overrides:
  - [`collectCoverageFrom`](https://facebook.github.io/jest/docs/en/configuration.html#collectcoveragefrom-array)
@@ -1885,7 +1883,7 @@ runtime caching strategy for those requests, you can [`eject`](#npm-run-eject)
 and then configure the
 [`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
 option in the `SWPrecacheWebpackPlugin` section of
-[`webpack.appconfig.prod.js`](../appconfig/webpack.appconfig.prod.js).
+[`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
 ### Progressive Web App Metadata
 
@@ -2020,7 +2018,7 @@ service worker navigation routing can be configured or disabled by
 [`eject`ing](#npm-run-eject) and then modifying the
 [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
-options of the `SWPreachePlugin` [configuration](../appconfig/webpack.appconfig.prod.js).
+options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
 ### Building for Relative Paths
 
