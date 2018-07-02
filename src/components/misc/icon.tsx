@@ -17,14 +17,16 @@ class Icon extends React.Component <PropTypes> {
             },
         }
 
-        let iconClass = 'icon';
-        let iconContainerClass = 'icon-container';
-
+        let iconClass, iconContainerClass;
         switch(iconType){
-            case "inPanel":
+            case IconType.IN_LIST:
+                iconClass = 'icon';
+                iconContainerClass = 'icon-container';
+                break;
+            case IconType.IN_PANEL:
                 iconClass = 'selected-icon';
                 iconContainerClass = 'selected-icon-container';
-                break
+                break;
         }
 
         return (

@@ -19,4 +19,7 @@ export interface Icon{
 
 export type Icons = Icon[];
 export type SearchText = string;
-export type IconType = 'inList' | 'inPanel';
+export enum IconType {
+    IN_LIST,
+    IN_PANEL
+};

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
 import {config} from '../../appconfig';
-import {Icon as IIcon, Store} from "../../redux/store-interfaces";
+import {Icon as IIcon, IconType, Store} from "../../redux/store-interfaces";
 import Icon from './icon';
 import './misc.less';
 
@@ -22,7 +22,7 @@ class InformationPanel extends React.Component<PropTypes>{
         return (
             <div className="icon-side-panel">
                 <h2>{selectedIcon.title}</h2>
-                <Icon icon={selectedIcon} iconClickTrigger={undefined} iconType="inPanel" iconColor="black"/>
+                <Icon icon={selectedIcon} iconType={IconType.IN_PANEL} iconColor="black"/>
                 <a download={true} href={config.NAV_ICONS_API_LINK + "icon/download?title=" + selectedIcon.title} className="selected-icon-download-link">
                     <button type="submit" className="knapp knapp--hoved selected-icon-download-button">Last ned ikon</button>
                 </a>
