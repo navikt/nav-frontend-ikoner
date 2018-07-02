@@ -7,6 +7,10 @@ interface PropTypes { icon:IIcon, iconType: IconType, iconColor: string, iconCli
 
 class Icon extends React.Component <PropTypes> {
 
+    public getIconClass (iconType : IconType ) : string{
+        return iconType === IconType.IN_LIST ? 'icon-in-list' : 'icon-in-panel';
+    }
+
     public render() {
 
         const {icon, iconClickTrigger, iconType} = this.props;
@@ -17,22 +21,8 @@ class Icon extends React.Component <PropTypes> {
             },
         }
 
-        let iconClass, iconContainerClass;
-        switch(iconType){
-            case IconType.IN_LIST:
-                iconClass = 'icon';
-                iconContainerClass = 'icon-container';
-                break;
-            case IconType.IN_PANEL:
-                iconClass = 'selected-icon';
-                iconContainerClass = 'selected-icon-container';
-                break;
-        }
-
         return (
-            <div className={iconContainerClass}  onClick={iconClickTrigger}>
-                <div className={iconClass} style={style.icon} />
-            </div>
+            <div className={this.getIconClass(iconType)}  onClick={iconClickTrigger} style={style.icon} />
         );
     }
 }
