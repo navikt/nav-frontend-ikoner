@@ -1,15 +1,19 @@
 /* tslint:disable */
 import * as React from 'react';
-import {Icon as IIcon} from '../../redux/store-interfaces';
+import {Icon as IIcon, IconType} from '../../redux/store-interfaces';
 import './misc.less';
 
-interface PropTypes { icon:IIcon,  iconClass: string, iconContainerClass: string, iconColor: string, iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void};
+interface PropTypes { icon:IIcon, iconType: IconType, iconColor: string, iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void};
 
 class Icon extends React.Component <PropTypes> {
 
+    public getIconClass (iconType : IconType ) : string{
+        return iconType === IconType.IN_LIST ? 'icon-in-list' : 'icon-in-panel';
+    }
+
     public render() {
 
-        const {icon, iconClass, iconContainerClass, iconClickTrigger} = this.props;
+        const {icon, iconClickTrigger, iconType} = this.props;
 
         const style = {
             icon: {
@@ -18,9 +22,7 @@ class Icon extends React.Component <PropTypes> {
         }
 
         return (
-            <div className={iconContainerClass}  onClick={iconClickTrigger}>
-                <div className={iconClass} style={style.icon} />
-            </div>
+            <div className={this.getIconClass(iconType)}  onClick={iconClickTrigger} style={style.icon} />
         );
     }
 }
