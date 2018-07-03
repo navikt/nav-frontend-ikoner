@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
 import {Icon as IIcon, IconType, Store} from "../../redux/store-interfaces";
-import DownloadButton from "../buttons/download-button";
 import Icon from './icon';
 import './misc.less';
 
@@ -23,7 +22,6 @@ class InformationPanel extends React.Component<PropTypes>{
             <div className="icon-side-panel">
                 <h2>{selectedIcon.title}</h2>
                 <Icon icon={selectedIcon} iconType={IconType.IN_PANEL} iconColor="black"/>
-                <DownloadButton icon={selectedIcon}/>
             </div>
 
         );
