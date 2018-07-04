@@ -13,9 +13,7 @@ class InformationPanel extends React.Component<PropTypes>{
         const {selectedIcon} = this.props;
         if(!selectedIcon){
             return (
-                <div className="icon-side-panel">
-                    <h2>Ikke selektert</h2>
-                </div>
+                <div className="icon-side-panel" />
             );
         }
         return (
