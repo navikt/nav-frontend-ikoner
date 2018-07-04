@@ -19,9 +19,11 @@ class InformationPanel extends React.Component<PropTypes>{
         }
         return (
             <div className="icon-side-panel">
-                <h2>{selectedIcon.title}</h2>
-                <Icon icon={selectedIcon} iconType={IconType.IN_PANEL} iconColor="black"/>
-                <DownloadButton icon={selectedIcon}/>
+                <div className="icon-side-panel-content">
+                    <h2>{selectedIcon.title}</h2>
+                    <Icon icon={selectedIcon} iconType={IconType.IN_PANEL} iconColor="black"/>
+                    <DownloadButton icon={selectedIcon}/>
+                </div>
             </div>
 
         );
