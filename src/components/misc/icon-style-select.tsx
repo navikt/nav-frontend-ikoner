@@ -16,7 +16,6 @@ class IconStyleSelect extends React.Component <PropTypes> {
     }
 
     public onToggle(){
-        console.log(this.props.iconStyle);
         this.props.setIconStyle(this.props.iconStyle === IconStyle.FILLED ? IconStyle.LINE : IconStyle.FILLED);
     }
 
@@ -25,10 +24,10 @@ class IconStyleSelect extends React.Component <PropTypes> {
             <ToggleGruppe onChange={this.onToggle}
                           name='toggleGruppe'>
                 <ToggleKnapp value='knapp1' defaultChecked={true} key='1'>
-                    <div />
+                    Filled
                 </ToggleKnapp>
                 <ToggleKnapp value='knapp2' defaultChecked={false} key='2'>
-                    <div />
+                    Line
                 </ToggleKnapp>
             </ToggleGruppe>
         );
