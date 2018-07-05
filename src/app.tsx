@@ -5,6 +5,7 @@ import IconStyleSelect from "./components/misc/icon-style-select";
 import InformationPanel from "./components/misc/information-panel";
 import SearchBar from "./components/misc/search-bar";
 
+
 class App extends React.Component {
 
     public render() {

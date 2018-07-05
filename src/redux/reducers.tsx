@@ -3,7 +3,7 @@ import {RECEIVE_ICONS, SET_ICON_COLOR, SET_ICON_STYLE, SET_SEARCH_TEXT, SET_SELE
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState : IconsStore = {
-    fetching: false,
+    fetching: true,
     iconColor: 'black',
     iconStyle: IconStyle.FILLED,
     icons: [],
@@ -29,6 +29,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                 }};
         case SET_SEARCH_TEXT:
             return {...state, ...{
+                    fetching: true,
                     searchText: action.searchText,
                 }};
         case RECEIVE_ICONS:
