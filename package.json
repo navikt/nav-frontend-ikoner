@@ -36,7 +36,11 @@
     "eject": "react-scripts eject",
     "lint": "echo not implemented, part of the build script"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": {
+    "nav-frontend-ikoner-backend/": {
+      "target": "http://localhost:8080/"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^23.1.1",
     "@types/node": "^9.6.7",

@@ -13,9 +13,13 @@ export interface Store{
 
 export interface Icon{
     title: string,
-    fileName: string,
+    filename: string,
     link: string,
 }
 
 export type Icons = Icon[];
 export type SearchText = string;
+export enum IconType {
+    IN_LIST,
+    IN_PANEL
+};
