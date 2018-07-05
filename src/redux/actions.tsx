@@ -48,4 +48,3 @@ export function setIconColor(iconColor: string): IconColorAction {
     return { type: SET_ICON_COLOR, iconColor }
 }
 
-

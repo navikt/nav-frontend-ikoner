@@ -4,6 +4,7 @@ import IconList from './components/lists/icon-list';
 import SearchBar from "./components/misc/search-bar";
 import SidePanel from "./components/misc/side-panel";
 
+
 class App extends React.Component {
 
     public render() {
