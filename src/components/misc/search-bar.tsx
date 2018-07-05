@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as Redux from 'react-redux';
 import {setSearchText} from "../../redux/actions";
 import {SearchText, Store} from "../../redux/store-interfaces";
-import Spinner from './spinner';
+import NavFrontendSpinner from "nav-frontend-spinner";
 import './misc.less';
 
 
@@ -32,7 +32,7 @@ class SearchBar extends React.Component<PropTypes> {
                     <div aria-live="assertive" role="alert"/>
                 </div>
 
-                {this.props.fetching && <Spinner />}
+                {this.props.fetching && <NavFrontendSpinner className="spinner"/>}
             </div>
         );
     }
