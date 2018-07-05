@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
+import {setFetchingIcons} from "../../redux/actions";
 import {Icon as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
@@ -40,7 +41,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchIcons : ( iconStyle: IconStyle, searchText:string)  => api.fetchIcons(iconStyle, searchText)(dispatch),
+    fetchIcons : ( iconStyle: IconStyle, searchText:string)  => {api.fetchIcons(iconStyle, searchText)(dispatch); dispatch(setFetchingIcons(true))},
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconList);

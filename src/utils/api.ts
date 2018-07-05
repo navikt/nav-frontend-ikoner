@@ -3,6 +3,7 @@ import {receiveIcons, ReceiveIconsAction} from "../redux/actions";
 import {IconStyle, SearchText} from "../redux/store-interfaces";
 
 function fetchIcons(iconStyle: IconStyle, searchText: SearchText): (dispatch: Redux.Dispatch<ReceiveIconsAction>) => Promise<ReceiveIconsAction> {
+
     return (dispatch: Redux.Dispatch<ReceiveIconsAction>) => {
 
         // Build URL

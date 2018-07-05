@@ -1,9 +1,16 @@
 import * as Redux from 'redux';
-import {RECEIVE_ICONS, SET_ICON_COLOR, SET_ICON_STYLE, SET_SEARCH_TEXT, SET_SELECTED_ICON} from "./actions";
+import {
+    RECEIVE_ICONS,
+    SET_FETCHING_ICONS,
+    SET_ICON_COLOR,
+    SET_ICON_STYLE,
+    SET_SEARCH_TEXT,
+    SET_SELECTED_ICON
+} from "./actions";
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState : IconsStore = {
-    fetching: true,
+    fetching: false,
     iconColor: 'black',
     iconStyle: IconStyle.FILLED,
     icons: [],
@@ -19,6 +26,10 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
             return {...state, ...{
                     selectedIcon: action.icon,
                 }};
+        case SET_FETCHING_ICONS:
+            return {...state, ...{
+                    fetching: action.fetching,
+                }};
         case SET_ICON_STYLE:
             return {...state, ...{
                     iconStyle: action.iconStyle,
@@ -29,7 +40,6 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                 }};
         case SET_SEARCH_TEXT:
             return {...state, ...{
-                    fetching: true,
                     searchText: action.searchText,
                 }};
         case RECEIVE_ICONS:

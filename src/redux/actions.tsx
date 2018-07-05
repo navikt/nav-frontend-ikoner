@@ -5,6 +5,7 @@ export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
 export const SET_ICON_STYLE = 'SET_ICON_STYLE'
+export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
 
 /*
     Interfaces
@@ -34,6 +35,11 @@ export interface IconColorStyle{
     iconStyle: IconStyle,
 }
 
+export interface FetchingIconsAction {
+    type: string,
+    fetching: boolean,
+}
+
 /*
     Actions
  */
@@ -58,4 +64,7 @@ export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
     return { type: SET_ICON_STYLE, iconStyle}
 }
 
+export function setFetchingIcons(fetching: boolean): FetchingIconsAction {
+    return { type: SET_FETCHING_ICONS, fetching }
+}
 

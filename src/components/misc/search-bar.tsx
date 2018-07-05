@@ -31,7 +31,6 @@ class SearchBar extends React.Component<PropTypes> {
                         (event) => this.handleSearchChange(event.target.value)} className="search-bar-input"/>
                     <div aria-live="assertive" role="alert"/>
                 </div>
-
                 {this.props.fetching && <NavFrontendSpinner className="spinner"/>}
             </div>
         );
