@@ -5,7 +5,7 @@ import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
-interface PropTypes { icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons}
+interface PropTypes { icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons }
 
 class IconList extends React.Component <PropTypes>{
 
