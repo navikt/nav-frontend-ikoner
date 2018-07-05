@@ -1,22 +1,22 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
-import {Icon as IIcon, Icons, SearchText, Store} from "../../redux/store-interfaces";
+import {Icon as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
-interface PropTypes { icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons}
+interface PropTypes { iconStyle: IconStyle, icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons}
 
 class IconList extends React.Component <PropTypes>{
 
     constructor(props: any){
         super(props);
-        props.fetchIcons();
+        props.fetchIcons(props.iconStyle);
     }
 
     public componentWillReceiveProps(props: PropTypes){
-        if (this.props.searchText !== props.searchText) {
-            props.fetchIcons(props.searchText);
+        if (this.props.searchText !== props.searchText || this.props.iconStyle !== props.iconStyle) {
+            props.fetchIcons(props.iconStyle, props.searchText);
         }
     }
 
@@ -33,13 +33,14 @@ class IconList extends React.Component <PropTypes>{
 
 const mapStateToProps = (state: Store) => {
     return {
+        iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
     };
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchIcons : (searchText:string)  => api.fetchIcons(searchText)(dispatch),
+    fetchIcons : ( iconStyle: IconStyle, searchText:string)  => api.fetchIcons(iconStyle, searchText)(dispatch),
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconList);

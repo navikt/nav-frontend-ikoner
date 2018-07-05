@@ -1,10 +1,11 @@
 export interface IconsStore {
     fetching: boolean,
-        icons: Icons,
-        lastUpdated?: Date,
-        searchText: string,
-        selectedIcon?: Icon,
-        iconColor: string,
+    icons: Icons,
+    lastUpdated?: Date,
+    searchText: string,
+    selectedIcon?: Icon,
+    iconColor: string,
+    iconStyle: IconStyle,
 }
 
 export interface Store{
@@ -22,4 +23,8 @@ export type SearchText = string;
 export enum IconType {
     IN_LIST,
     IN_PANEL
+};
+export enum IconStyle {
+    FILLED,
+    LINE
 };

@@ -1,9 +1,10 @@
-import {Icon, Icons} from "./store-interfaces";
+import {Icon, Icons, IconStyle} from "./store-interfaces";
 
 export const RECEIVE_ICONS = 'RECEIVE_ICONS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
+export const SET_ICON_STYLE = 'SET_ICON_STYLE'
 
 /*
     Interfaces
@@ -28,6 +29,11 @@ export interface IconColorAction {
     iconColor: string;
 }
 
+export interface IconColorStyle{
+    type: string,
+    iconStyle: IconStyle,
+}
+
 /*
     Actions
  */
@@ -46,6 +52,10 @@ export function setSearchText(searchText: string): SearchTextAction {
 
 export function setIconColor(iconColor: string): IconColorAction {
     return { type: SET_ICON_COLOR, iconColor }
+}
+
+export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
+    return { type: SET_ICON_STYLE, iconStyle}
 }
 
 

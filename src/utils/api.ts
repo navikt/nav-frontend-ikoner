@@ -1,10 +1,15 @@
 import * as Redux from "redux";
 import {receiveIcons, ReceiveIconsAction} from "../redux/actions";
-import {SearchText} from "../redux/store-interfaces";
+import {IconStyle, SearchText} from "../redux/store-interfaces";
 
-function fetchIcons(searchText: SearchText): (dispatch: Redux.Dispatch<ReceiveIconsAction>) => Promise<ReceiveIconsAction> {
+function fetchIcons(iconStyle: IconStyle, searchText: SearchText): (dispatch: Redux.Dispatch<ReceiveIconsAction>) => Promise<ReceiveIconsAction> {
     return (dispatch: Redux.Dispatch<ReceiveIconsAction>) => {
-        return fetch(searchText ? `/nav-frontend-ikoner-backend/api/icons?search=${searchText}` : `/nav-frontend-ikoner-backend/api/icons`)
+
+        // Build URL
+        const iStyle = iconStyle === IconStyle.FILLED ? "style=Filled" : "style=Line";
+        const iSearch = searchText ? `&search=${searchText}` : "";
+
+        return fetch(`/nav-frontend-ikoner-backend/api/icons?${iStyle}${iSearch}`)
             .then(
                 response => response.json(),
                 error => console.log('An error occurred.', error)

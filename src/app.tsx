@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './app.less';
 import IconList from './components/lists/icon-list';
+import IconStyleSelect from "./components/misc/icon-style-select";
 import InformationPanel from "./components/misc/information-panel";
 import SearchBar from "./components/misc/search-bar";
 
@@ -15,6 +16,7 @@ class App extends React.Component {
                 <div className="app-content">
                     <div className="column-icon-list">
                         <SearchBar/>
+                        <IconStyleSelect />
                         <IconList/>
                     </div>
                     <InformationPanel/>
