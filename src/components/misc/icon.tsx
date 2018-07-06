@@ -23,10 +23,10 @@ class Icon extends React.Component <PropTypes> {
 
         return (
             <div className={this.getIconClass(iconType)}  onClick={iconClickTrigger} style={style.icon}>
-                {icon.extension == "pdf" &&
+                {icon.extension != "svg" && icon.extension != "png" &&
                 <div className="pdf-replacement-container">
                     <div className="pdf-replacement">
-                        PDF
+                        {icon.extension}
                     </div>
                 </div>
                     }
