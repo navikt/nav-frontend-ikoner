@@ -4,11 +4,10 @@ import * as React from 'react';
 import * as Redux from 'react-redux';
 import {resetIconFetch, setSearchText} from "../../redux/actions";
 import {SearchText, Store} from "../../redux/store-interfaces";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import './misc.less';
 
 
-interface PropTypes {searchText: SearchText, setSearchText: typeof setSearchText, fetching: boolean }
+interface PropTypes {searchText: SearchText, setSearchText: typeof setSearchText }
 
 class SearchBar extends React.Component<PropTypes> {
 
@@ -30,7 +29,6 @@ class SearchBar extends React.Component<PropTypes> {
                         (event) => this.handleSearchChange(event.target.value)} className="search-bar-input"/>
                     <div aria-live="assertive" role="alert"/>
                 </div>
-                {this.props.fetching && <NavFrontendSpinner className="spinner"/>}
             </div>
         );
     }
@@ -38,7 +36,6 @@ class SearchBar extends React.Component<PropTypes> {
 
 const mapStateToProps = (state: Store) => {
     return {
-        fetching: state.iconsStore.fetching,
         searchText: state.iconsStore.searchText,
     };
 };

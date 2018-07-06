@@ -1,4 +1,5 @@
 import * as Redux from 'redux';
+import {config} from '../appconfig';
 import {
     RECEIVE_ICONS, RESET_ICON_FETCH, SET_FETCH_INTERVAL,
     SET_FETCHING_ICONS,
@@ -12,7 +13,7 @@ import {IconsStore, IconStyle} from "./store-interfaces";
 const initialState : IconsStore = {
     fetchFrom: 0,
     fetchHasMore: true,
-    fetchTo: 100,
+    fetchTo: config.NAV_ICONS_FETCH_INTERVAL_SIZE,
     fetching: false,
     iconColor: 'black',
     iconStyle: IconStyle.FILLED,
