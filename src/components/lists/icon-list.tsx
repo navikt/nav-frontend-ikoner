@@ -2,7 +2,7 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import * as React from 'react';
 import * as InfiniteScroll  from 'react-infinite-scroller';
 import * as Redux from "react-redux";
-import {config} from '../../appconfig';
+import Config from '../../appconfig';
 import {setFetchingIcons, setFetchingInterval} from "../../redux/actions";
 import {Icon as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
@@ -33,7 +33,7 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     public loadMore() {
         if(!this.props.fetching){
             const fetchFrom = this.props.fetchTo;
-            const fetchTo = this.props.fetchTo + config.NAV_ICONS_FETCH_INTERVAL_SIZE;
+            const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
         }
     }

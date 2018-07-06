@@ -5,6 +5,7 @@ import * as Redux from 'react-redux';
 import {resetIconFetch, setSearchText} from "../../redux/actions";
 import {SearchText, Store} from "../../redux/store-interfaces";
 import './misc.less';
+import Language from "../../language/norwegian";
 
 
 interface PropTypes {searchText: SearchText, setSearchText: typeof setSearchText }
@@ -25,7 +26,7 @@ class SearchBar extends React.Component<PropTypes> {
             <div className="search-bar-row">
                 <div className="icon-search-bar">
                     <label className="search-bar-label"/>
-                    <Input label='Søk' value={this.props.searchText} onChange={
+                    <Input label={Language.SEARCH} value={this.props.searchText} onChange={
                         (event) => this.handleSearchChange(event.target.value)} className="search-bar-input"/>
                     <div aria-live="assertive" role="alert"/>
                 </div>

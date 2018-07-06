@@ -1,5 +1,6 @@
 import * as Redux from "redux";
-import {config} from '../appconfig';
+import Config from '../appconfig';
+import Language from '../language/norwegian';
 import {receiveIcons, ReceiveIconsAction} from "../redux/actions";
 import {IconStyle, SearchText} from "../redux/store-interfaces";
 
@@ -12,10 +13,10 @@ function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, se
         const iSearch = searchText ? `&search=${searchText}` : "";
         const fetchInterval = fetchFrom !== undefined || fetchTo !== undefined ? `&from=${fetchFrom}&to=${fetchTo}` : "";
 
-        return fetch  (`${config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${fetchInterval}`)
+        return fetch  (`${Config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${fetchInterval}`)
             .then(
                 response => response.json(),
-                error => console.log('An error occurred.', error)
+                error => console.log(Language.AN_ERROR_HAS_ACCURED, error)
             )
             .then(json => dispatch(receiveIcons(json.icons, json.numberOfIcons))
             );

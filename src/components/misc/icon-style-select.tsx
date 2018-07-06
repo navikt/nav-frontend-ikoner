@@ -1,10 +1,10 @@
-/* tslint:disable */
 import * as React from 'react';
 import * as Redux from 'react-redux';
+import {ToggleGruppe, ToggleKnapp} from '../../../node_modules/nav-frontend-skjema';
+import Language from '../../language/norwegian';
 import {resetIconFetch, setIconStyle} from "../../redux/actions";
 import {IconStyle, Store} from '../../redux/store-interfaces';
 import './misc.less';
-import {ToggleGruppe, ToggleKnapp} from '../../../node_modules/nav-frontend-skjema';
 
 interface PropTypes {iconStyle : IconStyle, setIconStyle: typeof setIconStyle};
 
@@ -21,13 +21,12 @@ class IconStyleSelect extends React.Component <PropTypes> {
 
     public render() {
         return (
-            <ToggleGruppe onChange={this.onToggle}
-                          name='toggleGruppe'>
-                <ToggleKnapp value='Filled' defaultChecked={true} key='1'>
-                    Filled
+            <ToggleGruppe onChange={this.onToggle} name='toggleGruppe'>
+                <ToggleKnapp key={1} defaultChecked={true} value='Filled'>
+                    {Language.FILLED_ICON}
                 </ToggleKnapp>
-                <ToggleKnapp value='Line' defaultChecked={false} key='2'>
-                    Line
+                <ToggleKnapp  key={2} defaultChecked={false} value='Line' >
+                    {Language.LINE_ICON}
                 </ToggleKnapp>
             </ToggleGruppe>
         );
