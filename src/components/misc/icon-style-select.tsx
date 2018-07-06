@@ -23,10 +23,10 @@ class IconStyleSelect extends React.Component <PropTypes> {
         return (
             <ToggleGruppe onChange={this.onToggle}
                           name='toggleGruppe'>
-                <ToggleKnapp value='knapp1' defaultChecked={true} key='1'>
+                <ToggleKnapp value='Filled' defaultChecked={true} key='1'>
                     Filled
                 </ToggleKnapp>
-                <ToggleKnapp value='knapp2' defaultChecked={false} key='2'>
+                <ToggleKnapp value='Line' defaultChecked={false} key='2'>
                     Line
                 </ToggleKnapp>
             </ToggleGruppe>

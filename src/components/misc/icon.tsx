@@ -22,7 +22,15 @@ class Icon extends React.Component <PropTypes> {
         }
 
         return (
-            <div className={this.getIconClass(iconType)}  onClick={iconClickTrigger} style={style.icon} />
+            <div className={this.getIconClass(iconType)}  onClick={iconClickTrigger} style={style.icon}>
+                {icon.extension == "pdf" &&
+                <div className="pdf-replacement-container">
+                    <div className="pdf-replacement">
+                        PDF
+                    </div>
+                </div>
+                    }
+            </div>
         );
     }
 }
