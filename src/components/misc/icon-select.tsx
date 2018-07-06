@@ -6,7 +6,7 @@ import {Icon as IIcon, IconType, Store} from '../../redux/store-interfaces';
 import './misc.less';
 import Icon from "./icon";
 
-interface PropTypes { icon:IIcon, setSelectedIcon: typeof setSelectedIcon};
+interface PropTypes { icon:IIcon, key: number, setSelectedIcon: typeof setSelectedIcon};
 
 class IconSelect extends React.Component <PropTypes> {
 
@@ -22,7 +22,7 @@ class IconSelect extends React.Component <PropTypes> {
 
     public render() {
         return (
-            <Icon icon={this.props.icon} iconType={IconType.IN_LIST} iconClickTrigger={this.onIconClick} iconColor="black"/>
+            <Icon key={this.props.key} icon={this.props.icon} iconType={IconType.IN_LIST} iconClickTrigger={this.onIconClick} iconColor="black"/>
         );
     }
 }

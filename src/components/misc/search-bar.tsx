@@ -24,7 +24,6 @@ class SearchBar extends React.Component<PropTypes> {
     public render() {
         return (
             <div className="search-bar-row">
-
                 <div className="icon-search-bar">
                     <label className="search-bar-label"/>
                     <Input label='Søk' value={this.props.searchText} onChange={
