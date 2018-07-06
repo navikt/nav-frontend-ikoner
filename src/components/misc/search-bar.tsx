@@ -2,7 +2,7 @@
 import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
 import * as Redux from 'react-redux';
-import {setSearchText} from "../../redux/actions";
+import {resetIconFetch, setSearchText} from "../../redux/actions";
 import {SearchText, Store} from "../../redux/store-interfaces";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import './misc.less';
@@ -45,7 +45,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText))
+    setSearchText : (searchText:string)  => { dispatch(setSearchText(searchText)); dispatch(resetIconFetch() ); }
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -1,7 +1,7 @@
 /* tslint:disable */
 import * as React from 'react';
 import * as Redux from 'react-redux';
-import {setIconStyle} from "../../redux/actions";
+import {resetIconFetch, setIconStyle} from "../../redux/actions";
 import {IconStyle, Store} from '../../redux/store-interfaces';
 import './misc.less';
 import {ToggleGruppe, ToggleKnapp} from '../../../node_modules/nav-frontend-skjema';
@@ -41,7 +41,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    setIconStyle : (iconStyle: IconStyle)  => dispatch(setIconStyle(iconStyle)),
+    setIconStyle : (iconStyle: IconStyle)  => {dispatch(setIconStyle(iconStyle)); dispatch(resetIconFetch()); },
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconStyleSelect);

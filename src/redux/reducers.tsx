@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import {
-    RECEIVE_ICONS,
+    RECEIVE_ICONS, RESET_ICON_FETCH, SET_FETCH_INTERVAL,
     SET_FETCHING_ICONS,
     SET_ICON_COLOR,
     SET_ICON_STYLE,
@@ -10,6 +10,9 @@ import {
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState : IconsStore = {
+    fetchFrom: 0,
+    fetchHasMore: true,
+    fetchTo: 100,
     fetching: false,
     iconColor: 'black',
     iconStyle: IconStyle.FILLED,
@@ -42,12 +45,27 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
             return {...state, ...{
                     searchText: action.searchText,
                 }};
+        case SET_FETCH_INTERVAL:
+            return {...state, ...{
+                    fetchFrom: action.fetchFrom,
+                    fetchTo: action.fetchTo,
+                }};
         case RECEIVE_ICONS:
             return {...state, ...{
+                    fetchHasMore: state.icons.concat(action.icons).length === action.numberOfIcons ? false : true,
                     fetching: false,
-                    icons: action.icons,
+                    icons: state.icons.concat(action.icons),
                     lastUpdated: Date.now(),
                 }};
+        case RESET_ICON_FETCH:
+            return {...state, ...{
+                    fetchFrom: 0,
+                    fetchHasMore: true,
+                    fetchTo: 100,
+                    icons: [],
+                    lastUpdated: Date.now(),
+                }};
+            break;
         default:
             return state
     }

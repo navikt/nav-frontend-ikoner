@@ -6,6 +6,9 @@ export interface IconsStore {
     selectedIcon?: Icon,
     iconColor: string,
     iconStyle: IconStyle,
+    fetchHasMore: boolean
+    fetchFrom: number,
+    fetchTo: number,
 }
 
 export interface Store{
