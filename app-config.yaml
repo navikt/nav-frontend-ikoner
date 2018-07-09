@@ -12,3 +12,7 @@ healthcheck:
   readiness:
     path: isReady
     initialDelay: 10
+fasitResources:
+  used:
+  - alias: loadbalancer:nav-frontend-ikoner
+    resourceType: loadbalancerconfig
