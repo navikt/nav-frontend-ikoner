@@ -1,3 +1,4 @@
-export const config = {
+export default {
     "NAV_ICONS_API_LINK": "/nav-frontend-ikoner-backend/api",
+    "NAV_ICONS_FETCH_INTERVAL_SIZE": 200,
 };

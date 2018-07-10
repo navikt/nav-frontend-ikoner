@@ -1,9 +1,13 @@
-import {Icon, Icons} from "./store-interfaces";
+import {Icon, Icons, IconStyle} from "./store-interfaces";
 
 export const RECEIVE_ICONS = 'RECEIVE_ICONS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
+export const SET_ICON_STYLE = 'SET_ICON_STYLE'
+export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
+export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
+export const RESET_ICON_FETCH = 'RESET_ICON_FETCH'
 
 /*
     Interfaces
@@ -11,6 +15,7 @@ export const SET_ICON_COLOR = 'SET_ICON_COLOR'
 export interface ReceiveIconsAction {
     type: string;
     icons: Icons;
+    numberOfIcons: number;
 }
 
 export interface SearchTextAction {
@@ -28,12 +33,32 @@ export interface IconColorAction {
     iconColor: string;
 }
 
+export interface IconColorStyle{
+    type: string,
+    iconStyle: IconStyle,
+}
+
+export interface FetchingIconsAction {
+    type: string,
+    fetching: boolean,
+}
+
+export interface FetchingInterval {
+    type: string,
+    fetchFrom: number,
+    fetchTo: number,
+}
+
+export interface ResetFetch{
+    type: string,
+}
+
 /*
     Actions
  */
 
-export function receiveIcons(icons: Icons): ReceiveIconsAction {
-    return { type: RECEIVE_ICONS, icons }
+export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsAction {
+    return { type: RECEIVE_ICONS, icons , numberOfIcons}
 }
 
 export function setSelectedIcon(icon: Icon): SelectedIconAction {
@@ -48,3 +73,18 @@ export function setIconColor(iconColor: string): IconColorAction {
     return { type: SET_ICON_COLOR, iconColor }
 }
 
+export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
+    return { type: SET_ICON_STYLE, iconStyle}
+}
+
+export function setFetchingIcons(fetching: boolean): FetchingIconsAction {
+    return { type: SET_FETCHING_ICONS, fetching }
+}
+
+export function setFetchingInterval(fetchFrom: number, fetchTo: number): FetchingInterval {
+    return { type: SET_FETCH_INTERVAL, fetchFrom, fetchTo }
+}
+
+export function resetIconFetch() : ResetFetch {
+    return {type: RESET_ICON_FETCH }
+}
