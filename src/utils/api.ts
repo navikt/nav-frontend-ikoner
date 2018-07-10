@@ -8,11 +8,11 @@ function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, se
 
     return (dispatch: Redux.Dispatch<ReceiveIconsAction>) => {
         // Build URL
-        const iStyle = iconStyle === IconStyle.FILLED ? "Filled" : "Line";
+        const iStyle = iconStyle === IconStyle.FILLED ? "style=Filled" : "style=Line";
         const iSearch = searchText ? `&search=${searchText}` : "";
         const fetchInterval = fetchFrom !== undefined || fetchTo !== undefined ? `&from=${fetchFrom}&to=${fetchTo}` : "";
 
-        return fetch  (`${Config.NAV_ICONS_API_LINK}/icons/${iStyle}?${iSearch}${fetchInterval}`)
+        return fetch  (`${Config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${fetchInterval}`)
             .then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
             .then(json => dispatch(receiveIcons(json.icons, json.numberOfIcons)));
