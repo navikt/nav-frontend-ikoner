@@ -4,7 +4,7 @@ import {
     RECEIVE_ICONS, RESET_ICON_FETCH, SET_FETCH_INTERVAL,
     SET_FETCHING_ICONS,
     SET_ICON_COLOR,
-    SET_ICON_STYLE,
+    SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
     SET_SELECTED_ICON
 } from "./actions";
@@ -67,6 +67,11 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     lastUpdated: Date.now(),
                 }};
             break;
+        case SET_ICON_TITLE_DESCRIPTION:
+            return {...state, ...{
+                    description: action.description,
+                    title: action.title,
+                }};
         default:
             return state
     }

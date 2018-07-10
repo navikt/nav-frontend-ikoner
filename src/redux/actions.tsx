@@ -8,6 +8,7 @@ export const SET_ICON_STYLE = 'SET_ICON_STYLE'
 export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
 export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
 export const RESET_ICON_FETCH = 'RESET_ICON_FETCH'
+export const SET_ICON_TITLE_DESCRIPTION = 'SET_ICON_TITLE_DESCRIPTION'
 
 /*
     Interfaces
@@ -53,6 +54,12 @@ export interface ResetFetch{
     type: string,
 }
 
+export interface IconTitleDescription {
+    type: string,
+    title: string,
+    description: string,
+}
+
 /*
     Actions
  */
@@ -87,4 +94,8 @@ export function setFetchingInterval(fetchFrom: number, fetchTo: number): Fetchin
 
 export function resetIconFetch() : ResetFetch {
     return {type: RESET_ICON_FETCH }
+}
+
+export function setIconTitleDescripion(title: string, description: string): IconTitleDescription {
+    return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
 }
