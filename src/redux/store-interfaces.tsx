@@ -3,7 +3,7 @@ export interface IconsStore {
     icons: Icons,
     lastUpdated?: Date,
     searchText: string,
-    selectedIcon?: Icon,
+    selectedIcon?: IconBasic,
     iconColor: string,
     iconStyle: IconStyle,
     fetchHasMore: boolean
@@ -15,14 +15,36 @@ export interface Store{
     iconsStore: IconsStore
 }
 
-export interface Icon{
+export interface Location{
+    filename:string,
+    extension: string,
+    path: string,
+    size: string,
+    url: string,
+}
+
+export interface Tag{
+    id: string,
+    text: string,
+}
+
+export interface IconExpanded{
+    title: string,
+    description: string,
+    bestLocation: Location,
+    locations: Location[],
+    tags: Tag[],
+    tagsSuggestions: Tag[],
+}
+
+export interface IconBasic{
     title: string,
     filename: string,
     extension:string,
     link: string,
 }
 
-export type Icons = Icon[];
+export type Icons = IconBasic[];
 export type SearchText = string;
 export enum IconType {
     IN_LIST,
