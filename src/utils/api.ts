@@ -24,8 +24,27 @@ function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, se
 
 }
 
+function fetchIcon(filename: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<ReceiveIconsAction>) => Promise<ReceiveIconsAction> {
+
+    return (dispatch: Redux.Dispatch<ReceiveIconsAction>) => {
+
+        // Build URL
+        const iFilename = `%filename=${filename}`;
+        const iStyle = iconStyle === IconStyle.FILLED ? "style=Filled" : "style=Line";
+        return fetch  (`${Config.NAV_ICONS_API_LINK}/icon?${iFilename}${iStyle}`)
+            .then(
+                response => response.json(),
+                error => console.log(Language.AN_ERROR_HAS_ACCURED, error)
+            )
+            .then(json => dispatch(receiveIcon(json))
+            );
+    }
+
+}
+
 const api = {
     fetchIcons,
+    fetchIcon,
 };
 
 export default api;
