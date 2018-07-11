@@ -1,17 +1,16 @@
 /* tslint:disable */
 import * as Redux from "react-redux";
 import TagsHandler from './tags-handler';
-import {IconType, Store} from "../../redux/store-interfaces";
+import {IconStyle, IconType, Store} from "../../redux/store-interfaces";
 import DownloadButton from "../buttons/download-button";
 import Icon from './icon';
 import './misc.less';
 import './tags.less';
 import Seperator from "./seperator";
 import api from "../../utils/api";
-import {setIconTitleDescription} from 'src/redux/actions';
 import * as React from "react";
 
-interface PropTypes { selectedIcon: any, setIconTitleDescription: typeof setIconTitleDescription, editIcon: typeof api.editIcon};
+interface PropTypes { selectedIcon: any, editIcon: any, iconStyle: IconStyle};
 interface StateTypes { tags: any; suggestions:any };
 
 class InformationPanel extends React.Component<PropTypes, StateTypes>{
@@ -23,17 +22,11 @@ class InformationPanel extends React.Component<PropTypes, StateTypes>{
     }
 
     public handleTitleChange(title: string) {
-        this.props.setIconTitleDescription(title, this.props.selectedIcon.description);
-        console.log(this.props.selectedIcon.filename + " got new title: " + this.props.selectedIcon.title + "(=" + title + ")");
+        this.props.editIcon(this.props.selectedIcon.id, title, this.props.selectedIcon.description, this.props.iconStyle);
     }
 
     public handleDescriptionChange(description: string) {
-        this.props.setIconTitleDescription(this.props.selectedIcon.title, description);
-        console.log(this.props.selectedIcon.filename + " got new description: " + this.props.selectedIcon.description + "(=" + description + ")");
-    }
-
-    componentDidUpdate() {
-        api.editIcon(this.props.selectedIcon.filename, this.props.selectedIcon.title, this.props.selectedIcon.description)
+        this.props.editIcon(this.props.selectedIcon.id, this.props.selectedIcon.title, description, this.props.iconStyle);
     }
 
     public render() {
@@ -45,15 +38,11 @@ class InformationPanel extends React.Component<PropTypes, StateTypes>{
             );
         }
 
-
-        console.log(selectedIcon.filename + " " + selectedIcon.title);
-
         return (
             <div className="icon-side-panel">
                 <div className="icon-side-panel-content">
                     <div className="icon-side-panel-heading">
-                        <h2>{selectedIcon.title}</h2>
-                        <input className="icon-title" value={selectedIcon.title} onChange={
+                        <input className="icon-title" value={selectedIcon.title}  onChange={
                             (event) => this.handleTitleChange(event.target.value)}/>
                     </div>
                     <input className="icon-description" value={selectedIcon.description} onChange={
@@ -71,13 +60,13 @@ class InformationPanel extends React.Component<PropTypes, StateTypes>{
 
 const mapStateToProps = (state: Store) => {
     return {
+        iconStyle: state.iconsStore.iconStyle,
         selectedIcon: state.iconsStore.selectedIcon,
     };
 };
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    editIcon : ( filename: string, title: string, description: string)  => { api.editIcon(filename, title, description)(dispatch); },
-    setIconTitleDescription : (title:string, description:string)  => { dispatch(setIconTitleDescription(title, description)); }
+    editIcon : ( id: string, title: string, description: string, style: IconStyle)  => api.editIcon(id, title, description, style)(dispatch)
 });
 
 

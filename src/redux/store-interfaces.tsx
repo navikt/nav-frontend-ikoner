@@ -38,6 +38,7 @@ export interface IconExpanded{
 }
 
 export interface IconBasic{
+    id: string,
     title: string,
     filename: string,
     description: string,

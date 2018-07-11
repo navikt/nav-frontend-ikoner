@@ -1,8 +1,8 @@
 import * as React from 'react';
 import './app.less';
 import IconList from './components/lists/icon-list';
+import IconListHeader from "./components/misc/icon-list-header";
 import InformationPanel from "./components/misc/information-panel";
-import SearchBar from "./components/misc/search-bar";
 
 
 class App extends React.Component {
@@ -15,7 +15,7 @@ class App extends React.Component {
                 </header>
                 <div className="app-content">
                     <div className="column-icon-list">
-                        <SearchBar/>
+                        <IconListHeader/>
                         <IconList/>
                     </div>
                     <InformationPanel/>

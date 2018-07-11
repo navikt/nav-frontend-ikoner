@@ -4,9 +4,10 @@ import {ToggleGruppe, ToggleKnapp} from '../../../node_modules/nav-frontend-skje
 import Language from '../../language/norwegian';
 import {resetIconFetch, setIconStyle} from "../../redux/actions";
 import {IconStyle, Store} from '../../redux/store-interfaces';
+import api from "../../utils/api";
 import './misc.less';
 
-interface PropTypes {iconStyle : IconStyle, setIconStyle: typeof setIconStyle};
+interface PropTypes {iconStyle : IconStyle, selectedIcon: any, setIconStyle: typeof setIconStyle, fetchIcon: any};
 
 class IconStyleSelect extends React.Component <PropTypes> {
 
@@ -16,7 +17,11 @@ class IconStyleSelect extends React.Component <PropTypes> {
     }
 
     public onToggle(){
-        this.props.setIconStyle(this.props.iconStyle === IconStyle.FILLED ? IconStyle.LINE : IconStyle.FILLED);
+        const newStyle = this.props.iconStyle === IconStyle.FILLED ? IconStyle.LINE : IconStyle.FILLED;
+        this.props.setIconStyle(newStyle);
+        if(this.props.selectedIcon){
+            this.props.fetchIcon(this.props.selectedIcon.id, newStyle);
+        }
     }
 
     public render() {
@@ -36,10 +41,12 @@ class IconStyleSelect extends React.Component <PropTypes> {
 const mapStateToProps = (state: Store) => {
     return {
         iconStyle: state.iconsStore.iconStyle,
+        selectedIcon: state.iconsStore.selectedIcon,
     };
 };
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
+    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
     setIconStyle : (iconStyle: IconStyle)  => {dispatch(setIconStyle(iconStyle)); dispatch(resetIconFetch()); },
 });
 

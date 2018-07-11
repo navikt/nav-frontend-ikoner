@@ -6,7 +6,7 @@ import './misc.less';
 import Icon from "./icon";
 import api from "../../utils/api";
 
-interface PropTypes { title: string,imageLink: string, extension: string, iconStyle: IconStyle, key: number, fetchIcon: any};
+interface PropTypes { id: string, title: string,imageLink: string, extension: string, iconStyle: IconStyle, key: number, fetchIcon: any};
 interface StateTypes {iconStyle: IconStyle, iconColor: string}
 
 class IconSelect extends React.Component <PropTypes,StateTypes> {
@@ -18,7 +18,7 @@ class IconSelect extends React.Component <PropTypes,StateTypes> {
 
     public onIconClick(){
         console.log("Clicked on " + this.props.title);
-        this.props.fetchIcon(this.props.title, this.props.iconStyle);
+        this.props.fetchIcon(this.props.id, this.props.iconStyle);
     }
 
     public render() {
