@@ -4,7 +4,7 @@ import * as Redux from "react-redux";
 import { WithContext as ReactTags } from 'react-tag-input';
 import {IconStyle, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
-import './misc.less';
+import '../misc/misc.less';
 import './tags.less';
 import {resetIconFetch, setSearchText} from "../../redux/actions";
 

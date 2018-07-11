@@ -2,7 +2,7 @@ import * as React from 'react';
 import './app.less';
 import IconList from './components/lists/icon-list';
 import IconListHeader from "./components/misc/icon-list-header";
-import InformationPanel from "./components/misc/information-panel";
+import Sidebar from "./components/sidebar";
 
 
 class App extends React.Component {
@@ -18,7 +18,7 @@ class App extends React.Component {
                         <IconListHeader/>
                         <IconList/>
                     </div>
-                    <InformationPanel/>
+                    <Sidebar/>
                 </div>
             </div>
         );

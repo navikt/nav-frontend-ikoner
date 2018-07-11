@@ -73,7 +73,6 @@ function deleteTag(id: string, icon: string, style: IconStyle): (dispatch: Redux
 function editIcon(id: string, title: string, description: string, style: IconStyle): (dispatch: Redux.Dispatch<any>) => Promise<any> {
 
     return (dispatch: Redux.Dispatch<any>) => {
-
         console.log(`${id} got new title ${title} or description ${description} `);
         const data = JSON.stringify({id, title, description });
         return fetch  (`${Config.NAV_ICONS_API_LINK}/icon`, {
