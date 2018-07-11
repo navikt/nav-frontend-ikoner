@@ -22,7 +22,6 @@ function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, se
 function fetchIcon(filename: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
 
     return (dispatch: Redux.Dispatch<SelectedIconAction>) => {
-
         // Build URL
         const iStyle = iconStyle === IconStyle.FILLED ? "Filled" : "Line";
 
@@ -33,24 +32,42 @@ function fetchIcon(filename: string, iconStyle: IconStyle): (dispatch: Redux.Dis
     }
 }
 
-/*
-function insertTag(filename: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
+function insertTag(text: string, icon: string, style: IconStyle): (dispatch: Redux.Dispatch<any>) => Promise<any> {
 
-    return (dispatch: Redux.Dispatch<SelectedIconAction>) => {
-        // Build URL
-        const iStyle = iconStyle === IconStyle.FILLED ? "style=Filled" : "style=Line";
-        const iFilename = `&filename=${filename}`;
+    return (dispatch: Redux.Dispatch<any>) => {
+        // Build request.body
+        const data = JSON.stringify({icon, text});
 
-        return fetch  (`${Config.NAV_ICONS_API_LINK}/icon?${iStyle}${iFilename}`)
+        return fetch  (`${Config.NAV_ICONS_API_LINK}/tag`, {
+                body: data,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST'}
+            )
             .then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-            .then(json => dispatch(setSelectedIcon(json)));
+            .then(json => {console.log(json); return dispatch(fetchIcon(icon, style));});
     }
 }
-*/
+
+function deleteTag(id: string, icon: string, style: IconStyle): (dispatch: Redux.Dispatch<any>) => Promise<any> {
+
+    return (dispatch: Redux.Dispatch<any>) => {
+        return fetch  (`${Config.NAV_ICONS_API_LINK}/tag/${id}`, {method: 'DELETE'} )
+            .then(response => response.json())
+            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then(json => {console.log(json); return dispatch(fetchIcon(icon, style));});
+    }
+}
+
+
 const api = {
+    deleteTag,
     fetchIcon,
     fetchIcons,
+    insertTag,
 };
 
 export default api;

@@ -1,7 +1,7 @@
 /* tslint:disable */
 import * as React from 'react';
 import * as Redux from "react-redux";
-import { WithContext as ReactTags } from 'react-tag-input';
+import TagsHandler from './tags-handler';
 import {IconType, Store} from "../../redux/store-interfaces";
 import DownloadButton from "../buttons/download-button";
 import Icon from './icon';
@@ -16,21 +16,6 @@ class InformationPanel extends React.Component<PropTypes, StateTypes>{
 
     constructor(props: PropTypes){
         super(props);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleAddition = this.handleAddition.bind(this);
-    }
-
-    handleDelete(id : any) {
-        console.log("Deleted " + id);
-    }
-
-    handleAddition(tag : any) {
-        console.log("Added" + tag);
-    }
-
-
-    componentWillReceiveProps(props: any){
-        console.log(props.selectedIcon);
     }
 
     public render() {
@@ -49,14 +34,7 @@ class InformationPanel extends React.Component<PropTypes, StateTypes>{
                     <h2>{selectedIcon.title}</h2>
                     </div>
                     <Icon imageLink={selectedIcon.bestLocation.url} extension={selectedIcon.bestLocation.extension} iconType={IconType.IN_PANEL} iconColor="black"/>
-                    <div className="tags-container">
-                        <ReactTags tags={selectedIcon.tags}
-                                   suggestions={selectedIcon.tagsSuggestions}
-                                   placeholder={'Legg til tagger'}
-                                   handleDelete={(tag) => this.handleDelete(tag)}
-                                   handleAddition={(tag) => this.handleDelete(tag)}
-                        />
-                    </div>
+                    <TagsHandler />
                     <Seperator/>
                     <DownloadButton icon={selectedIcon}/>
                 </div>
