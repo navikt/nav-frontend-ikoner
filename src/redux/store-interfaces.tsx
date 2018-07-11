@@ -18,6 +18,7 @@ export interface Store{
 export interface Icon{
     title: string,
     filename: string,
+    description: string,
     extension:string,
     link: string,
 }

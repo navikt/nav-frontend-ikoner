@@ -96,6 +96,6 @@ export function resetIconFetch() : ResetFetch {
     return {type: RESET_ICON_FETCH }
 }
 
-export function setIconTitleDescripion(title: string, description: string): IconTitleDescription {
+export function setIconTitleDescription(title: string, description: string): IconTitleDescription {
     return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
 }
