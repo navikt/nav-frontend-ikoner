@@ -4,7 +4,7 @@ import * as InfiniteScroll  from 'react-infinite-scroller';
 import * as Redux from "react-redux";
 import Config from '../../appconfig';
 import {setFetchingIcons, setFetchingInterval} from "../../redux/actions";
-import {Icon as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
+import {IconBasic as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
@@ -47,7 +47,7 @@ class IconList extends React.Component <PropTypes,StateTypes>{
                 hasMore={this.props.fetchHasMore}
                 loader={<div key={0} className="icon-list-spinner"><NavFrontendSpinner className="spinner"/></div>} >
                 {this.props.icons.map((icon:IIcon, index: number) =>
-                    <IconSelect key={index} icon={icon} />)}
+                    <IconSelect key={index} title={icon.title} imageLink={icon.link} extension={icon.extension} />)}
             </InfiniteScroll>
         );
     }

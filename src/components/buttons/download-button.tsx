@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Config from "../../appconfig";
 import Language from '../../language/norwegian';
-import {Icon as IIcon} from "../../redux/store-interfaces";
+import {IconExpanded} from "../../redux/store-interfaces";
 import './buttons.less';
 
-interface PropTypes { icon:IIcon};
+interface PropTypes { icon:IconExpanded};
 class DownloadButton extends React.Component <PropTypes> {
 
     public render() {

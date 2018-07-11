@@ -1,17 +1,20 @@
 /* tslint:disable */
-import * as React from 'react';
-import * as Redux from 'react-redux';
-import { setIconTitleDescription} from "../../redux/actions";
-import {Icon as IIcon, IconType, Store} from "../../redux/store-interfaces";
+import * as Redux from "react-redux";
+import TagsHandler from './tags-handler';
+import {IconType, Store} from "../../redux/store-interfaces";
 import DownloadButton from "../buttons/download-button";
 import Icon from './icon';
 import './misc.less';
+import './tags.less';
+import Seperator from "./seperator";
 import api from "../../utils/api";
+import {setIconTitleDescription} from 'src/redux/actions';
+import * as React from "react";
 
+interface PropTypes { selectedIcon: any, setIconTitleDescription: typeof setIconTitleDescription, editIcon: typeof api.editIcon};
+interface StateTypes { tags: any; suggestions:any };
 
-interface PropTypes { selectedIcon: IIcon, setIconTitleDescription: typeof setIconTitleDescription, editIcon: typeof api.editIcon};
-
-class InformationPanel extends React.Component<PropTypes>{
+class InformationPanel extends React.Component<PropTypes, StateTypes>{
 
     constructor(props: PropTypes) {
         super(props);
@@ -42,7 +45,9 @@ class InformationPanel extends React.Component<PropTypes>{
             );
         }
 
+
         console.log(selectedIcon.filename + " " + selectedIcon.title);
+
         return (
             <div className="icon-side-panel">
                 <div className="icon-side-panel-content">
@@ -51,9 +56,11 @@ class InformationPanel extends React.Component<PropTypes>{
                         <input className="icon-title" value={selectedIcon.title} onChange={
                             (event) => this.handleTitleChange(event.target.value)}/>
                     </div>
-                    <Icon icon={selectedIcon} iconType={IconType.IN_PANEL} iconColor="black"/>
                     <input className="icon-description" value={selectedIcon.description} onChange={
                         (event) => this.handleDescriptionChange(event.target.value)}/>
+                    <Icon imageLink={selectedIcon.bestLocation.url} extension={selectedIcon.bestLocation.extension} iconType={IconType.IN_PANEL} iconColor="black"/>
+                    <TagsHandler />
+                    <Seperator/>
                     <DownloadButton icon={selectedIcon}/>
                 </div>
             </div>
