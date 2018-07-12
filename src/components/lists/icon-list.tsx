@@ -40,9 +40,7 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     }
 
     public render() {
-        if (this.props.icons.length === 0 && !this.props.fetching) {
-            return(<div className="no-results">{Language.NO_RESULTS}</div>);
-        }
+
         return (
             <InfiniteScroll
                 className="icon-list"
@@ -51,6 +49,9 @@ class IconList extends React.Component <PropTypes,StateTypes>{
                 loadMore={this.loadMore}
                 hasMore={this.props.fetchHasMore}
                 loader={<div key={0} className="icon-list-spinner"><NavFrontendSpinner className="spinner"/></div>} >
+                {this.props.icons.length === 0 && !this.props.fetching &&
+                    <div className="no-results">{Language.NO_RESULTS}</div>
+                }
                 {this.props.icons.map((icon:IIcon, index: number) =>
                     <IconSelect id={icon.id} key={index} title={icon.title} imageLink={icon.link} extension={icon.extension} />)}
             </InfiniteScroll>
