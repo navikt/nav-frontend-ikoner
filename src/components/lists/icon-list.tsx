@@ -43,6 +43,7 @@ class IconList extends React.Component <PropTypes,StateTypes>{
             <InfiniteScroll
                 className="icon-list"
                 pageStart={0}
+                initialLoad={false}
                 loadMore={this.loadMore}
                 hasMore={this.props.fetchHasMore}
                 loader={<div key={0} className="icon-list-spinner"><NavFrontendSpinner className="spinner"/></div>} >
