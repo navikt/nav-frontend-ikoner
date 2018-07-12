@@ -31,7 +31,7 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     }
 
     public loadMore() {
-        if(!this.props.fetching){
+        if(!this.props.fetching && this.props.icons.length > 0){
             const fetchFrom = this.props.fetchTo;
             const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
