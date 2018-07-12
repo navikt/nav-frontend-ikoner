@@ -5,7 +5,7 @@ function iconStyle(iStyle : IconStyle) : string{
 }
 
 function searchText(search :string) : string {
-    return searchText ? `&search=${searchText}` : "";
+    return search ? `&search=${search}` : "";
 }
 
 function fetchInterval(fetchFrom: number, fetchTo:number) : string{
