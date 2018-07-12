@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as InfiniteScroll  from 'react-infinite-scroller';
 import * as Redux from "react-redux";
 import Config from '../../appconfig';
+import Language from '../../language/norwegian';
 import {setFetchingIcons, setFetchingInterval} from "../../redux/actions";
 import {IconBasic as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
@@ -39,6 +40,9 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     }
 
     public render() {
+        if (this.props.icons.length === 0 && !this.props.fetching) {
+            return(<div className="no-results">{Language.NO_RESULTS}</div>);
+        }
         return (
             <InfiniteScroll
                 className="icon-list"
@@ -63,7 +67,6 @@ const mapStateToProps = (state: Store) => {
         iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
-
     };
 };
 
