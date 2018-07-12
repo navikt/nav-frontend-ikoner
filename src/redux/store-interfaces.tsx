@@ -1,14 +1,15 @@
 export interface IconsStore {
     fetching: boolean,
-    icons: Icons,
-    lastUpdated?: Date,
-    searchText: string,
-    selectedIcon?: IconBasic,
-    iconColor: string,
-    iconStyle: IconStyle,
     fetchHasMore: boolean
     fetchFrom: number,
     fetchTo: number,
+    icons: Icons,
+    iconColor: string,
+    iconStyle: IconStyle,
+    lastUpdated?: Date,
+    searchText: string,
+    selectedIcon?: IconBasic,
+    tags: Tags,
 }
 
 export interface Store{
@@ -46,6 +47,7 @@ export interface IconBasic{
     link: string,
 }
 
+export type Tags = Tag[];
 export type Icons = IconBasic[];
 export type SearchText = string;
 export enum IconType {

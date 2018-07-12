@@ -4,13 +4,14 @@ import Language from '../language/norwegian';
 import {
     receiveIcons,
     ReceiveIconsAction,
+    receiveTags,
+    ReceiveTagsAction,
     SelectedIconAction,
     setSelectedIcon
 } from "../redux/actions";
 import {IconStyle, SearchText} from "../redux/store-interfaces";
 
 function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText: SearchText): (dispatch: Redux.Dispatch<ReceiveIconsAction>) => Promise<ReceiveIconsAction> {
-
     return (dispatch: Redux.Dispatch<ReceiveIconsAction>) => {
         // Build URL
         const iStyle = iconStyle === IconStyle.FILLED ? "style=Filled" : "style=Line";
@@ -25,11 +26,9 @@ function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, se
 }
 
 function fetchIcon(id: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
-
     return (dispatch: Redux.Dispatch<SelectedIconAction>) => {
         // Build URL
         const iStyle = iconStyle === IconStyle.FILLED ? "Filled" : "Line";
-        console.log(`${id} ${iStyle} `);
 
         return fetch  (`${Config.NAV_ICONS_API_LINK}/icon/${iStyle}/${id}`)
             .then(response => response.json())
@@ -38,8 +37,16 @@ function fetchIcon(id: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<
     }
 }
 
-function insertTag(text: string, icon: string, style: IconStyle): (dispatch: Redux.Dispatch<any>) => Promise<any> {
+function fetchTags() : (dispatch: Redux.Dispatch<ReceiveTagsAction>) => Promise<ReceiveTagsAction> {
+    return (dispatch: Redux.Dispatch<ReceiveTagsAction>) => {
+        return fetch  (`${Config.NAV_ICONS_API_LINK}/tags`)
+            .then(response => response.json())
+            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then(json => dispatch(receiveTags(json)));
+    }
+}
 
+function insertTag(text: string, icon: string, style: IconStyle): (dispatch: Redux.Dispatch<any>) => Promise<any> {
     return (dispatch: Redux.Dispatch<any>) => {
         // Build request.body
         const data = JSON.stringify({icon, text});
@@ -53,7 +60,8 @@ function insertTag(text: string, icon: string, style: IconStyle): (dispatch: Red
                 method: 'POST'})
             .then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-            .then(json => {console.log(json); return dispatch(fetchIcon(icon, style));});
+            .then(() => dispatch(fetchIcon(icon, style)))
+            .then(() => dispatch(fetchTags()));
     }
 }
 
@@ -63,7 +71,8 @@ function deleteTag(id: string, icon: string, style: IconStyle): (dispatch: Redux
         return fetch  (`${Config.NAV_ICONS_API_LINK}/tag/${id}`, {method: 'DELETE'} )
             .then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-            .then(json => {console.log(json); return dispatch(fetchIcon(icon, style));});
+            .then(json => dispatch(fetchIcon(icon, style)))
+            .then(() => dispatch(fetchTags()));
     }
 }
 
@@ -94,6 +103,7 @@ const api = {
     editIcon,
     fetchIcon,
     fetchIcons,
+    fetchTags,
     insertTag,
 };
 

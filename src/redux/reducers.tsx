@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import Config from '../appconfig';
 import {
-    RECEIVE_ICONS, RESET_ICON_FETCH, SET_FETCH_INTERVAL,
+    RECEIVE_ICONS, RECEIVE_TAGS, RESET_ICON_FETCH, SET_FETCH_INTERVAL,
     SET_FETCHING_ICONS,
     SET_ICON_COLOR,
     SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
@@ -21,6 +21,7 @@ const initialState : IconsStore = {
     lastUpdated: undefined,
     searchText: '',
     selectedIcon: undefined,
+    tags: [],
 }
 
 export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
@@ -57,6 +58,10 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     fetching: false,
                     icons: state.icons.concat(action.icons),
                     lastUpdated: Date.now(),
+                }};
+        case RECEIVE_TAGS:
+            return {...state, ...{
+                    tags: action.tags,
                 }};
         case RESET_ICON_FETCH:
             return {...state, ...{

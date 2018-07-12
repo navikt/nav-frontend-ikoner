@@ -17,7 +17,6 @@ class IconSelect extends React.Component <PropTypes,StateTypes> {
     }
 
     public onIconClick(){
-        console.log("Clicked on " + this.props.title);
         this.props.fetchIcon(this.props.id, this.props.iconStyle);
     }
 

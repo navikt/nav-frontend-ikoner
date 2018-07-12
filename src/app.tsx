@@ -1,11 +1,19 @@
 import * as React from 'react';
+import * as Redux from "react-redux";
 import './app.less';
 import IconList from './components/lists/icon-list';
 import IconListHeader from "./components/misc/icon-list-header";
 import Sidebar from "./components/sidebar";
+import {Store} from "./redux/store-interfaces";
+import api from "./utils/api";
 
+interface PropTypes {fetchTags: any};
 
-class App extends React.Component {
+class App extends React.Component <PropTypes>  {
+
+    public componentDidMount(){
+        this.props.fetchTags();
+    }
 
     public render() {
         return (
@@ -25,4 +33,12 @@ class App extends React.Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state: Store) => {
+    return {};
+};
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    fetchTags : ()  => api.fetchTags()(dispatch)
+});
+
+
+export default Redux.connect(mapStateToProps, mapDispatchToProps)(App);

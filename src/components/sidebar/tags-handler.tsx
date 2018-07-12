@@ -2,13 +2,13 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
 import { WithContext as ReactTags } from 'react-tag-input';
-import {IconStyle, Store} from "../../redux/store-interfaces";
+import {IconStyle, Store, Tag, Tags} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import '../misc/misc.less';
 import './tags.less';
 import {resetIconFetch, setSearchText} from "../../redux/actions";
 
-interface PropTypes { selectedIcon: any, insertTag: any, deleteTag: any, iconStyle: IconStyle};
+interface PropTypes { tags: Tags, selectedIcon: any, insertTag: any, deleteTag: any, iconStyle: IconStyle};
 
 class TagsHandler extends React.Component<PropTypes>{
 
@@ -16,6 +16,7 @@ class TagsHandler extends React.Component<PropTypes>{
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
+        this.isTagUsed = this.isTagUsed.bind(this);
     }
 
     handleAddition(tag : any) {
@@ -23,20 +24,25 @@ class TagsHandler extends React.Component<PropTypes>{
     }
 
     handleDelete(position : any) {
-        this.props.deleteTag(this.props.selectedIcon.tags[position].id, this.props.selectedIcon.title, this.props.iconStyle)
+        const {selectedIcon, deleteTag, iconStyle} = this.props;
+        if(selectedIcon.tags[position]) deleteTag(selectedIcon.tags[position].id, selectedIcon.title, iconStyle)
     }
 
-    public render() {
+    public isTagUsed(text:string){
+        return this.props.selectedIcon.tags.filter((tag: Tag) => tag.text === text).length == 0;
+    }
 
-        const {selectedIcon} = this.props;
+
+    public render() {
+        const {selectedIcon,tags} = this.props;
         return (
            <div className="tags-container">
-                        <ReactTags tags={selectedIcon.tags}
-                                   suggestions={selectedIcon.tagsSuggestions}
-                                   placeholder={'Legg til tagger'}
-                                   handleAddition={(tag) => this.handleAddition(tag)}
-                                   handleDelete={(position) => this.handleDelete(position)}
-                        />
+                <ReactTags tags={selectedIcon.tags}
+                           suggestions={tags.filter((tag: Tag) => this.isTagUsed(tag.text))}
+                           placeholder={'Legg til tagger'}
+                           handleAddition={(tag) => this.handleAddition(tag)}
+                           handleDelete={(position) => this.handleDelete(position)}
+                />
            </div>
         );
     }
@@ -44,6 +50,7 @@ class TagsHandler extends React.Component<PropTypes>{
 
 const mapStateToProps = (state: Store) => {
     return {
+        tags: state.iconsStore.tags,
         selectedIcon: state.iconsStore.selectedIcon,
         iconStyle: state.iconsStore.iconStyle,
     };

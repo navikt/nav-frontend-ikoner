@@ -1,6 +1,7 @@
-import {IconExpanded, Icons, IconStyle} from "./store-interfaces";
+import {IconExpanded, Icons, IconStyle, Tags} from "./store-interfaces";
 
 export const RECEIVE_ICONS = 'RECEIVE_ICONS'
+export const RECEIVE_TAGS = 'RECEIVE_TAGS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
@@ -17,6 +18,11 @@ export interface ReceiveIconsAction {
     type: string;
     icons: Icons;
     numberOfIcons: number;
+}
+
+export interface ReceiveTagsAction {
+    type: string;
+    tags: Tags;
 }
 
 export interface SearchTextAction {
@@ -66,6 +72,10 @@ export interface IconTitleDescription {
 
 export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsAction {
     return { type: RECEIVE_ICONS, icons , numberOfIcons}
+}
+
+export function receiveTags(tags: Tags): ReceiveTagsAction {
+    return { type: RECEIVE_TAGS, tags }
 }
 
 export function setSelectedIcon(icon: IconExpanded): SelectedIconAction {
