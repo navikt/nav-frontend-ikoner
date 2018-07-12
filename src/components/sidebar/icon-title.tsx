@@ -5,6 +5,7 @@ import '../misc/misc.less';
 import './tags.less';
 import api from "../../utils/api";
 import * as React from "react";
+import {Input} from "../../../node_modules/nav-frontend-skjema";
 
 interface PropTypes { selectedIcon: any, editIcon: any, iconStyle: IconStyle};
 interface StateTypes { tags: any; suggestions:any };
@@ -16,7 +17,7 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
         this.handleTitleChange = this.handleTitleChange.bind(this);
     }
 
-    public handleTitleChange(title: string) {
+    public handleTitleChange(title: any) {
         this.props.editIcon(this.props.selectedIcon.id, title, this.props.selectedIcon.description, this.props.iconStyle);
     }
 
@@ -31,7 +32,7 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
 
         return (
             <div className="icon-title-container">
-                <input className="icon-title" value={selectedIcon.title} onChange={
+                <Input inputClassName="icon-title" label="" value={selectedIcon.title} onChange={
                 (event) => this.handleTitleChange(event.target.value)}/>
             </div>
         );
