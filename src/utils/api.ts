@@ -41,7 +41,7 @@ function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number,
 function fetchIcon(id: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
     return (dispatch: Redux.Dispatch<SelectedIconAction>) => {
         // Build URL
-        const iStyle = LinkCreator.iconStyle(iconStyle);
+        const iStyle = LinkCreator.iconStyleToString(iconStyle);
         return fetch  (`${Config.NAV_ICONS_API_LINK}/icon/${iStyle}/${id}`)
             .then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
