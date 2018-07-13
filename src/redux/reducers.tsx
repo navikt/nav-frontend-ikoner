@@ -67,7 +67,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
             return {...state, ...{
                     fetchFrom: 0,
                     fetchHasMore: true,
-                    fetchTo: 100,
+                    fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
                     icons: [],
                     lastUpdated: Date.now(),
                 }};
