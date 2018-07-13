@@ -52,9 +52,11 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     fetchTo: action.fetchTo,
                 }};
         case RECEIVE_ICONS:
-            const icons = action.numberOfIcons ? state.icons.concat(action.icons) : [];
+            const icons = action.icons.length > 0 ? state.icons.concat(action.icons) : state.icons;
+            // const icons = action.numberOfIcons ? state.icons.concat(action.icons) : [];
             return {...state, ...{
-                    fetchHasMore: icons.length === action.numberOfIcons ? false : true,
+                    // fetchHasMore: icons.length !== action.numberOfIcons, // causes never-stops-fetching-bug
+                    fetchHasMore: icons.length < action.numberOfIcons, // fixes never-stops-fetching-bug
                     fetching: false,
                     icons,
                     lastUpdated: Date.now(),

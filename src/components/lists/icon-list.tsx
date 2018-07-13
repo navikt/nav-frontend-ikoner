@@ -27,12 +27,18 @@ class IconList extends React.Component <PropTypes,StateTypes>{
             this.props.fetchFrom !== props.fetchFrom ||
             this.props.fetchTo !== props.fetchTo
         )) {
+
+
+            console.log("FetchHasMore " + this.props.fetchHasMore);
             props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         }
     }
 
     public loadMore() {
         if(!this.props.fetching && this.props.icons.length > 0){
+
+            console.log("Fetching " + this.props.fetching + ", icons " + this.props.icons.length);
+
             const fetchFrom = this.props.fetchTo;
             const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
