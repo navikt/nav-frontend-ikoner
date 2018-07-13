@@ -55,7 +55,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
             return {...state, ...{
                     fetchHasMore: state.icons.concat(action.icons).length === action.numberOfIcons ? false : true,
                     fetching: false,
-                    icons: state.icons.concat(action.icons),
+                    icons: action.numberOfIcons ? state.icons.concat(action.icons) : [],
                     lastUpdated: Date.now(),
                 }};
         case RESET_ICON_FETCH:
