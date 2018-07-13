@@ -53,10 +53,11 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     fetchTo: action.fetchTo,
                 }};
         case RECEIVE_ICONS:
+            const icons = action.numberOfIcons ? state.icons.concat(action.icons) : [];
             return {...state, ...{
-                    fetchHasMore: state.icons.concat(action.icons).length === action.numberOfIcons ? false : true,
+                    fetchHasMore: icons.length === action.numberOfIcons ? false : true,
                     fetching: false,
-                    icons: state.icons.concat(action.icons),
+                    icons,
                     lastUpdated: Date.now(),
                 }};
         case RECEIVE_TAGS:
