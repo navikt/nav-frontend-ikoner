@@ -1,11 +1,7 @@
 import {IconStyle} from "../redux/store-interfaces";
 
-function iconStyleToString(iStyle : IconStyle) : string{
-    return iStyle === IconStyle.FILLED ? "Filled" : "Line";
-}
-
-function iconStyle(style : IconStyle) : string{
-    return style === IconStyle.FILLED ? `style=${iconStyleToString(style)}` : `style=${iconStyleToString(style)}`
+function iconStyle(iStyle : IconStyle) : string{
+    return iStyle === IconStyle.FILLED ? "style=Filled" : "style=Line"
 }
 
 function searchText(search :string) : string {
@@ -13,13 +9,12 @@ function searchText(search :string) : string {
 }
 
 function fetchInterval(fetchFrom: number, fetchTo:number) : string{
-    return fetchFrom !== undefined || fetchTo !== undefined ? `&from=${fetchFrom}&to=${fetchTo}` : "";
+    return fetchFrom !== undefined || fetchTo !== undefined ? `&from=${fetchFrom.toString()}&to=${fetchTo.toString()}` : "";
 }
 
 const LinkCreator = {
     fetchInterval,
     iconStyle,
-    iconStyleToString,
     searchText,
 };
 
