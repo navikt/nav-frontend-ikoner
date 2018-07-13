@@ -21,11 +21,12 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     }
 
     public componentWillReceiveProps(props: PropTypes){
-        if (this.props.searchText !== props.searchText ||
+        if (!this.props.fetching && (
+            this.props.searchText !== props.searchText ||
             this.props.iconStyle !== props.iconStyle  ||
             this.props.fetchFrom !== props.fetchFrom ||
             this.props.fetchTo !== props.fetchTo
-        ) {
+        )) {
             props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         }
     }
