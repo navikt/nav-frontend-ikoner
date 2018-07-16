@@ -2,13 +2,19 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
 import { WithContext as ReactTags } from 'react-tag-input';
-import {IconStyle, Store, Tag, Tags} from "../../redux/store-interfaces";
+import {IconExpanded, IconStyle, Store, Tag, Tags} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import '../misc/misc.less';
 import './tags.less';
-import {resetIconFetch, setSearchText} from "../../redux/actions";
+import {ReceiveTagsAction, setSearchText} from "../../redux/actions";
 
-interface PropTypes { tags: Tags, selectedIcon: any, insertTag: any, deleteTag: any, iconStyle: IconStyle};
+interface PropTypes {
+    tags: Tags;
+    selectedIcon: IconExpanded;
+    insertTag: (tag: string, icon:string, style: IconStyle) => Promise<ReceiveTagsAction>;
+    deleteTag: (id:string, icon: string,  style: IconStyle) => Promise<ReceiveTagsAction>;
+    iconStyle: IconStyle;
+};
 
 class TagsHandler extends React.Component<PropTypes>{
 
@@ -19,11 +25,11 @@ class TagsHandler extends React.Component<PropTypes>{
         this.isTagUsed = this.isTagUsed.bind(this);
     }
 
-    handleAddition(tag : any) {
+    handleAddition(tag : Tag) {
         this.props.insertTag(tag.text, this.props.selectedIcon.title, this.props.iconStyle)
     }
 
-    handleDelete(position : any) {
+    handleDelete(position : number) {
         const {selectedIcon, deleteTag, iconStyle} = this.props;
         if(selectedIcon.tags[position]) deleteTag(selectedIcon.tags[position].id, selectedIcon.title, iconStyle)
     }
@@ -57,7 +63,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    setSearchText : (searchText:string)  => { dispatch(setSearchText(searchText)); dispatch(resetIconFetch()) } ,
+    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText)),
     insertTag : (tag: string, icon:string, style: IconStyle)  => api.insertTag(tag, icon, style)(dispatch),
     deleteTag : (id:string, icon: string,  style: IconStyle)  => api.deleteTag(id, icon, style)(dispatch)
 });

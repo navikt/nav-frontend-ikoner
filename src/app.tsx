@@ -4,10 +4,13 @@ import './app.less';
 import IconList from './components/lists/icon-list';
 import IconListHeader from "./components/misc/icon-list-header";
 import Sidebar from "./components/sidebar";
+import {ReceiveTagsAction} from "./redux/actions";
 import {Store} from "./redux/store-interfaces";
 import api from "./utils/api";
 
-interface PropTypes {fetchTags: any};
+interface PropTypes {
+    fetchTags: () => Promise<ReceiveTagsAction>
+};
 
 class App extends React.Component <PropTypes>  {
 

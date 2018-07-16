@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import Config from '../appconfig';
 import {
-    RECEIVE_ICONS, RECEIVE_TAGS, RESET_ICON_FETCH, SET_FETCH_INTERVAL,
+    RECEIVE_ICONS, RECEIVE_TAGS, SET_FETCH_INTERVAL,
     SET_FETCHING_ICONS,
     SET_ICON_COLOR,
     SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
@@ -45,6 +45,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
         case SET_ICON_STYLE:
             return {...state, ...{
                     iconStyle: action.iconStyle,
+                    ... RESET_FETCH
                 }};
         case SET_ICON_COLOR:
             return {...state, ...{
@@ -72,11 +73,6 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
             return {...state, ...{
                     tags: action.tags,
                 }};
-        case RESET_ICON_FETCH:
-            return {...state, ...{
-                    ... RESET_FETCH
-                }};
-            break;
         case SET_ICON_TITLE_DESCRIPTION:
             return {...state, ...{
                     description: action.description,

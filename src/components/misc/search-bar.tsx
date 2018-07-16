@@ -2,13 +2,16 @@
 import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
 import * as Redux from 'react-redux';
-import {setSearchText} from "../../redux/actions";
+import {SearchTextAction, setSearchText} from "../../redux/actions";
 import {SearchText, Store} from "../../redux/store-interfaces";
 import './misc.less';
 import Language from "../../language/norwegian";
 
 
-interface PropTypes {searchText: SearchText, setSearchText: typeof setSearchText }
+interface PropTypes {
+    searchText: SearchText;
+    setSearchText: (searchText:string) => SearchTextAction;
+}
 
 class SearchBar extends React.Component<PropTypes> {
 

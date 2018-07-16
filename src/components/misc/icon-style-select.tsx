@@ -2,12 +2,17 @@ import * as React from 'react';
 import * as Redux from 'react-redux';
 import {ToggleGruppe, ToggleKnapp} from '../../../node_modules/nav-frontend-skjema';
 import Language from '../../language/norwegian';
-import {resetIconFetch, setIconStyle} from "../../redux/actions";
-import {IconStyle, Store} from '../../redux/store-interfaces';
+import {IconColorStyle, SelectedIconAction, setIconStyle} from "../../redux/actions";
+import {IconExpanded, IconStyle, Store} from '../../redux/store-interfaces';
 import api from "../../utils/api";
 import './misc.less';
 
-interface PropTypes {iconStyle : IconStyle, selectedIcon: any, setIconStyle: typeof setIconStyle, fetchIcon: any};
+interface PropTypes {
+    iconStyle : IconStyle;
+    selectedIcon: IconExpanded;
+    setIconStyle: (iconStyle: IconStyle) => IconColorStyle;
+    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
+};
 
 class IconStyleSelect extends React.Component <PropTypes> {
 
@@ -47,7 +52,7 @@ const mapStateToProps = (state: Store) => {
 
 const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
     fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
-    setIconStyle : (iconStyle: IconStyle)  => {dispatch(setIconStyle(iconStyle)); dispatch(resetIconFetch()); },
+    setIconStyle : (iconStyle: IconStyle)  => dispatch(setIconStyle(iconStyle)),
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconStyleSelect);

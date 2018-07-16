@@ -1,14 +1,18 @@
 /* tslint:disable */
 import * as Redux from "react-redux";
-import {IconStyle, Store} from "../../redux/store-interfaces";
+import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
 import '../misc/misc.less';
 import './tags.less';
 import api from "../../utils/api";
 import * as React from "react";
 import {Input} from "../../../node_modules/nav-frontend-skjema";
 
-interface PropTypes { selectedIcon: any, editIcon: any, iconStyle: IconStyle};
-interface StateTypes { tags: any; suggestions:any };
+interface PropTypes {
+    selectedIcon: IconExpanded,
+    editIcon:  ( id: string, title: string, description: string, style: IconStyle) => Promise<any>,
+    iconStyle: IconStyle
+};
+interface StateTypes { tags: Tags; suggestions: Tags };
 
 class IconTitle extends React.Component<PropTypes, StateTypes>{
 
@@ -17,7 +21,7 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
         this.handleTitleChange = this.handleTitleChange.bind(this);
     }
 
-    public handleTitleChange(title: any) {
+    public handleTitleChange(title: string) {
         this.props.editIcon(this.props.selectedIcon.id, title, this.props.selectedIcon.description, this.props.iconStyle);
     }
 

@@ -8,7 +8,7 @@ export interface IconsStore {
     iconStyle: IconStyle,
     lastUpdated?: Date,
     searchText: string,
-    selectedIcon?: IconBasic,
+    selectedIcon?: IconExpanded,
     tags: Tags,
 }
 
@@ -30,6 +30,7 @@ export interface Tag{
 }
 
 export interface IconExpanded{
+    id: string,
     title: string,
     description: string,
     bestLocation: Location,
@@ -41,8 +42,6 @@ export interface IconExpanded{
 export interface IconBasic{
     id: string,
     title: string,
-    filename: string,
-    description: string,
     extension:string,
     link: string,
 }

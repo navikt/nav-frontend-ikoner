@@ -1,6 +1,6 @@
 /* tslint:disable */
 import * as Redux from "react-redux";
-import {IconStyle, Store} from "../../redux/store-interfaces";
+import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
 import '../misc/misc.less';
 import './tags.less';
 import api from "../../utils/api";
@@ -8,8 +8,12 @@ import * as React from "react";
 import {Textarea} from "../../../node_modules/nav-frontend-skjema";
 import Language from "../../language/norwegian";
 
-interface PropTypes { selectedIcon: any, editIcon: any, iconStyle: IconStyle};
-interface StateTypes { tags: any; suggestions:any };
+interface PropTypes {
+    selectedIcon: IconExpanded,
+    editIcon:  ( id: string, title: string, description: string, style: IconStyle) => Promise<any>,
+    iconStyle: IconStyle
+};
+interface StateTypes { tags: Tags; suggestions: Tags };
 
 class IconDescription extends React.Component<PropTypes, StateTypes>{
 

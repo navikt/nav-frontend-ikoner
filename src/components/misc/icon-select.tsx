@@ -5,8 +5,17 @@ import {IconStyle, IconType, Store} from '../../redux/store-interfaces';
 import './misc.less';
 import Icon from "./icon";
 import api from "../../utils/api";
+import {SelectedIconAction} from "../../redux/actions";
 
-interface PropTypes { id: string, title: string,imageLink: string, extension: string, iconStyle: IconStyle, key: number, fetchIcon: any};
+interface PropTypes {
+    id: string;
+    title: string;
+    imageLink: string;
+    extension: string;
+    iconStyle: IconStyle;
+    key: number;
+    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
+};
 interface StateTypes {iconStyle: IconStyle, iconColor: string}
 
 class IconSelect extends React.Component <PropTypes,StateTypes> {
