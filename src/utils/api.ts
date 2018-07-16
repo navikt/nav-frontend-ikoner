@@ -17,7 +17,7 @@ function fetchIcons(iconStyle: IconStyle,
     };
 }
 
-const fetchIconsDispatchDebounced = debounce(fetchIconsDispatch, 100);
+const fetchIconsDispatchDebounced = debounce(fetchIconsDispatch, 200);
 function fetchIconsDispatch(dispatch: Redux.Dispatch<any>,
                             iconStyle: IconStyle,
                             fetchFrom: number,
@@ -25,7 +25,7 @@ function fetchIconsDispatch(dispatch: Redux.Dispatch<any>,
                             searchText: SearchText) {
 
     // Prevent several API calls before response
-    dispatch(setFetchingIcons(true));
+    dispatch(setFetchingIcons());
 
     // Build parameters
     const iStyle = LinkCreator.iconStyle(iconStyle);

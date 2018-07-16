@@ -3,13 +3,14 @@ import * as React from 'react';
 import * as InfiniteScroll  from 'react-infinite-scroller';
 import * as Redux from "react-redux";
 import Config from '../../appconfig';
+import Language from '../../language/norwegian';
 import {setFetchingInterval} from "../../redux/actions";
 import {Icon as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
-interface PropTypes { iconStyle: IconStyle, icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons, fetchFrom: number, fetchHasMore: boolean, fetchTo: number, fetching: boolean, setFetchInterval: typeof setFetchingInterval}
+interface PropTypes { iconStyle: IconStyle, icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons, fetchFrom: number, fetchHasMore: boolean, fetchTo: number, fetchingCounter: number, setFetchInterval: typeof setFetchingInterval}
 interface StateTypes {hasMore: boolean}
 
 class IconList extends React.Component <PropTypes,StateTypes>{
@@ -21,18 +22,18 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     }
 
     public componentWillReceiveProps(props: PropTypes){
-        if (!this.props.fetching && (
-            this.props.searchText !== props.searchText ||
+        if (this.props.searchText !== props.searchText ||
             this.props.iconStyle !== props.iconStyle  ||
             this.props.fetchFrom !== props.fetchFrom ||
             this.props.fetchTo !== props.fetchTo
-        )) {
+        ) {
+            console.log("FetchHasMore " + this.props.fetchHasMore);
             props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         }
     }
 
     public loadMore() {
-        if(!this.props.fetching && this.props.icons.length > 0){
+        if(this.props.icons.length > 0){
             const fetchFrom = this.props.fetchTo;
             const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
@@ -46,8 +47,13 @@ class IconList extends React.Component <PropTypes,StateTypes>{
                 pageStart={0}
                 initialLoad={false}
                 loadMore={this.loadMore}
-                hasMore={this.props.fetchHasMore}
-                loader={<div key={0} className="icon-list-spinner"><NavFrontendSpinner className="spinner"/></div>} >
+                hasMore={this.props.fetchHasMore} >
+                {this.props.icons.length === 0 && this.props.fetchingCounter === 0 &&
+                    <div className="no-results">{Language.NO_RESULTS}</div>
+                }
+                {this.props.icons.length === 0 && this.props.fetchingCounter > 0 &&
+                    <div className="spinner-container"><NavFrontendSpinner /></div>
+                }
                 {this.props.icons.map((icon:IIcon, index: number) =>
                     <IconSelect key={index} icon={icon} />)}
             </InfiniteScroll>
@@ -60,7 +66,7 @@ const mapStateToProps = (state: Store) => {
         fetchFrom: state.iconsStore.fetchFrom,
         fetchHasMore: state.iconsStore.fetchHasMore,
         fetchTo: state.iconsStore.fetchTo,
-        fetching: state.iconsStore.fetching,
+        fetchingCounter: state.iconsStore.fetchingCounter,
         iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
