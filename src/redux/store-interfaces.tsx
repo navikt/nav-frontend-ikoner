@@ -1,5 +1,5 @@
 export interface IconsStore {
-    fetching: boolean,
+    fetchingCounter: number,
     fetchHasMore: boolean
     fetchFrom: number,
     fetchTo: number,

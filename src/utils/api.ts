@@ -5,7 +5,7 @@ import {
     receiveIcons,
     ReceiveIconsAction, receiveTags,
     ReceiveTagsAction,
-    SelectedIconAction,
+    SelectedIconAction, setFetchingIcons,
     setSelectedIcon
 } from "../redux/actions";
 import {IconStyle, SearchText} from "../redux/store-interfaces";
@@ -24,11 +24,14 @@ function fetchIcons(iconStyle: IconStyle,
 }
 
 const fetchIconsDispatchDebounced = debounce(fetchIconsDispatch, 100);
-function fetchIconsDispatch(dispatch: Redux.Dispatch<ReceiveIconsAction>,
+function fetchIconsDispatch(dispatch: Redux.Dispatch<any>,
                             iconStyle: IconStyle,
                             fetchFrom: number,
                             fetchTo: number,
                             searchText: SearchText) {
+
+    // Prevent several API calls before response
+    dispatch(setFetchingIcons());
 
     // Build parameters
     const iStyle = LinkCreator.iconStyle(iconStyle);

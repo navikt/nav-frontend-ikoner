@@ -47,7 +47,6 @@ export interface IconColorStyle{
 
 export interface FetchingIconsAction {
     type: string,
-    fetching: boolean,
 }
 
 export interface FetchingInterval {
@@ -94,8 +93,8 @@ export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
     return { type: SET_ICON_STYLE, iconStyle}
 }
 
-export function setFetchingIcons(fetching: boolean): FetchingIconsAction {
-    return { type: SET_FETCHING_ICONS, fetching }
+export function setFetchingIcons(): FetchingIconsAction {
+    return { type: SET_FETCHING_ICONS}
 }
 
 export function setFetchingInterval(fetchFrom: number, fetchTo: number): FetchingInterval {
