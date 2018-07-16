@@ -94,7 +94,8 @@ function deleteTag(id: string, icon: string, style: IconStyle):
     }
 }
 
-function editIcon(id: string, title: string, description: string, style: IconStyle): (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
+function editIcon(id: string, title: string, description: string, style: IconStyle)
+    : (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
     return (dispatch: Redux.Dispatch<SelectedIconAction>) => {
         const data = JSON.stringify({id, title, description });
         return fetch  (`${Config.NAV_ICONS_API_LINK}/icon`, {

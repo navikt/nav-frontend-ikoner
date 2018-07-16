@@ -1,17 +1,16 @@
-/* tslint:disable */
+import * as React from "react";
 import * as Redux from "react-redux";
-import TagsHandler from './sidebar/tags-handler';
-import {IconStyle, IconType, Store} from "../redux/store-interfaces";
+import {IconExpanded, IconStyle, IconType, Store, Tags} from "../redux/store-interfaces";
 import DownloadButton from "./buttons/download-button";
 import Icon from './misc/icon';
 import './misc/misc.less';
-import IconTitle from './sidebar/icon-title'
-import IconDescription from './sidebar/icon-description'
 import Seperator from "./misc/seperator";
-import * as React from "react";
+import IconDescription from './sidebar/icon-description'
+import IconTitle from './sidebar/icon-title'
+import TagsHandler from './sidebar/tags-handler';
 
-interface PropTypes { selectedIcon: any, iconStyle: IconStyle};
-interface StateTypes { tags: any; suggestions:any };
+interface PropTypes { selectedIcon: IconExpanded, iconStyle: IconStyle};
+interface StateTypes { tags: Tags; suggestions:Tags };
 
 class Sidebar extends React.Component<PropTypes, StateTypes>{
 

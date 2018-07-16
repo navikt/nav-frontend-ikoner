@@ -1,11 +1,10 @@
-/* tslint:disable */
 import * as React from 'react';
 import * as Redux from 'react-redux';
-import {IconStyle, IconType, Store} from '../../redux/store-interfaces';
-import './misc.less';
-import Icon from "./icon";
-import api from "../../utils/api";
 import {SelectedIconAction} from "../../redux/actions";
+import {IconStyle, IconType, Store} from '../../redux/store-interfaces';
+import api from "../../utils/api";
+import Icon from "./icon";
+import './misc.less';
 
 interface PropTypes {
     id: string;
@@ -31,15 +30,21 @@ class IconSelect extends React.Component <PropTypes,StateTypes> {
 
     public render() {
         return (
-            <Icon key={this.props.key} imageLink={this.props.imageLink} extension={this.props.extension} iconType={IconType.IN_LIST} iconClickTrigger={this.onIconClick} iconColor="black"/>
+            <Icon
+                key={this.props.key}
+                imageLink={this.props.imageLink}
+                extension={this.props.extension}
+                iconType={IconType.IN_LIST}
+                iconClickTrigger={this.onIconClick}
+                iconColor="black"/>
         );
     }
 }
 
 const mapStateToProps = (state: Store) => {
     return {
+        iconColor: state.iconsStore.iconColor,
         iconStyle: state.iconsStore.iconStyle,
-        iconColor: state.iconsStore.iconColor
     };
 };
 
