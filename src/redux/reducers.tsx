@@ -39,7 +39,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                 }};
         case SET_FETCHING_ICONS:
             return {...state, ...{
-                    fetchingCounter: state.fetchingCounter + 1,
+                    fetchingCounter: state.fetchingCounter++,
                 }};
         case SET_ICON_STYLE:
             return {...state, ...{
@@ -63,7 +63,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
             const icons = state.fetchFrom > 0 ? state.icons.concat(action.icons) : action.icons;
             return {...state, ...{
                     fetchHasMore: action.icons.length === Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
-                    fetchingCounter: state.fetchingCounter - 1,
+                    fetchingCounter: state.fetchingCounter--,
                     icons,
                     lastUpdated: Date.now(),
                 }};
