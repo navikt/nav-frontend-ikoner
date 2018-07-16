@@ -14,7 +14,7 @@ const initialState : IconsStore = {
     fetchFrom: 0,
     fetchHasMore: true,
     fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
-    fetching: false,
+    fetchingCounter: 0,
     iconColor: 'black',
     iconStyle: IconStyle.FILLED,
     icons: [],
@@ -25,6 +25,13 @@ const initialState : IconsStore = {
 
 export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
 
+    const RESET_FETCH = {
+        fetchFrom: 0,
+        fetchHasMore: true,
+        fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
+        icons: [],
+    }
+
     switch (action.type) {
         case SET_SELECTED_ICON:
             return {...state, ...{
@@ -32,7 +39,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                 }};
         case SET_FETCHING_ICONS:
             return {...state, ...{
-                    fetching: action.fetching,
+                    fetchingCounter: state.fetchingCounter++,
                 }};
         case SET_ICON_STYLE:
             return {...state, ...{
@@ -43,8 +50,9 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     iconColor: action.iconColor,
                 }};
         case SET_SEARCH_TEXT:
-            return {...state, ...{
+            return {...state, ... {
                     searchText: action.searchText,
+                    ... RESET_FETCH
                 }};
         case SET_FETCH_INTERVAL:
             return {...state, ...{
@@ -52,20 +60,16 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     fetchTo: action.fetchTo,
                 }};
         case RECEIVE_ICONS:
-            const icons = action.numberOfIcons ? state.icons.concat(action.icons) : [];
+            const icons = state.fetchFrom > 0 ? state.icons.concat(action.icons) : action.icons;
             return {...state, ...{
-                    fetchHasMore: icons.length === action.numberOfIcons ? false : true,
-                    fetching: false,
+                    fetchHasMore: action.icons.length === Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
+                    fetchingCounter: state.fetchingCounter--,
                     icons,
                     lastUpdated: Date.now(),
                 }};
         case RESET_ICON_FETCH:
             return {...state, ...{
-                    fetchFrom: 0,
-                    fetchHasMore: true,
-                    fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
-                    icons: [],
-                    lastUpdated: Date.now(),
+                    ... RESET_FETCH
                 }};
             break;
         default:

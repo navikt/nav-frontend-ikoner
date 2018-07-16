@@ -1,7 +1,7 @@
 import * as Redux from "redux";
 import Config from '../appconfig';
 import Language from '../language/norwegian';
-import {receiveIcons, ReceiveIconsAction} from "../redux/actions";
+import {receiveIcons, ReceiveIconsAction, setFetchingIcons} from "../redux/actions";
 import {IconStyle, SearchText} from "../redux/store-interfaces";
 import LinkCreator from './api-link-creator';
 const debounce = require('lodash.debounce'); // tslint:disable-line
@@ -18,11 +18,14 @@ function fetchIcons(iconStyle: IconStyle,
 }
 
 const fetchIconsDispatchDebounced = debounce(fetchIconsDispatch, 100);
-function fetchIconsDispatch(dispatch: Redux.Dispatch<ReceiveIconsAction>,
+function fetchIconsDispatch(dispatch: Redux.Dispatch<any>,
                             iconStyle: IconStyle,
                             fetchFrom: number,
                             fetchTo: number,
                             searchText: SearchText) {
+
+    // Prevent several API calls before response
+    dispatch(setFetchingIcons());
 
     // Build parameters
     const iStyle = LinkCreator.iconStyle(iconStyle);
@@ -31,7 +34,8 @@ function fetchIconsDispatch(dispatch: Redux.Dispatch<ReceiveIconsAction>,
     return fetch  (`${Config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${iFetchInterval}`)
         .then(response => response.json())
         .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-        .then(json => dispatch(receiveIcons(json.icons, json.numberOfIcons)));
+        .then(json => {console.log(json); dispatch(receiveIcons(json.icons, json.numberOfIcons)); });
+
 }
 
 const api = {
