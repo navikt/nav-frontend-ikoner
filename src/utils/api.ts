@@ -17,7 +17,7 @@ function fetchIcons(iconStyle: IconStyle,
     };
 }
 
-const fetchIconsDispatchDebounced = debounce(fetchIconsDispatch, 200);
+const fetchIconsDispatchDebounced = debounce(fetchIconsDispatch, 100);
 function fetchIconsDispatch(dispatch: Redux.Dispatch<any>,
                             iconStyle: IconStyle,
                             fetchFrom: number,

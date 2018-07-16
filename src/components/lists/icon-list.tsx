@@ -1,6 +1,6 @@
 import NavFrontendSpinner from "nav-frontend-spinner";
 import * as React from 'react';
-import * as InfiniteScroll  from 'react-infinite-scroller';
+import * as InfiniteScroll from 'react-infinite-scroll-component';
 import * as Redux from "react-redux";
 import Config from '../../appconfig';
 import Language from '../../language/norwegian';
@@ -27,7 +27,6 @@ class IconList extends React.Component <PropTypes,StateTypes>{
             this.props.fetchFrom !== props.fetchFrom ||
             this.props.fetchTo !== props.fetchTo
         ) {
-            console.log("FetchHasMore " + this.props.fetchHasMore);
             props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         }
     }
@@ -41,20 +40,16 @@ class IconList extends React.Component <PropTypes,StateTypes>{
     }
 
     public render() {
+        const {icons, fetchingCounter, fetchHasMore} = this.props;
         return (
             <InfiniteScroll
-                className="icon-list"
-                pageStart={0}
-                initialLoad={false}
-                loadMore={this.loadMore}
-                hasMore={this.props.fetchHasMore} >
-                {this.props.icons.length === 0 && this.props.fetchingCounter === 0 &&
-                    <div className="no-results">{Language.NO_RESULTS}</div>
-                }
-                {this.props.icons.length === 0 && this.props.fetchingCounter > 0 &&
-                    <div className="spinner-container"><NavFrontendSpinner /></div>
-                }
-                {this.props.icons.map((icon:IIcon, index: number) =>
+                dataLength={icons.length}
+                endMessage={icons.length === 0 && fetchingCounter === 0 ?
+                    <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
+                next={this.loadMore}
+                hasMore={fetchHasMore}
+                loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}>
+                {icons.map((icon:IIcon, index: number) =>
                     <IconSelect key={index} icon={icon} />)}
             </InfiniteScroll>
         );

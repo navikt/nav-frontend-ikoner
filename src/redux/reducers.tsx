@@ -62,7 +62,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
         case RECEIVE_ICONS:
             const icons = state.fetchFrom > 0 ? state.icons.concat(action.icons) : action.icons;
             return {...state, ...{
-                    fetchHasMore: action.icons.length > Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
+                    fetchHasMore: action.icons.length === Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
                     fetchingCounter: state.fetchingCounter - 1,
                     icons,
                     lastUpdated: Date.now(),
