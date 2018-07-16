@@ -1,13 +1,14 @@
-import {Icon, Icons, IconStyle} from "./store-interfaces";
+import {IconExpanded, Icons, IconStyle, Tags} from "./store-interfaces";
 
 export const RECEIVE_ICONS = 'RECEIVE_ICONS'
+export const RECEIVE_TAGS = 'RECEIVE_TAGS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
 export const SET_ICON_STYLE = 'SET_ICON_STYLE'
 export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
 export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
-export const RESET_ICON_FETCH = 'RESET_ICON_FETCH'
+export const SET_ICON_TITLE_DESCRIPTION = 'SET_ICON_TITLE_DESCRIPTION'
 
 /*
     Interfaces
@@ -18,6 +19,11 @@ export interface ReceiveIconsAction {
     numberOfIcons: number;
 }
 
+export interface ReceiveTagsAction {
+    type: string;
+    tags: Tags;
+}
+
 export interface SearchTextAction {
     type: string;
     searchText: string;
@@ -25,7 +31,7 @@ export interface SearchTextAction {
 
 export interface SelectedIconAction {
     type: string;
-    icon: Icon;
+    icon: IconExpanded;
 }
 
 export interface IconColorAction {
@@ -52,6 +58,12 @@ export interface ResetFetch{
     type: string,
 }
 
+export interface IconTitleDescription {
+    type: string,
+    title: string,
+    description: string,
+}
+
 /*
     Actions
  */
@@ -60,7 +72,11 @@ export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsA
     return { type: RECEIVE_ICONS, icons , numberOfIcons}
 }
 
-export function setSelectedIcon(icon: Icon): SelectedIconAction {
+export function receiveTags(tags: Tags): ReceiveTagsAction {
+    return { type: RECEIVE_TAGS, tags }
+}
+
+export function setSelectedIcon(icon: IconExpanded): SelectedIconAction {
     return { type: SET_SELECTED_ICON, icon }
 }
 
@@ -84,6 +100,6 @@ export function setFetchingInterval(fetchFrom: number, fetchTo: number): Fetchin
     return { type: SET_FETCH_INTERVAL, fetchFrom, fetchTo }
 }
 
-export function resetIconFetch() : ResetFetch {
-    return {type: RESET_ICON_FETCH }
+export function setIconTitleDescription(title: string, description: string): IconTitleDescription {
+    return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
 }

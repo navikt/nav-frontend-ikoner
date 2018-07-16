@@ -1,14 +1,15 @@
-/* tslint:disable */
 import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
 import * as Redux from 'react-redux';
-import {setSearchText} from "../../redux/actions";
+import Language from "../../language/norwegian";
+import {SearchTextAction, setSearchText} from "../../redux/actions";
 import {SearchText, Store} from "../../redux/store-interfaces";
 import './misc.less';
-import Language from "../../language/norwegian";
 
-
-interface PropTypes {searchText: SearchText, setSearchText: typeof setSearchText }
+interface PropTypes {
+    searchText: SearchText;
+    setSearchText: (searchText:string) => SearchTextAction;
+}
 
 class SearchBar extends React.Component<PropTypes> {
 
@@ -17,8 +18,8 @@ class SearchBar extends React.Component<PropTypes> {
         this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
-    public handleSearchChange (searchText: string) {
-        this.props.setSearchText(searchText);
+    public handleSearchChange (event: React.ChangeEvent<HTMLInputElement>) {
+        this.props.setSearchText(event.target.value);
     }
 
     public render() {
@@ -26,8 +27,10 @@ class SearchBar extends React.Component<PropTypes> {
             <div className="search-bar-row">
                 <div className="icon-search-bar">
                     <label className="search-bar-label"/>
-                    <Input label={Language.SEARCH} value={this.props.searchText} onChange={
-                        (event) => this.handleSearchChange(event.target.value)} className="search-bar-input"/>
+                    <Input label={Language.SEARCH}
+                           value={this.props.searchText}
+                           onChange={this.handleSearchChange}
+                           className="search-bar-input"/>
                     <div aria-live="assertive" role="alert"/>
                 </div>
             </div>

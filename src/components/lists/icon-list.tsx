@@ -4,20 +4,35 @@ import * as InfiniteScroll from 'react-infinite-scroll-component';
 import * as Redux from "react-redux";
 import Config from '../../appconfig';
 import Language from '../../language/norwegian';
-import {setFetchingInterval} from "../../redux/actions";
-import {Icon as IIcon, Icons, IconStyle, SearchText, Store} from "../../redux/store-interfaces";
+import {FetchingInterval, ReceiveIconsAction, setFetchingInterval} from "../../redux/actions";
+import {
+    IconBasic,
+    Icons,
+    IconStyle,
+    SearchText,
+    Store
+} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
-interface PropTypes { iconStyle: IconStyle, icons: Icons, searchText: SearchText, fetchIcons: typeof api.fetchIcons, fetchFrom: number, fetchHasMore: boolean, fetchTo: number, fetchingCounter: number, setFetchInterval: typeof setFetchingInterval}
-interface StateTypes {hasMore: boolean}
+interface PropTypes {
+    iconStyle: IconStyle;
+    icons: Icons;
+    searchText: SearchText;
+    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string) => Promise<ReceiveIconsAction>;
+    fetchFrom: number;
+    fetchHasMore: boolean;
+    fetchTo: number;
+    fetchingCounter: number;
+    setFetchInterval: (fetchFrom: number, fetchTo: number) => FetchingInterval;
+}
 
-class IconList extends React.Component <PropTypes,StateTypes>{
+class IconList extends React.Component <PropTypes>{
 
-    constructor(props: any){
+    constructor(props: PropTypes){
         super(props);
-        props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo);
+        props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         this.loadMore = this.loadMore.bind(this);
     }
 
@@ -49,8 +64,9 @@ class IconList extends React.Component <PropTypes,StateTypes>{
                 next={this.loadMore}
                 hasMore={fetchHasMore}
                 loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}>
-                {icons.map((icon:IIcon, index: number) =>
-                    <IconSelect key={index} icon={icon} />)}
+                {icons.map((icon:IconBasic, index: number) =>
+                    <IconSelect key={index} id={icon.id} title={icon.title} imageLink={icon.link} extension={icon.extension}/>
+                )}
             </InfiniteScroll>
         );
     }
