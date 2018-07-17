@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import Config from '../appconfig';
 import {
     RECEIVE_ICONS, RECEIVE_TAGS, SET_FETCH_INTERVAL,
-    SET_FETCHING_ICONS,
+    SET_FETCHING_ICONS, SET_ICON_BACKGROUND_COLOR,
     SET_ICON_COLOR,
     SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
@@ -15,7 +15,8 @@ const initialState : IconsStore = {
     fetchHasMore: true,
     fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
     fetchingCounter: 0,
-    iconColor: 'green',
+    iconBackgroundColor: 'white',
+    iconColor: 'black',
     iconStyle: IconStyle.FILLED,
     icons: [],
     lastUpdated: undefined,
@@ -50,6 +51,10 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
         case SET_ICON_COLOR:
             return {...state, ...{
                     iconColor: action.iconColor,
+                }};
+        case SET_ICON_BACKGROUND_COLOR:
+            return {...state, ...{
+                    iconBackgroundColor: action.iconBackgroundColor,
                 }};
         case SET_SEARCH_TEXT:
             return {...state, ... {

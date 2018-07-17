@@ -9,8 +9,8 @@ function iconStyle(style : IconStyle) : string{
     return style === IconStyle.FILLED ? `style=${iconStyleToString(style)}` : `style=${iconStyleToString(style)}`
 }
 
-function iconDisplayLink(style: IconStyle, iconColor: string, selectedIcon: IconExpanded){
-    return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(style)}/${iconColor}/${selectedIcon.bestLocation.filename}`;
+function iconDisplay(style: IconStyle, iconColor: string, selectedIcon: IconExpanded){
+    return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(style)}/${iconColor}/${selectedIcon.bestLocation.filename}`.replace("#", "%23");
 }
 
 function iconSearchText(search :string) : string {
@@ -22,7 +22,7 @@ function iconFetchInterval(fetchFrom: number, fetchTo:number) : string{
 }
 
 const LinkCreator = {
-    iconDisplayLink,
+    iconDisplay,
     iconFetchInterval,
     iconSearchText,
     iconStyle,
