@@ -10,7 +10,7 @@ class DownloadButton extends React.Component <PropTypes> {
     public render() {
         return (
             <a download={true} href={`${Config.NAV_ICONS_API_LINK}/icon/download?title=${this.props.icon.title}`} className="knapp knapp--hoved icon-download-button">
-                {Language.DOWNLOAD_ICON}
+                {Language.DOWNLOAD_ICONS}
             </a>
         );
     }
