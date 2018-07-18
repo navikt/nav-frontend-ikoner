@@ -1,5 +1,5 @@
-import Textarea from "nav-frontend-skjema/lib/textarea";
 import * as React from "react";
+import TextareaAutosize from 'react-autosize-textarea';
 import * as Redux from "react-redux";
 import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
 import api from "../../utils/api";
@@ -29,23 +29,18 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
             );
         }
 
-        const style = {
-            height: selectedIcon.title.length
-        };
-
         return (
             <div className="icon-title-container">
-                <Textarea
-                    style={style}
-                    textareaClass="icon-title"
-                    label=""
+                <TextareaAutosize
+                    className="icon-title"
                     value={selectedIcon.title}
-                    onChange={this.handleTitleChange} />
+                    onChange={this.handleTitleChange}
+                />
             </div>
         );
     }
 
-    private handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    private handleTitleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
         this.props.editIcon(this.props.selectedIcon.id, event.target.value, this.props.selectedIcon.description, this.props.iconStyle);
     }
 }
