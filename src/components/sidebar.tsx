@@ -18,7 +18,7 @@ class Sidebar extends React.Component<PropTypes, StateTypes>{
     public render() {
 
         const {selectedIcon} = this.props;
-        if(!selectedIcon){
+        if(!selectedIcon || !selectedIcon.bestLocation){
             return (
                 <div className="icon-side-panel" />
             );
