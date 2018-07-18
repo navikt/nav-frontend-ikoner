@@ -16,3 +16,4 @@ fasitResources:
   used:
   - alias: loadbalancer:nav-frontend-ikoner
     resourceType: loadbalancerconfig
+team: oppfolging
