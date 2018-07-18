@@ -6,7 +6,7 @@ import {SelectedIconAction} from "../../redux/actions";
 import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import '../misc/misc.less';
-import './tags.less';
+import './icon-title.less';
 
 interface PropTypes {
     selectedIcon: IconExpanded,
