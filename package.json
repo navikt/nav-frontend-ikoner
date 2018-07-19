@@ -28,6 +28,7 @@
     "npm": "^6.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-autosize-textarea": "^4.0.0",
     "react-background-image-loader": "0.0.5",
     "react-collapse": "^4.0.3",
     "react-color": "^2.14.1",
