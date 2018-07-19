@@ -13,6 +13,7 @@ interface PropTypes {
     extension: string;
     iconStyle: IconStyle;
     key: number;
+    selected: boolean,
     fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
 };
 interface StateTypes {iconStyle: IconStyle, iconColor: string}
@@ -31,12 +32,10 @@ class IconSelect extends React.Component <PropTypes,StateTypes> {
     public render() {
         return (
             <Icon
-                key={this.props.key}
-                imageLink={this.props.imageLink}
-                extension={this.props.extension}
                 iconType={IconType.IN_LIST}
                 iconClickTrigger={this.onIconClick}
-                iconColor="black"/>
+                iconColor="black"
+                {...this.props} />
         );
     }
 }

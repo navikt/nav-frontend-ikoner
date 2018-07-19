@@ -4,9 +4,9 @@ import * as InfiniteScroll from 'react-infinite-scroll-component';
 import * as Redux from "react-redux";
 import Config from '../../appconfig';
 import Language from '../../language/norwegian';
-import {FetchingInterval, ReceiveIconsAction, setFetchingInterval} from "../../redux/actions";
+import {FetchingInterval, ReceiveIconsAction, SelectedIconAction, setFetchingInterval} from "../../redux/actions";
 import {
-    IconBasic,
+    IconBasic, IconExpanded,
     Icons,
     IconStyle,
     SearchText,
@@ -20,11 +20,13 @@ interface PropTypes {
     iconStyle: IconStyle;
     icons: Icons;
     searchText: SearchText;
+    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
     fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string) => Promise<ReceiveIconsAction>;
     fetchFrom: number;
     fetchHasMore: boolean;
     fetchTo: number;
     fetchingCounter: number;
+    selectedIcon: IconExpanded,
     setFetchInterval: (fetchFrom: number, fetchTo: number) => FetchingInterval;
 }
 
@@ -34,6 +36,15 @@ class IconList extends React.Component <PropTypes>{
         super(props);
         props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         this.loadMore = this.loadMore.bind(this);
+        this.keyDown = this.keyDown.bind(this);
+    }
+
+    public componentWillMount(){
+        document.addEventListener("keydown", this.keyDown);
+    }
+
+    public componentWillUnmount() {
+        document.removeEventListener("keydown", this.keyDown);
     }
 
     public componentWillReceiveProps(props: PropTypes){
@@ -54,18 +65,61 @@ class IconList extends React.Component <PropTypes>{
         }
     }
 
+    public keyDown = (event: KeyboardEvent) => {
+
+        const {icons, selectedIcon, fetchIcon, iconStyle} = this.props;
+
+        if(selectedIcon){
+
+            let iconIndex = 0;
+            icons.forEach((icon, index) => {
+                if(selectedIcon.id === icon.id){
+                    iconIndex = index;
+                }
+            });
+
+            switch (event.key){
+                case 'ArrowUp':
+                    console.log("Up");
+                    break;
+                case 'ArrowRight':
+                    console.log("Right");
+                    if(iconIndex + 1 <= icons.length){
+                        iconIndex++;
+                    }
+                    break;
+                case 'ArrowDown':
+                    console.log("Down");
+                    break;
+                case 'ArrowLeft':
+                    console.log("Left");
+                    if(iconIndex - 1 >= 0){
+                        iconIndex--;
+                    }
+                    break;
+            }
+            fetchIcon(icons[iconIndex].id, iconStyle);
+        }
+
+    }
+
     public render() {
-        const {icons, fetchingCounter, fetchHasMore} = this.props;
+        const {icons, fetchingCounter, fetchHasMore, selectedIcon} = this.props;
         return (
             <InfiniteScroll
+                endMessage={!icons.length && !fetchingCounter ? <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
+                loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}
                 dataLength={icons.length}
-                endMessage={icons.length === 0 && fetchingCounter === 0 ?
-                    <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
-                next={this.loadMore}
                 hasMore={fetchHasMore}
-                loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}>
+                next={this.loadMore} >
                 {icons.map((icon:IconBasic, index: number) =>
-                    <IconSelect key={index} id={icon.id} title={icon.title} imageLink={icon.link} extension={icon.extension}/>
+                    <IconSelect
+                        key={index}
+                        id={icon.id}
+                        title={icon.title}
+                        imageLink={icon.link}
+                        extension={icon.extension}
+                        selected={selectedIcon && icon.id === selectedIcon.id}/>
                 )}
             </InfiniteScroll>
         );
@@ -81,11 +135,12 @@ const mapStateToProps = (state: Store) => {
         iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
-
+        selectedIcon: state.iconsStore.selectedIcon,
     };
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
     fetchIcons : ( iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string)  => api.fetchIcons(iconStyle, fetchFrom, fetchTo, searchText)(dispatch),
     setFetchInterval : ( fetchFrom: number, fetchTo: number)  => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
 });
