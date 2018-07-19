@@ -12,7 +12,7 @@ class ExtensionButton extends React.Component <PropTypes> {
     public render() {
         const {style, icon, extension} = this.props;
         return (
-            <a className="knapp knapp--flat knapp--mini"
+            <a className="knapp knapp--mini"
                href={`${Config.NAV_ICONS_API_LINK}/icon/download/extension?style=${style}&title=${icon.title}&extension=${extension}`}
                download={true}>{extension}</a>
         );
