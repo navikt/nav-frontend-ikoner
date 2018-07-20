@@ -18,11 +18,8 @@ class IconInList extends React.Component <PropTypes> {
         const {icon, selected} = this.props;
         const className = `icon-in-list ${selected ? 'icon-in-list-selected' : ''}`;
         return (
-            <div
-                className={className}
-                style={{backgroundImage: `url(${icon.link})`}} >
-                <IconUnknownExtension extension={icon.extension}/>
-                }
+            <div className={className} style={{backgroundImage: `url(${icon.link})`}} >
+                <IconUnknownExtension extension={icon.extension} />
             </div>
         );
     }

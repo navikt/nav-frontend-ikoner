@@ -15,8 +15,8 @@ class IconUnknownExtension extends React.Component <PropTypes>{
         const {extension} = this.props;
         if(extension !== "svg" && extension !== "png"){
             return (
-                <div className="pdf-replacement-container">
-                    <div className="pdf-replacement">
+                <div className="unknown-extension-container">
+                    <div className="unknown-extension">
                         {extension.toLocaleUpperCase()}
                     </div>
                 </div>

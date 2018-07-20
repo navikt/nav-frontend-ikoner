@@ -10,12 +10,12 @@ interface PropTypes {
     icon: IconBasic,
     iconStyle: IconStyle;
     selected: boolean,
+    setFocus: boolean,
     reference: React.RefObject<HTMLButtonElement>,
     fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
 };
-interface StateTypes {iconStyle: IconStyle, iconColor: string}
 
-class IconSelect extends React.Component <PropTypes,StateTypes> {
+class IconSelect extends React.Component <PropTypes> {
 
     constructor(props: PropTypes){
         super(props);
@@ -27,15 +27,21 @@ class IconSelect extends React.Component <PropTypes,StateTypes> {
     }
 
     public componentDidUpdate(){
-        if(this.props.selected && this.props.reference.current != null){
+        if(this.props.selected && this.props.setFocus && this.props.reference.current != null){
             this.props.reference.current.focus();
         }
+    }
+
+    public onFocus(event: React.FocusEvent<HTMLButtonElement>){
+        console.log("FOCUS");
+        event.preventDefault();
     }
 
     public render() {
         return(
             <button
                 ref={this.props.selected ? this.props.reference : undefined}
+                onFocus={this.onFocus}
                 tabIndex={this.props.selected ? 0 : -1}
                 onClick={this.onIconClick}
                 className="icon-in-list-button" >

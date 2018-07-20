@@ -36,12 +36,13 @@ interface PropTypes {
 
 interface StateTypes{
     numInRow: number,
+    setFocus: boolean,
 }
 
 class IconList extends React.Component <PropTypes, StateTypes>{
 
-    private container : React.RefObject<HTMLDivElement>;
-    private selectedElement : React.RefObject<HTMLButtonElement>;
+    private readonly container : React.RefObject<HTMLDivElement>;
+    private readonly selectedElement : React.RefObject<HTMLButtonElement>;
 
     constructor(props: PropTypes){
         super(props);
@@ -54,11 +55,12 @@ class IconList extends React.Component <PropTypes, StateTypes>{
         this.scrollToIcon = debounce(this.scrollToIcon.bind(this), 250);
         this.state = {
             numInRow: -1,
+            setFocus: false,
         }
     }
 
     public measure(){
-        if(this.container.current != null) {
+        if(this.container.current != null && this.props.icons.length) {
           this.setState({
                 numInRow:Math.floor(
                     Math.min((this.container.current.offsetWidth - Config.NAV_ICONS_LIST_PADDING * 2)
@@ -68,17 +70,9 @@ class IconList extends React.Component <PropTypes, StateTypes>{
         }
     }
 
-    public componentWillMount(){
-        window.addEventListener("resize", this.measure);
-        document.addEventListener("keydown", this.keyDown);
-    }
-
-    public componentWillUnmount() {
-        window.removeEventListener("resize", this.measure);
-        document.removeEventListener("keydown", this.keyDown);
-    }
-
     public componentWillReceiveProps(props: PropTypes){
+
+        // Fetch from API if changes in state
         if (this.props.searchText !== props.searchText ||
             this.props.iconStyle !== props.iconStyle  ||
             this.props.fetchFrom !== props.fetchFrom ||
@@ -86,7 +80,10 @@ class IconList extends React.Component <PropTypes, StateTypes>{
         ) {
             props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         }
-        if(this.props.icons){
+
+        // Always set the first element in the list to active
+        if(this.props.icons !== props.icons && props.icons[0] && props.icons.length <= Config.NAV_ICONS_FETCH_INTERVAL_SIZE){
+            props.fetchIcon(props.icons[0].id, props.iconStyle);
             this.measure();
         }
     }
@@ -106,47 +103,81 @@ class IconList extends React.Component <PropTypes, StateTypes>{
         let iconIndex = 0;
 
         if(selectedIcon){
+
+            // Find current icon position
             icons.forEach((icon, index) => {
                 if(selectedIcon.id === icon.id){
                     iconIndex = index;
                 }
             });
 
+            // Check if user has pushed arrow buttons and calculate new position
             switch (event.key){
                 case 'ArrowUp':
-                    if(iconIndex - numInRow >= 0){
+                    if(icons[iconIndex - numInRow]){
                         iconIndex-= numInRow;
                     }else{
                         iconIndex = 0;
                     }
                     break;
                 case 'ArrowRight':
-                    if(iconIndex + 1 <= icons.length){
+                    if(icons[iconIndex + 1]){
                         iconIndex++;
                     }
                     break;
                 case 'ArrowDown':
-                    if(iconIndex + numInRow <= icons.length){
+                    if(icons[iconIndex + numInRow]){
                         iconIndex+= numInRow;
                     }else{
-                        iconIndex = icons.length;
+                        iconIndex = icons.length - 1;
                     }
-                    break;
+                    break
                 case 'ArrowLeft':
-                    if(iconIndex - 1 >= 0){
+                    if(icons[iconIndex - 1]){
                         iconIndex--;
                     }
                     break;
             }
-            fetchIcon(icons[iconIndex].id, iconStyle);
-            this.scrollToIcon();
+
+            // Fetch new icon with new position
+            if(icons[iconIndex]){
+                fetchIcon(icons[iconIndex].id, iconStyle);
+                this.scrollToIcon();
+            }
+
+            // Only set focus if user has pushed the arrows
+            switch(event.key){
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    // Prevent defaults scrolling
+                    event.preventDefault();
+                case 'ArrowRight':
+                case 'ArrowLeft':
+                    // Allow focus to be set when using arrows
+                    this.setState({setFocus: true});
+                    break;
+                default:
+                    this.setState({setFocus: false});
+                    break;
+            }
         }
+
     }
 
     public scrollToIcon(){
         if(this.selectedElement.current != null) {
-            scroll.scrollTo(this.selectedElement.current.offsetTop - (window.innerHeight / 3), { duration : 150});
+           scroll.scrollTo(this.selectedElement.current.offsetTop - (window.innerHeight / 3), { duration : 100});
         }
+    }
+
+    public componentWillMount(){
+        window.addEventListener("resize", this.measure);
+        document.addEventListener("keydown", this.keyDown);
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener("resize", this.measure);
+        document.removeEventListener("keydown", this.keyDown);
     }
 
     public render() {
@@ -163,6 +194,7 @@ class IconList extends React.Component <PropTypes, StateTypes>{
                     {icons.map((icon:IconBasic, index: number) =>
                         <IconSelect
                             key={index}
+                            setFocus={this.state.setFocus}
                             icon={icon}
                             reference={this.selectedElement}
                             selected={selectedIcon && icon.id === selectedIcon.id}/>
