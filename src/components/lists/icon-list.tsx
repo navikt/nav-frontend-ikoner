@@ -2,6 +2,8 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import * as React from 'react';
 import * as InfiniteScroll from 'react-infinite-scroll-component';
 import * as Redux from "react-redux";
+import * as Scroll from 'react-scroll';
+const debounce = require('lodash.debounce'); // tslint:disable-line
 import Config from '../../appconfig';
 import Language from '../../language/norwegian';
 import {FetchingInterval, ReceiveIconsAction, SelectedIconAction, setFetchingInterval} from "../../redux/actions";
@@ -15,6 +17,8 @@ import {
 import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
+
+const scroll = Scroll.animateScroll;
 
 interface PropTypes {
     iconStyle: IconStyle;
@@ -30,20 +34,47 @@ interface PropTypes {
     setFetchInterval: (fetchFrom: number, fetchTo: number) => FetchingInterval;
 }
 
-class IconList extends React.Component <PropTypes>{
+interface StateTypes{
+    numInRow: number,
+}
+
+class IconList extends React.Component <PropTypes, StateTypes>{
+
+    private container : React.RefObject<HTMLDivElement>;
+    private selectedElement : React.RefObject<HTMLButtonElement>;
 
     constructor(props: PropTypes){
         super(props);
         props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
+        this.container = React.createRef();
+        this.selectedElement = React.createRef();
         this.loadMore = this.loadMore.bind(this);
         this.keyDown = this.keyDown.bind(this);
+        this.measure = debounce(this.measure.bind(this));
+        this.scrollToIcon = debounce(this.scrollToIcon.bind(this), 250);
+        this.state = {
+            numInRow: -1,
+        }
+    }
+
+    public measure(){
+        if(this.container.current != null) {
+          this.setState({
+                numInRow:Math.floor(
+                    Math.min((this.container.current.offsetWidth - Config.NAV_ICONS_LIST_PADDING * 2)
+                        / Config.NAV_ICONS_ELEMENT_WIDTH, this.props.icons.length)
+                ),
+            });
+        }
     }
 
     public componentWillMount(){
+        window.addEventListener("resize", this.measure);
         document.addEventListener("keydown", this.keyDown);
     }
 
     public componentWillUnmount() {
+        window.removeEventListener("resize", this.measure);
         document.removeEventListener("keydown", this.keyDown);
     }
 
@@ -54,6 +85,9 @@ class IconList extends React.Component <PropTypes>{
             this.props.fetchTo !== props.fetchTo
         ) {
             props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
+        }
+        if(this.props.icons){
+            this.measure();
         }
     }
 
@@ -68,10 +102,10 @@ class IconList extends React.Component <PropTypes>{
     public keyDown = (event: KeyboardEvent) => {
 
         const {icons, selectedIcon, fetchIcon, iconStyle} = this.props;
+        const {numInRow} = this.state;
+        let iconIndex = 0;
 
         if(selectedIcon){
-
-            let iconIndex = 0;
             icons.forEach((icon, index) => {
                 if(selectedIcon.id === icon.id){
                     iconIndex = index;
@@ -80,48 +114,62 @@ class IconList extends React.Component <PropTypes>{
 
             switch (event.key){
                 case 'ArrowUp':
-                    console.log("Up");
+                    if(iconIndex - numInRow >= 0){
+                        iconIndex-= numInRow;
+                    }else{
+                        iconIndex = 0;
+                    }
                     break;
                 case 'ArrowRight':
-                    console.log("Right");
                     if(iconIndex + 1 <= icons.length){
                         iconIndex++;
                     }
                     break;
                 case 'ArrowDown':
-                    console.log("Down");
+                    if(iconIndex + numInRow <= icons.length){
+                        iconIndex+= numInRow;
+                    }else{
+                        iconIndex = icons.length;
+                    }
                     break;
                 case 'ArrowLeft':
-                    console.log("Left");
                     if(iconIndex - 1 >= 0){
                         iconIndex--;
                     }
                     break;
             }
             fetchIcon(icons[iconIndex].id, iconStyle);
+            this.scrollToIcon();
         }
+    }
 
+    public scrollToIcon(){
+        if(this.selectedElement.current != null) {
+            scroll.scrollTo(this.selectedElement.current.offsetTop - (window.innerHeight / 3), { duration : 150});
+        }
     }
 
     public render() {
         const {icons, fetchingCounter, fetchHasMore, selectedIcon} = this.props;
+
         return (
-            <InfiniteScroll
-                endMessage={!icons.length && !fetchingCounter ? <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
-                loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}
-                dataLength={icons.length}
-                hasMore={fetchHasMore}
-                next={this.loadMore} >
-                {icons.map((icon:IconBasic, index: number) =>
-                    <IconSelect
-                        key={index}
-                        id={icon.id}
-                        title={icon.title}
-                        imageLink={icon.link}
-                        extension={icon.extension}
-                        selected={selectedIcon && icon.id === selectedIcon.id}/>
-                )}
-            </InfiniteScroll>
+            <div ref={this.container}>
+                <InfiniteScroll
+                    endMessage={!icons.length && !fetchingCounter ? <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
+                    loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}
+                    dataLength={icons.length}
+                    hasMore={fetchHasMore}
+                    next={this.loadMore} >
+                    {icons.map((icon:IconBasic, index: number) =>
+                        <IconSelect
+                            key={index}
+                            icon={icon}
+                            reference={this.selectedElement}
+                            selected={selectedIcon && icon.id === selectedIcon.id}/>
+                    )}
+                </InfiniteScroll>
+            </div>
+
         );
     }
 }
