@@ -7,7 +7,8 @@ import Language from '../../language/norwegian';
 import {
     FetchingInterval,
     ReceiveIconsAction,
-    SelectedIconAction, SelectedIconIndexAction,
+    SelectedIconAction,
+    SelectedIconIndexAction,
     setFetchingInterval,
     setSelectedIconIndex
 } from "../../redux/actions";
@@ -26,6 +27,7 @@ const debounce = require('lodash.debounce'); // tslint:disable-line
 
 interface PropTypes {
     iconStyle: IconStyle;
+    iconColor: string;
     icons: Icons;
     searchText: SearchText;
     fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
@@ -90,11 +92,14 @@ class IconList extends React.Component <PropTypes, StateTypes>{
         document.removeEventListener("keydown", this.keyDown);
     }
 
+    /*
     public shouldComponentUpdate(props: PropTypes){
         return this.props.icons !== props.icons;
     }
+    */
+
     public render() {
-        const {icons, fetchingCounter, fetchHasMore} = this.props;
+        const {icons, fetchingCounter, fetchHasMore, iconColor, iconStyle, fetchIcon, setIconIndex, selectedIconIndex} = this.props;
         return (
             <div ref={this.container}>
                 <InfiniteScroll
@@ -107,6 +112,12 @@ class IconList extends React.Component <PropTypes, StateTypes>{
                         <IconSelect
                             key={index}
                             index={index}
+                            icons={icons}
+                            setIconIndex={setIconIndex}
+                            selectedIconIndex={selectedIconIndex}
+                            iconColor={iconColor}
+                            fetchIcon={fetchIcon}
+                            iconStyle={iconStyle}
                             icon={icon}/>
                     )}
                 </InfiniteScroll>
@@ -184,6 +195,7 @@ const mapStateToProps = (state: Store) => {
         fetchHasMore: state.iconsStore.fetchHasMore,
         fetchTo: state.iconsStore.fetchTo,
         fetchingCounter: state.iconsStore.fetchingCounter,
+        iconColor: state.iconsStore.iconColor,
         iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,

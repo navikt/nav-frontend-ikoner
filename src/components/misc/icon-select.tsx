@@ -1,8 +1,6 @@
 import * as React from 'react';
-import * as Redux from 'react-redux';
-import {SelectedIconAction, SelectedIconIndexAction, setSelectedIconIndex} from "../../redux/actions";
-import {IconBasic, Icons, IconStyle, Store} from '../../redux/store-interfaces';
-import api from "../../utils/api";
+import {SelectedIconAction, SelectedIconIndexAction} from "../../redux/actions";
+import {IconBasic, Icons, IconStyle} from '../../redux/store-interfaces';
 import IconInList from "./icon-in-list";
 import './misc.less';
 
@@ -10,6 +8,7 @@ interface PropTypes {
     index: number,
     key: number,
     icon: IconBasic,
+    iconColor: string;
     iconStyle: IconStyle;
     icons: Icons;
     fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
@@ -78,18 +77,4 @@ class IconSelect extends React.Component <PropTypes, StateTypes> {
     }
 }
 
-const mapStateToProps = (state: Store) => {
-    return {
-        iconColor: state.iconsStore.iconColor,
-        iconStyle: state.iconsStore.iconStyle,
-        icons: state.iconsStore.icons,
-        selectedIconIndex:  state.iconsStore.selectedIconIndex,
-    };
-};
-
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
-    setIconIndex: (index: number) => dispatch(setSelectedIconIndex(index)),
-});
-
-export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconSelect);
+export default IconSelect;
