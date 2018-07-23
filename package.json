@@ -64,6 +64,7 @@
     "@types/react-scroll": "^1.5.3",
     "@types/react-svg": "^3.0.0",
     "@types/react-tag-input": "^5.0.0",
+    "react-addons-perf": "^15.4.2",
     "react-edit-inline": "^1.0.8",
     "typescript": "^2.9.2",
     "yet-another-fetch-mock": "^2.3.3"

@@ -4,6 +4,7 @@ export const RECEIVE_ICONS = 'RECEIVE_ICONS'
 export const RECEIVE_TAGS = 'RECEIVE_TAGS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
+export const SET_SELECTED_ICON_INDEX = 'SET_SELECTED_ICON_INDEX'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
 export const SET_ICON_STYLE = 'SET_ICON_STYLE'
 export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
@@ -32,6 +33,11 @@ export interface SearchTextAction {
 export interface SelectedIconAction {
     type: string;
     icon: IconExpanded;
+}
+
+export interface SelectedIconIndexAction {
+    type: string;
+    index: number;
 }
 
 export interface IconColorAction {
@@ -78,6 +84,10 @@ export function receiveTags(tags: Tags): ReceiveTagsAction {
 
 export function setSelectedIcon(icon: IconExpanded): SelectedIconAction {
     return { type: SET_SELECTED_ICON, icon }
+}
+
+export function setSelectedIconIndex(index: number): SelectedIconIndexAction {
+    return { type: SET_SELECTED_ICON_INDEX, index }
 }
 
 export function setSearchText(searchText: string): SearchTextAction {

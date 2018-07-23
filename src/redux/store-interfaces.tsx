@@ -9,6 +9,7 @@ export interface IconsStore {
     lastUpdated?: Date,
     searchText: string,
     selectedIcon?: IconExpanded,
+    selectedIconIndex: number,
     tags: Tags,
 }
 

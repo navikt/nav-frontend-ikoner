@@ -46,13 +46,20 @@ function fetchIconsDispatch(dispatch: Redux.Dispatch<ReceiveIconsAction | Fetchi
 
 function fetchIcon(id: string, iconStyle: IconStyle): (dispatch: Redux.Dispatch<SelectedIconAction>) => Promise<SelectedIconAction> {
     return (dispatch: Redux.Dispatch<SelectedIconAction>) => {
-        // Build URL
-        const iStyle = LinkCreator.iconStyleToString(iconStyle);
-        return fetch  (`${Config.NAV_ICONS_API_LINK}/icon/${iStyle}/${id}`)
-            .then(response => response.json())
-            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-            .then(json => dispatch(setSelectedIcon(json)));
+       return fetchIconDispatchDebounced(dispatch, id, iconStyle);
     }
+}
+
+const fetchIconDispatchDebounced = debounce(fetchIconDispatch, 100);
+function fetchIconDispatch(dispatch: Redux.Dispatch<SelectedIconAction>,
+                           id: string,
+                           iconStyle: IconStyle){
+    // Build URL
+    const iStyle = LinkCreator.iconStyleToString(iconStyle);
+    return fetch  (`${Config.NAV_ICONS_API_LINK}/icon/${iStyle}/${id}`)
+        .then(response => response.json())
+        .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+        .then(json => dispatch(setSelectedIcon(json)));
 }
 
 function fetchTags() : (dispatch: Redux.Dispatch<ReceiveTagsAction>) => Promise<ReceiveTagsAction> {

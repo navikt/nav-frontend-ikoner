@@ -6,7 +6,7 @@ import {
     SET_ICON_COLOR,
     SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
-    SET_SELECTED_ICON
+    SET_SELECTED_ICON, SET_SELECTED_ICON_INDEX
 } from "./actions";
 import {IconsStore, IconStyle} from "./store-interfaces";
 
@@ -21,6 +21,7 @@ const initialState : IconsStore = {
     lastUpdated: undefined,
     searchText: '',
     selectedIcon: undefined,
+    selectedIconIndex: 0,
     tags: [],
 }
 
@@ -31,12 +32,17 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
         fetchHasMore: true,
         fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
         icons: [],
+        selectedIconIndex: 0,
     }
 
     switch (action.type) {
         case SET_SELECTED_ICON:
             return {...state, ...{
                     selectedIcon: action.icon,
+                }};
+        case SET_SELECTED_ICON_INDEX:
+            return {...state, ...{
+                    selectedIconIndex: action.index,
                 }};
         case SET_FETCHING_ICONS:
             return {...state, ...{
