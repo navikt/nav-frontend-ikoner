@@ -50,11 +50,13 @@ interface StateTypes{
 class IconList extends React.Component <PropTypes, StateTypes>{
 
     private readonly container : React.RefObject<HTMLDivElement>;
+    private readonly selectedIconElement : React.RefObject<HTMLButtonElement>;
 
     constructor(props: PropTypes){
         super(props);
         props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         this.container = React.createRef();
+        this.selectedIconElement = React.createRef();
         this.loadMore = this.loadMore.bind(this);
         this.keyDown = debounce(this.keyDown.bind(this), 25);
         this.measure = debounce(this.measure.bind(this), 500);
@@ -112,7 +114,7 @@ class IconList extends React.Component <PropTypes, StateTypes>{
                         <IconSelect
                             key={index}
                             index={index}
-                            icons={icons}
+                            selectedIconElement={this.selectedIconElement}
                             setIconIndex={setIconIndex}
                             selectedIconIndex={selectedIconIndex}
                             iconColor={iconColor}
@@ -176,7 +178,15 @@ class IconList extends React.Component <PropTypes, StateTypes>{
             if(icons[selectedIconIndex]){
                 fetchIcon(icons[selectedIconIndex].id, iconStyle);
                 setIconIndex(selectedIconIndex);
+                this.focusIcon();
             }
+        }
+    }
+
+
+    private focusIcon(){
+        if(this.selectedIconElement.current != null){
+             this.selectedIconElement.current.focus();
         }
     }
 

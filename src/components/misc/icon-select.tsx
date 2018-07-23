@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {SelectedIconAction, SelectedIconIndexAction} from "../../redux/actions";
-import {IconBasic, Icons, IconStyle} from '../../redux/store-interfaces';
+import {IconBasic, IconStyle} from '../../redux/store-interfaces';
 import IconInList from "./icon-in-list";
 import './misc.less';
 
@@ -10,7 +10,7 @@ interface PropTypes {
     icon: IconBasic,
     iconColor: string;
     iconStyle: IconStyle;
-    icons: Icons;
+    selectedIconElement: React.RefObject<HTMLButtonElement>;
     fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
     setIconIndex: (index:number) => SelectedIconIndexAction;
     selectedIconIndex: number;
@@ -22,11 +22,8 @@ interface StateTypes {
 
 class IconSelect extends React.Component <PropTypes, StateTypes> {
 
-    private buttonElement : React.RefObject<HTMLButtonElement>;
-
     constructor(props: PropTypes){
         super(props);
-        this.buttonElement = React.createRef();
         this.onIconClick = this.onIconClick.bind(this);
         this.state = {
             selected: props.index === props.selectedIconIndex,
@@ -34,24 +31,18 @@ class IconSelect extends React.Component <PropTypes, StateTypes> {
     }
 
     public onIconClick(){
-        const {icons, icon, setIconIndex} = this.props;
-        icons.forEach((otherIcon, index) => {
-            if(icon.id === otherIcon.id){
-                setIconIndex(index);
-            }
-        });
-
+        const {setIconIndex} = this.props;
+        setIconIndex(this.props.index);
         this.props.fetchIcon(this.props.icon.id, this.props.iconStyle);
     }
 
-    public shouldComponentUpdate(props: PropTypes) {
-        return props.index === props.selectedIconIndex || this.state.selected;
+    public shouldComponentUpdate(props: PropTypes, state: StateTypes) {
+        return this.state.selected !== state.selected;
     }
 
     public componentWillReceiveProps(props: PropTypes){
         if(props.index === props.selectedIconIndex){
             this.setState({selected: true});
-            this.focusIcon();
         }else if(this.state.selected){
             this.setState({selected: false});
         }
@@ -60,7 +51,6 @@ class IconSelect extends React.Component <PropTypes, StateTypes> {
     public render() {
         return(
             <button
-                ref={this.buttonElement}
                 tabIndex={this.state.selected ? 0 : -1}
                 onClick={this.onIconClick}
                 className="icon-in-list-button">
@@ -70,11 +60,6 @@ class IconSelect extends React.Component <PropTypes, StateTypes> {
         );
     }
 
-    private focusIcon(){
-        if(this.buttonElement.current != null){
-            this.buttonElement.current.focus();
-        }
-    }
 }
 
 export default IconSelect;
