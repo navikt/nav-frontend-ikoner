@@ -1,12 +1,11 @@
 import * as React from "react";
 import * as Redux from "react-redux";
 import {IconExpanded, IconStyle, IconType, Store, Tags} from "../redux/store-interfaces";
-import DownloadButton from "./buttons/download-button";
-import {default as DownloadTypes} from "./misc/download-types";
 import Icon from './misc/icon';
 import './misc/misc.less';
 import Seperator from "./misc/seperator";
 import IconDescription from './sidebar/icon-description'
+import IconDownload from "./sidebar/icon-download";
 import IconTitle from './sidebar/icon-title'
 import TagsHandler from './sidebar/tags-handler';
 
@@ -31,9 +30,8 @@ class Sidebar extends React.Component<PropTypes, StateTypes>{
                     <Icon imageLink={selectedIcon.bestLocation.url} extension={selectedIcon.bestLocation.extension} iconType={IconType.IN_PANEL} iconColor="black"/>
                     <IconDescription />
                     <TagsHandler />
-                    <Seperator/>
-                    <DownloadTypes icon={selectedIcon} iconStyle={this.props.iconStyle}/>
-                    <DownloadButton icon={selectedIcon}/>
+                    <Seperator />
+                    <IconDownload />
                 </div>
             </div>
         );

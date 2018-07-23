@@ -1,4 +1,5 @@
 export interface IconsStore {
+    chosenExtensions: { [key: string]: boolean },
     fetchingCounter: number,
     fetchHasMore: boolean
     fetchFrom: number,
@@ -42,7 +43,7 @@ export interface IconExpanded{
 export interface IconBasic{
     id: string,
     title: string,
-    extension:string,
+    extension: string,
     link: string,
 }
 
@@ -57,3 +58,4 @@ export enum IconStyle {
     FILLED,
     LINE
 };
+

@@ -1,16 +1,21 @@
 import * as Redux from 'redux';
 import Config from '../appconfig';
 import {
-    RECEIVE_ICONS, RECEIVE_TAGS, SET_FETCH_INTERVAL,
+    RECEIVE_ICONS,
+    RECEIVE_TAGS,
+    SET_FETCH_INTERVAL,
     SET_FETCHING_ICONS,
     SET_ICON_COLOR,
-    SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
+    SET_ICON_STYLE,
+    // SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
-    SET_SELECTED_ICON
+    SET_SELECTED_ICON,
+    TOGGLE_CHOSEN_EXTENSIONS
 } from "./actions";
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState : IconsStore = {
+    chosenExtensions: {},
     fetchFrom: 0,
     fetchHasMore: true,
     fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
@@ -21,10 +26,10 @@ const initialState : IconsStore = {
     lastUpdated: undefined,
     searchText: '',
     selectedIcon: undefined,
-    tags: [],
-}
+    tags: []
+};
 
-export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
+export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): IconsStore {
 
     const RESET_FETCH = {
         fetchFrom: 0,
@@ -36,6 +41,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
     switch (action.type) {
         case SET_SELECTED_ICON:
             return {...state, ...{
+                    chosenExtensions: {},
                     selectedIcon: action.icon,
                 }};
         case SET_FETCHING_ICONS:
@@ -67,17 +73,21 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction) {
                     fetchHasMore: action.icons.length === Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
                     fetchingCounter: state.fetchingCounter--,
                     icons,
-                    lastUpdated: Date.now(),
+                    lastUpdated: new Date()
                 }};
         case RECEIVE_TAGS:
             return {...state, ...{
                     tags: action.tags,
                 }};
-        case SET_ICON_TITLE_DESCRIPTION:
-            return {...state, ...{
-                    description: action.description,
-                    title: action.title,
-                }};
+        // case SET_ICON_TITLE_DESCRIPTION:
+        //     return {...state, ...{
+        //             description: action.description,
+        //             title: action.title,
+        //         }};
+        case TOGGLE_CHOSEN_EXTENSIONS:
+            const nState = { ...state.chosenExtensions };
+            nState[action.chosenExtensions] = !nState[action.chosenExtensions];
+            return {...state, chosenExtensions: { ...nState } };
         default:
             return state
     }

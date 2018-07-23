@@ -9,6 +9,7 @@ export const SET_ICON_STYLE = 'SET_ICON_STYLE'
 export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
 export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
 export const SET_ICON_TITLE_DESCRIPTION = 'SET_ICON_TITLE_DESCRIPTION'
+export const TOGGLE_CHOSEN_EXTENSIONS = 'TOGGLE_CHOSEN_EXTENSIONS'
 
 /*
     Interfaces
@@ -64,6 +65,11 @@ export interface IconTitleDescription {
     description: string,
 }
 
+export interface ChosenExtensions {
+    type: string,
+    chosenExtensions: string,
+}
+
 /*
     Actions
  */
@@ -102,4 +108,9 @@ export function setFetchingInterval(fetchFrom: number, fetchTo: number): Fetchin
 
 export function setIconTitleDescription(title: string, description: string): IconTitleDescription {
     return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
+}
+
+export function toggleChosenExtensions(event: React.MouseEvent<HTMLInputElement> ): ChosenExtensions {
+    const chosenExtensions: string = event.currentTarget.id;
+    return { type: TOGGLE_CHOSEN_EXTENSIONS, chosenExtensions }
 }
