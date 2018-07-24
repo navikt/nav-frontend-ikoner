@@ -1,6 +1,7 @@
 import * as React from "react";
 import TextareaAutosize from 'react-autosize-textarea';
 import * as Redux from "react-redux";
+import {SelectedIconAction} from "../../redux/actions";
 import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
 import api from "../../utils/api";
 import '../misc/misc.less';
@@ -9,7 +10,7 @@ import './tags.less';
 
 interface PropTypes {
     selectedIcon: IconExpanded;
-    editIcon: (id: string, title: string, description: string, style: IconStyle) => Promise<any>;
+    editIcon: (id: string, title: string, description: string, style: IconStyle) => Promise<SelectedIconAction>;
     iconStyle: IconStyle;
 }
 
