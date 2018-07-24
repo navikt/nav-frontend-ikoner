@@ -7,7 +7,7 @@ import {
     SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
     SET_SELECTED_ICON, SET_SELECTED_ICON_INDEX
-} from "./actions";
+} from "./actions-constants";
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState : IconsStore = {

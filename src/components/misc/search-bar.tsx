@@ -1,13 +1,16 @@
 import {Input} from 'nav-frontend-skjema';
 import * as React from 'react';
 import * as Redux from 'react-redux';
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from 'redux-thunk';
 import Language from "../../language/norwegian";
-import {SearchTextAction, setSearchText} from "../../redux/actions";
-import {SearchText, Store} from "../../redux/store-interfaces";
+import {setSearchText} from "../../redux/actions";
+import {SearchTextAction} from "../../redux/actions-interfaces";
+import {Store} from "../../redux/store-interfaces";
 import './misc.less';
 
 interface PropTypes {
-    searchText: SearchText;
+    searchText: string;
     setSearchText: (searchText:string) => SearchTextAction;
 }
 
@@ -45,7 +48,7 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
     setSearchText : (searchText:string)  => dispatch(setSearchText(searchText)),
 });
 

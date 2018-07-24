@@ -2,36 +2,40 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import * as React from 'react';
 import * as InfiniteScroll from 'react-infinite-scroll-component';
 import * as Redux from "react-redux";
+import {AnyAction} from "redux";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import Config from '../../appconfig';
 import Language from '../../language/norwegian';
 import {
-    FetchingInterval,
-    ReceiveIconsAction,
-    SelectedIconAction,
-    SelectedIconIndexAction,
+    fetchIcon,
+    fetchIcons,
     setFetchingInterval,
     setSelectedIconIndex
 } from "../../redux/actions";
 import {
+    FetchingIconsAction, FetchingInterval,
+    ReceiveIconsAction,
+    SelectedIconAction,
+    SelectedIconIndexAction
+} from "../../redux/actions-interfaces";
+import {
     IconBasic, IconExpanded,
     Icons,
     IconStyle,
-    SearchText,
     Store
 } from "../../redux/store-interfaces";
-import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
-const debounce = require('lodash.debounce'); // tslint:disable-line
+// const debounce = require('lodash.debounce'); // tslint:disable-line
 
 interface PropTypes {
     iconStyle: IconStyle;
     iconColor: string;
     icons: Icons;
-    searchText: SearchText;
-    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
-    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string) => Promise<ReceiveIconsAction>;
+    searchText: string;
+    fetchIcon: (filename:string) => ThunkAction<void, Store, {}, SelectedIconAction>;
+    fetchIcons: (fetchFrom: number, fetchTo: number, searchText?: string | undefined) => ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction>;
     fetchFrom: number;
     fetchHasMore: boolean;
     fetchTo: number;
@@ -39,155 +43,101 @@ interface PropTypes {
     selectedIcon: IconExpanded,
     selectedIconIndex: number,
     setIconIndex: (index:number) => SelectedIconIndexAction;
-    setFetchInterval: (fetchFrom: number, fetchTo: number) => FetchingInterval;
+    setFetchInterval: (fetchFrom: number, fetchTo: number) => ThunkAction<void, Store, {}, FetchingInterval>;
 }
 
-interface StateTypes{
-    numInRow: number,
-    setFocus: boolean,
-}
-
-class IconList extends React.Component <PropTypes, StateTypes>{
-
-    private readonly container : React.RefObject<HTMLDivElement>;
-    private readonly selectedIconElement : React.RefObject<HTMLButtonElement>;
-
+class IconList extends React.Component <PropTypes, {}>{
     constructor(props: PropTypes){
         super(props);
-        props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
-        this.container = React.createRef();
-        this.selectedIconElement = React.createRef();
         this.loadMore = this.loadMore.bind(this);
-        this.keyDown = debounce(this.keyDown.bind(this), 25);
-        this.measure = debounce(this.measure.bind(this), 500);
-        this.state = {
-            numInRow: -1,
-            setFocus: false,
-        }
-    }
-    public componentWillReceiveProps(props: PropTypes){
-        // Fetch from API if changes in state
-        if (this.props.searchText !== props.searchText ||
-            this.props.iconStyle !== props.iconStyle  ||
-            this.props.fetchFrom !== props.fetchFrom ||
-            this.props.fetchTo !== props.fetchTo
-        ) {
-            props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
-        }
-
-        // Always set the first element in the list to active
-        if(this.props.icons !== props.icons && props.icons[0] && props.icons.length <= Config.NAV_ICONS_FETCH_INTERVAL_SIZE){
-            props.fetchIcon(props.icons[0].id, props.iconStyle);
-        }
-
-        if(this.props.icons !== props.icons){
-            this.measure();
-        }
-    }
-    public componentWillMount(){
-        window.addEventListener("resize", this.measure);
-        document.addEventListener("keydown", this.keyDown);
+        this.handle = this.handle.bind(this);
     }
 
-    public componentWillUnmount() {
-        window.removeEventListener("resize", this.measure);
-        document.removeEventListener("keydown", this.keyDown);
+    public componentDidMount() {
+        const {fetchFrom, fetchTo, searchText} = this.props;
+        this.props.fetchIcons(fetchFrom, fetchTo, searchText);
     }
 
-    /*
-    public shouldComponentUpdate(props: PropTypes){
-        return this.props.icons !== props.icons;
+    public handle = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        const container = event.currentTarget;
+        const children = Array.from(container.children) as HTMLElement[];
+        const currentFocus = container.querySelector(':focus') as HTMLElement;
+        if (!currentFocus) {
+            return;
+        }
+
+        const currentIndex = children.indexOf(currentFocus);
+        let newIndex = 0;
+        const actions = {
+            'ArrowDown': () => {
+                const iconOnRow = Math.floor(container.offsetWidth / currentFocus.offsetWidth);
+                if (currentIndex + iconOnRow < children.length) {
+                    newIndex = currentIndex + iconOnRow;
+                } else {
+                    newIndex = children.length - 1;
+                }
+            },
+            'ArrowLeft': () => {
+                if (currentIndex > 0) {
+                     newIndex = currentIndex - 1;
+                }
+            },
+            'ArrowRight': () => {
+                if (currentIndex < children.length - 1) {
+                    newIndex = currentIndex + 1;
+                }
+            },
+            'ArrowUp': () => {
+                const iconOnRow = Math.floor(container.offsetWidth / currentFocus.offsetWidth);
+                if (currentIndex - iconOnRow >= 0) {
+                    newIndex = currentIndex - iconOnRow;
+                } else {
+                    newIndex = 0;
+                }
+            },
+        };
+        (actions[event.key] || (() => {}))(); // tslint:disable-line
+        children[newIndex].focus();
+        this.props.setIconIndex(newIndex);
+        this.props.fetchIcon(this.props.icons[newIndex].id);
+    };
+
+    public iconOnclickFactory(index: number): () => void {
+        return () => {
+            this.props.setIconIndex(index);
+            this.props.fetchIcon(this.props.icons[index].id);
+        };
     }
-    */
+
+    public shouldComponentUpdate(nextProps: PropTypes) {
+        return this.props.icons !== nextProps.icons;
+    }
 
     public render() {
-        const {icons, fetchingCounter, fetchHasMore, iconColor, iconStyle, fetchIcon, setIconIndex, selectedIconIndex} = this.props;
+        const { icons, fetchingCounter, fetchHasMore } = this.props;
+        const iconElements = icons.map((icon:IconBasic, index: number) =>
+            <IconSelect
+                index={index}
+                key={icon.id}
+                onClick={this.iconOnclickFactory(index)}
+                icon={icon}/>
+        );
+
         return (
-            <div ref={this.container}>
+            <div>
                 <InfiniteScroll
                     endMessage={!icons.length && !fetchingCounter ? <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
                     loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}
                     dataLength={icons.length}
                     hasMore={fetchHasMore}
                     next={this.loadMore} >
-                    {icons.map((icon:IconBasic, index: number) =>
-                        <IconSelect
-                            key={index}
-                            index={index}
-                            selectedIconElement={this.selectedIconElement}
-                            setIconIndex={setIconIndex}
-                            selectedIconIndex={selectedIconIndex}
-                            iconColor={iconColor}
-                            fetchIcon={fetchIcon}
-                            iconStyle={iconStyle}
-                            icon={icon}/>
-                    )}
+                    <div onKeyDown={this.handle}>
+                        {iconElements}
+                    </div>
                 </InfiniteScroll>
             </div>
 
         );
-    }
-
-    private measure(){
-        if(this.container.current != null && this.props.icons.length) {
-            this.setState({
-                numInRow:Math.floor(
-                    Math.min((this.container.current.offsetWidth - Config.NAV_ICONS_LIST_PADDING * 2)
-                        / Config.NAV_ICONS_ELEMENT_WIDTH, this.props.icons.length)
-                ),
-            });
-        }
-    }
-
-    private readonly keyDown = (event: KeyboardEvent) => {
-
-        let {selectedIconIndex} = this.props;
-        const {icons, selectedIcon, fetchIcon, iconStyle, setIconIndex} = this.props;
-        const {numInRow} = this.state;
-
-        if(selectedIcon){
-            // Check if user has pushed arrow buttons and calculate new position
-            switch (event.key){
-                case 'ArrowUp':
-                    if(selectedIconIndex - numInRow >= 0){
-                        selectedIconIndex-= numInRow;
-                    }else{
-                        selectedIconIndex = 0;
-                    }
-                    break;
-                case 'ArrowRight':
-                    if(selectedIconIndex + 1 <= icons.length){
-                        selectedIconIndex++;
-                    }
-                    break;
-                case 'ArrowDown':
-                    if(selectedIconIndex + numInRow <= icons.length){
-                        selectedIconIndex+= numInRow;
-                    }else{
-                        selectedIconIndex = icons.length - 1;
-                    }
-                    break
-                case 'ArrowLeft':
-                    if(selectedIconIndex - 1 >= 0){
-                        selectedIconIndex--;
-                    }
-                    break;
-            }
-
-            // Fetch new icon with new position
-            if(icons[selectedIconIndex]){
-                fetchIcon(icons[selectedIconIndex].id, iconStyle);
-                setIconIndex(selectedIconIndex);
-                this.focusIcon();
-            }
-        }
-    }
-
-
-    private focusIcon(){
-        if(this.selectedIconElement.current != null){
-             this.selectedIconElement.current.focus();
-        }
     }
 
     private loadMore() {
@@ -214,9 +164,9 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
-    fetchIcons : ( iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string)  => api.fetchIcons(iconStyle, fetchFrom, fetchTo, searchText)(dispatch),
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
+    fetchIcon : (filename:string)  => dispatch(fetchIcon(filename)),
+    fetchIcons : ( fetchFrom: number, fetchTo: number, searchText?:string)  => dispatch(fetchIcons(fetchFrom, fetchTo, searchText)),
     setFetchInterval : ( fetchFrom: number, fetchTo: number)  => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
     setIconIndex: (index: number) => dispatch(setSelectedIconIndex(index)),
 });

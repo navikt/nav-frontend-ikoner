@@ -2,18 +2,13 @@ import * as React from 'react';
 import './misc.less';
 
 interface PropTypes {
-    extension: string
-};
+    extension: string;
+}
 
-class IconUnknownExtension extends React.Component <PropTypes>{
-
-    constructor(props:PropTypes){
-        super(props);
-    }
+class IconUnknownExtension extends React.PureComponent<PropTypes> {
     public render() {
-
         const {extension} = this.props;
-        if(extension !== "svg" && extension !== "png"){
+        if (extension !== "svg" && extension !== "png") {
             return (
                 <div className="unknown-extension-container">
                     <div className="unknown-extension">
@@ -22,7 +17,7 @@ class IconUnknownExtension extends React.Component <PropTypes>{
                 </div>
             );
         }
-       return null;
+        return null;
     }
 }
 

@@ -4,17 +4,12 @@ import IconUnknownExtension from "./icon-unknown-extension";
 import './misc.less';
 
 interface PropTypes {
-    icon: IconBasic,
-    selected: boolean,
-};
+    icon: IconBasic;
+    selected: boolean;
+}
 
-class IconInList extends React.Component <PropTypes> {
-
-    constructor(props:PropTypes){
-        super(props);
-    }
+class IconInList extends React.PureComponent<PropTypes> {
     public render() {
-
         const {icon, selected} = this.props;
         const className = `icon-in-list ${selected ? 'icon-in-list-selected' : ''}`;
         return (

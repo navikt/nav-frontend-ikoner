@@ -12,11 +12,7 @@ import TagsHandler from './sidebar/tags-handler';
 interface PropTypes { selectedIcon: IconExpanded, iconStyle: IconStyle};
 interface StateTypes { tags: Tags; suggestions:Tags };
 
-class Sidebar extends React.Component<PropTypes, StateTypes>{
-
-    public shouldComponentUpdate(props: PropTypes){
-        return this.props.selectedIcon ? this.props.selectedIcon.id !== props.selectedIcon.id : false;
-    }
+class Sidebar extends React.PureComponent<PropTypes, StateTypes>{
 
     public render() {
 

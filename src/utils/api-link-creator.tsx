@@ -8,7 +8,7 @@ function iconStyle(style : IconStyle) : string{
     return style === IconStyle.FILLED ? `style=${iconStyleToString(style)}` : `style=${iconStyleToString(style)}`
 }
 
-function searchText(search :string) : string {
+function searchText(search :string | undefined) : string {
     return search ? `&search=${search}` : "";
 }
 

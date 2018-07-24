@@ -1,16 +1,18 @@
 import * as React from "react";
 import * as Redux from "react-redux";
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from "redux-thunk";
 import {Textarea} from "../../../node_modules/nav-frontend-skjema";
 import Language from "../../language/norwegian";
-import {SelectedIconAction} from "../../redux/actions";
+import {editIcon} from "../../redux/actions";
+import {SelectedIconAction} from "../../redux/actions-interfaces";
 import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
-import api from "../../utils/api";
 import '../misc/misc.less';
 import './tags.less';
 
 interface PropTypes {
     selectedIcon: IconExpanded,
-    editIcon:  ( id: string, title: string, description: string, style: IconStyle) => Promise<SelectedIconAction>,
+    editIcon:  ( id: string, title: string, description: string) => Promise<SelectedIconAction>,
     iconStyle: IconStyle
 };
 interface StateTypes { tags: Tags; suggestions: Tags };
@@ -23,7 +25,7 @@ class IconDescription extends React.Component<PropTypes, StateTypes>{
     }
 
     public handleDescriptionChange(event: React.ChangeEvent<HTMLInputElement>) {
-        this.props.editIcon(this.props.selectedIcon.id, this.props.selectedIcon.title, event.target.value, this.props.iconStyle);
+        this.props.editIcon(this.props.selectedIcon.id, this.props.selectedIcon.title, event.target.value);
     }
 
     public render() {
@@ -57,8 +59,8 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    editIcon : ( id: string, title: string, description: string, style: IconStyle)  => api.editIcon(id, title, description, style)(dispatch)
+const mapDispatchToProps = (dispatch:ThunkDispatch<Store, {}, AnyAction>) => ({
+    editIcon : ( id: string, title: string, description: string)  => dispatch(editIcon(id, title, description))
 });
 
 

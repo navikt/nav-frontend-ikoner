@@ -1,78 +1,24 @@
-import {IconExpanded, Icons, IconStyle, Tags} from "./store-interfaces";
-
-export const RECEIVE_ICONS = 'RECEIVE_ICONS'
-export const RECEIVE_TAGS = 'RECEIVE_TAGS'
-export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
-export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
-export const SET_SELECTED_ICON_INDEX = 'SET_SELECTED_ICON_INDEX'
-export const SET_ICON_COLOR = 'SET_ICON_COLOR'
-export const SET_ICON_STYLE = 'SET_ICON_STYLE'
-export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
-export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
-export const SET_ICON_TITLE_DESCRIPTION = 'SET_ICON_TITLE_DESCRIPTION'
-
-/*
-    Interfaces
- */
-export interface ReceiveIconsAction {
-    type: string;
-    icons: Icons;
-    numberOfIcons: number;
-}
-
-export interface ReceiveTagsAction {
-    type: string;
-    tags: Tags;
-}
-
-export interface SearchTextAction {
-    type: string;
-    searchText: string;
-}
-
-export interface SelectedIconAction {
-    type: string;
-    icon: IconExpanded;
-}
-
-export interface SelectedIconIndexAction {
-    type: string;
-    index: number;
-}
-
-export interface IconColorAction {
-    type: string;
-    iconColor: string;
-}
-
-export interface IconColorStyle{
-    type: string,
-    iconStyle: IconStyle,
-}
-
-export interface FetchingIconsAction {
-    type: string,
-}
-
-export interface FetchingInterval {
-    type: string,
-    fetchFrom: number,
-    fetchTo: number,
-}
-
-export interface ResetFetch{
-    type: string,
-}
-
-export interface IconTitleDescription {
-    type: string,
-    title: string,
-    description: string,
-}
-
-/*
-    Actions
- */
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import Language from "../language/norwegian";
+import * as api from "../utils/api";
+import {
+    RECEIVE_ICONS,
+    RECEIVE_TAGS, SET_FETCH_INTERVAL,
+    SET_FETCHING_ICONS, SET_ICON_COLOR, SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION, SET_SEARCH_TEXT,
+    SET_SELECTED_ICON,
+    SET_SELECTED_ICON_INDEX
+} from "./actions-constants";
+import {
+    FetchingIconsAction, FetchingInterval,
+    IconColorAction, IconColorStyle, IconTitleDescription,
+    ReceiveIconsAction,
+    ReceiveTagsAction,
+    SearchTextAction,
+    SelectedIconAction,
+    SelectedIconIndexAction
+} from "./actions-interfaces";
+import {IconExpanded, Icons, IconsResult, IconStyle, Store, Tags} from "./store-interfaces";
+const debounce = require('lodash.debounce'); // tslint:disable-line
 
 export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsAction {
     return { type: RECEIVE_ICONS, icons , numberOfIcons}
@@ -82,7 +28,7 @@ export function receiveTags(tags: Tags): ReceiveTagsAction {
     return { type: RECEIVE_TAGS, tags }
 }
 
-export function setSelectedIcon(icon: IconExpanded): SelectedIconAction {
+export function setSelectedIcon(icon: IconExpanded | undefined): SelectedIconAction {
     return { type: SET_SELECTED_ICON, icon }
 }
 
@@ -90,26 +36,114 @@ export function setSelectedIconIndex(index: number): SelectedIconIndexAction {
     return { type: SET_SELECTED_ICON_INDEX, index }
 }
 
-export function setSearchText(searchText: string): SearchTextAction {
-    return { type: SET_SEARCH_TEXT, searchText }
+export function setSearchText(searchText: string):
+    ThunkAction<void, Store, {}, SearchTextAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+        const store = getState().iconsStore;
+        dispatch({type: SET_SEARCH_TEXT, searchText});
+        dispatch(fetchIcons(store.fetchFrom, store.fetchTo, searchText))
+    });
 }
 
 export function setIconColor(iconColor: string): IconColorAction {
     return { type: SET_ICON_COLOR, iconColor }
 }
 
-export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
-    return { type: SET_ICON_STYLE, iconStyle}
+export function setIconStyle(iconStyle: IconStyle):
+    ThunkAction<void, Store, {}, IconColorStyle> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+        dispatch({type: SET_ICON_STYLE, iconStyle})
+        dispatch(fetchIcons());
+    });
 }
 
 export function setFetchingIcons(): FetchingIconsAction {
-    return { type: SET_FETCHING_ICONS}
-}
-
-export function setFetchingInterval(fetchFrom: number, fetchTo: number): FetchingInterval {
-    return { type: SET_FETCH_INTERVAL, fetchFrom, fetchTo }
+    return { type: SET_FETCHING_ICONS }
 }
 
 export function setIconTitleDescription(title: string, description: string): IconTitleDescription {
     return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
+}
+
+export function setFetchingInterval(fetchFrom: number, fetchTo: number):
+    ThunkAction<void, Store, {}, FetchingInterval> {
+    return (dispatch)=> {
+        dispatch({ type: SET_FETCH_INTERVAL, fetchFrom, fetchTo });
+        dispatch(fetchIcons(fetchFrom, fetchTo));
+    };
+}
+
+export function fetchTags():
+    ThunkAction<void, Store, {}, ReceiveTagsAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+        api.fetchTags().then(response => response.json())
+            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then(json => dispatch(receiveTags(json)));
+    });
+}
+
+export function insertTag(tag: string, icon:string):
+    ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+        api.insertTag(tag, icon)
+            .then(response => response.json())
+            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then(() => dispatch(fetchTags()))
+            .then(() => dispatch(fetchIcon(icon)));
+    });
+}
+
+export function deleteTag(tag: string, icon:string):
+    ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+        api.deleteTag(tag)
+            .then(response => response.json())
+            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then(() => dispatch(fetchIcon(icon)))
+            .then(() => dispatch(fetchTags()));
+    });
+}
+
+export function editIcon(id: string, title: string, description: string):
+    ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+        api.editIcon(id, title,description)
+            .then(response => response.json())
+            .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then(() => dispatch(fetchIcon(id)));
+    });
+}
+
+export function fetchIcon(id: string) :
+    ThunkAction<void, Store, {}, SelectedIconAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+        const store = getState().iconsStore;
+            api.fetchIcon(store.iconStyle, id)
+                .then((response: Response) => response.json())
+                .catch((error: Error) => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+                .then((json: IconExpanded) => dispatch(setSelectedIcon(json)));
+    });
+}
+
+export function fetchIcons(fetchFrom?: number, fetchTo?: number, searchText?: string):
+    ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+        dispatch(setFetchingIcons());
+        const store = getState().iconsStore;
+        api.fetchIcons(store.iconStyle,
+            fetchFrom ? fetchFrom : store.fetchFrom,
+            fetchTo ? fetchTo : store.fetchTo,
+            searchText ? searchText : store.searchText)
+            .then((response: Response) => response.json())
+            .catch((error: Error) => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then((json: IconsResult) => dispatch(receiveIcons(json.icons, json.numberOfIcons)))
+            .then((json: IconsResult) => {
+                if(json.icons.length && !fetchFrom && searchText){
+                    dispatch(fetchIcon(json.icons[0].id))
+                }
+                if(!json.icons.length){
+                    dispatch(setSelectedIcon(undefined));
+                }
+        });
+    });
 }
