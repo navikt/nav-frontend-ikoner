@@ -8,23 +8,23 @@ import api from "../../utils/api";
 import './misc.less';
 
 interface PropTypes {
-    iconStyle : IconStyle;
+    iconStyle: IconStyle;
     selectedIcon: IconExpanded;
     setIconStyle: (iconStyle: IconStyle) => IconColorStyle;
-    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
-};
+    fetchIcon: (filename: string, style: IconStyle) => Promise<SelectedIconAction>;
+}
 
 class IconStyleSelect extends React.Component <PropTypes> {
 
-    constructor(props: PropTypes){
+    constructor(props: PropTypes) {
         super(props);
         this.onToggle = this.onToggle.bind(this);
     }
 
-    public onToggle(){
+    public onToggle() {
         const newStyle = this.props.iconStyle === IconStyle.FILLED ? IconStyle.LINE : IconStyle.FILLED;
         this.props.setIconStyle(newStyle);
-        if(this.props.selectedIcon){
+        if (this.props.selectedIcon) {
             this.props.fetchIcon(this.props.selectedIcon.id, newStyle);
         }
     }
@@ -32,10 +32,10 @@ class IconStyleSelect extends React.Component <PropTypes> {
     public render() {
         return (
             <ToggleGruppe onChange={this.onToggle} name='toggleGruppe'>
-                <ToggleKnapp key={1} defaultChecked={true} value='Filled'>
+                <ToggleKnapp key={1} defaultChecked={true} value={Language.FILLED_ICON}>
                     {Language.FILLED_ICON}
                 </ToggleKnapp>
-                <ToggleKnapp  key={2} defaultChecked={false} value='Line' >
+                <ToggleKnapp key={2} defaultChecked={false} value={Language.LINE_ICON}>
                     {Language.LINE_ICON}
                 </ToggleKnapp>
             </ToggleGruppe>
@@ -50,9 +50,9 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
-    setIconStyle : (iconStyle: IconStyle)  => dispatch(setIconStyle(iconStyle)),
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    fetchIcon: (filename: string, style: IconStyle) => api.fetchIcon(filename, style)(dispatch),
+    setIconStyle: (iconStyle: IconStyle) => dispatch(setIconStyle(iconStyle)),
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconStyleSelect);

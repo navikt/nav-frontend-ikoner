@@ -13,24 +13,24 @@ export interface IconsStore {
     tags: Tags,
 }
 
-export interface Store{
+export interface Store {
     iconsStore: IconsStore
 }
 
-export interface Location{
-    filename:string,
+export interface Location {
+    filename: string,
     extension: string,
     path: string,
     size: string,
     url: string,
 }
 
-export interface Tag{
+export interface Tag {
     id: string,
     text: string,
 }
 
-export interface IconExpanded{
+export interface IconExpanded {
     id: string,
     title: string,
     description: string,
@@ -40,7 +40,7 @@ export interface IconExpanded{
     tagsSuggestions: Tag[],
 }
 
-export interface IconBasic{
+export interface IconBasic {
     id: string,
     title: string,
     extension: string,
@@ -50,12 +50,13 @@ export interface IconBasic{
 export type Tags = Tag[];
 export type Icons = IconBasic[];
 export type SearchText = string;
+
 export enum IconType {
     IN_LIST,
     IN_PANEL
 };
+
 export enum IconStyle {
     FILLED,
     LINE
 };
-

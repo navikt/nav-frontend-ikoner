@@ -13,19 +13,19 @@ interface PropTypes {
     extension: string;
     iconStyle: IconStyle;
     key: number;
-    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
-};
-interface StateTypes {iconStyle: IconStyle, iconColor: string}
+    fetchIcon: (filename: string, style: IconStyle) => Promise<SelectedIconAction>;
+}
 
-class IconSelect extends React.Component <PropTypes,StateTypes> {
+interface StateTypes {
+    iconStyle: IconStyle;
+    iconColor: string;
+}
 
-    constructor(props: PropTypes){
+class IconSelect extends React.Component <PropTypes, StateTypes> {
+
+    constructor(props: PropTypes) {
         super(props);
         this.onIconClick = this.onIconClick.bind(this);
-    }
-
-    public onIconClick(){
-        this.props.fetchIcon(this.props.id, this.props.iconStyle);
     }
 
     public render() {
@@ -39,6 +39,10 @@ class IconSelect extends React.Component <PropTypes,StateTypes> {
                 iconColor="black"/>
         );
     }
+
+    private onIconClick() {
+        this.props.fetchIcon(this.props.id, this.props.iconStyle);
+    }
 }
 
 const mapStateToProps = (state: Store) => {
@@ -48,8 +52,8 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    fetchIcon: (filename: string, style: IconStyle) => api.fetchIcon(filename, style)(dispatch),
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconSelect);

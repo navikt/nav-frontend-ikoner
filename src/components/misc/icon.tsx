@@ -1,32 +1,37 @@
 import * as React from 'react';
+import Language from '../../language/norwegian';
 import {IconType} from '../../redux/store-interfaces';
 import './misc.less';
 
-interface PropTypes { imageLink:string, extension: string, iconType: IconType, iconColor: string, iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void};
-interface StateTypes { fetchingIcon : boolean, backgroundImage: HTMLImageElement}
+interface PropTypes {
+    imageLink: string;
+    extension: string;
+    iconType: IconType;
+    iconColor: string;
+    iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void;
+}
 
-class Icon extends React.Component <PropTypes, StateTypes> {
+function getIconClass(iconType: IconType): string {
+    return iconType === IconType.IN_LIST ? Language.ICON_IN_LIST : Language.ICON_IN_PANEL;
+}
 
-    public render() {
+function Icon(props: PropTypes) {
+    const {imageLink, extension, iconClickTrigger, iconType} = props;
 
-        const {imageLink, extension, iconClickTrigger, iconType} = this.props;
-
-        return (
-            <div className={this.getIconClass(iconType)}  onClick={iconClickTrigger} style={{backgroundImage: `url(${imageLink})`}} >
-                {extension !== "svg" && extension !== "png" &&
-                    <div className="pdf-replacement-container">
-                        <div className="pdf-replacement">
-                            {extension.toLocaleUpperCase()}
-                        </div>
-                    </div>
-                }
+    return (
+        <div className={getIconClass(iconType)}
+             onClick={iconClickTrigger}
+             style={{backgroundImage: `url(${imageLink})`}}
+        >
+            {extension !== "svg" && extension !== "png" &&
+            <div className="pdf-replacement-container">
+                <div className="pdf-replacement">
+                    {extension.toLocaleUpperCase()}
+                </div>
             </div>
-        );
-    }
-
-    private getIconClass (iconType : IconType ) : string{
-        return iconType === IconType.IN_LIST ? 'icon-in-list' : 'icon-in-panel';
-    }
+            }
+        </div>
+    );
 }
 
 export default Icon;

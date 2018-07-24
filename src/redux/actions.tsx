@@ -6,10 +6,9 @@ export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
 export const SET_ICON_STYLE = 'SET_ICON_STYLE'
-export const SET_FETCHING_ICONS =  'SET_FETCHING_ICONS'
+export const SET_FETCHING_ICONS = 'SET_FETCHING_ICONS'
 export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
-export const SET_ICON_TITLE_DESCRIPTION = 'SET_ICON_TITLE_DESCRIPTION'
-export const TOGGLE_CHOSEN_EXTENSIONS = 'TOGGLE_CHOSEN_EXTENSIONS'
+export const TOGGLE_CHOSEN_EXTENSION = 'TOGGLE_CHOSEN_EXTENSION'
 
 /*
     Interfaces
@@ -40,7 +39,7 @@ export interface IconColorAction {
     iconColor: string;
 }
 
-export interface IconColorStyle{
+export interface IconColorStyle {
     type: string,
     iconStyle: IconStyle,
 }
@@ -55,19 +54,9 @@ export interface FetchingInterval {
     fetchTo: number,
 }
 
-export interface ResetFetch{
-    type: string,
-}
-
-export interface IconTitleDescription {
-    type: string,
-    title: string,
-    description: string,
-}
-
 export interface ChosenExtensions {
     type: string,
-    chosenExtensions: string,
+    extension: string,
 }
 
 /*
@@ -75,42 +64,38 @@ export interface ChosenExtensions {
  */
 
 export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsAction {
-    return { type: RECEIVE_ICONS, icons , numberOfIcons}
+    return {type: RECEIVE_ICONS, icons, numberOfIcons}
 }
 
 export function receiveTags(tags: Tags): ReceiveTagsAction {
-    return { type: RECEIVE_TAGS, tags }
+    return {type: RECEIVE_TAGS, tags}
 }
 
 export function setSelectedIcon(icon: IconExpanded): SelectedIconAction {
-    return { type: SET_SELECTED_ICON, icon }
+    return {type: SET_SELECTED_ICON, icon}
 }
 
 export function setSearchText(searchText: string): SearchTextAction {
-    return { type: SET_SEARCH_TEXT, searchText }
+    return {type: SET_SEARCH_TEXT, searchText}
 }
 
 export function setIconColor(iconColor: string): IconColorAction {
-    return { type: SET_ICON_COLOR, iconColor }
+    return {type: SET_ICON_COLOR, iconColor}
 }
 
-export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
-    return { type: SET_ICON_STYLE, iconStyle}
+export function setIconStyle(iconStyle: IconStyle): IconColorStyle {
+    return {type: SET_ICON_STYLE, iconStyle}
 }
 
 export function setFetchingIcons(): FetchingIconsAction {
-    return { type: SET_FETCHING_ICONS}
+    return {type: SET_FETCHING_ICONS}
 }
 
-export function setFetchingInterval(fetchFrom: number, fetchTo: number): FetchingInterval {
-    return { type: SET_FETCH_INTERVAL, fetchFrom, fetchTo }
+export function setFetchingInterval(fetchFrom: number, fetchTo: number): FetchingInterval {
+    return {type: SET_FETCH_INTERVAL, fetchFrom, fetchTo}
 }
 
-export function setIconTitleDescription(title: string, description: string): IconTitleDescription {
-    return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
-}
-
-export function toggleChosenExtensions(event: React.MouseEvent<HTMLInputElement> ): ChosenExtensions {
-    const chosenExtensions: string = event.currentTarget.id;
-    return { type: TOGGLE_CHOSEN_EXTENSIONS, chosenExtensions }
+export function toggleChosenExtension(event: React.MouseEvent<HTMLInputElement>): ChosenExtensions {
+    const extension: string = event.currentTarget.id;
+    return {type: TOGGLE_CHOSEN_EXTENSION, extension}
 }

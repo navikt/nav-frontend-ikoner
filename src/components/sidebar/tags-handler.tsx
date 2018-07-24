@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
-import { WithContext as ReactTags } from 'react-tag-input';
+import {WithContext as ReactTags} from 'react-tag-input';
 import {ReceiveTagsAction, setSearchText} from "../../redux/actions";
 import {IconExpanded, IconStyle, Store, Tag, Tags} from "../../redux/store-interfaces";
 import api from "../../utils/api";
@@ -10,14 +10,14 @@ import './tags.less';
 interface PropTypes {
     tags: Tags;
     selectedIcon: IconExpanded;
-    insertTag: (tag: string, icon:string, style: IconStyle) => Promise<ReceiveTagsAction>;
-    deleteTag: (id:string, icon: string,  style: IconStyle) => Promise<ReceiveTagsAction>;
+    insertTag: (tag: string, icon: string, style: IconStyle) => Promise<ReceiveTagsAction>;
+    deleteTag: (id: string, icon: string, style: IconStyle) => Promise<ReceiveTagsAction>;
     iconStyle: IconStyle;
-};
+}
 
-class TagsHandler extends React.Component<PropTypes>{
+class TagsHandler extends React.Component<PropTypes> {
 
-    constructor(props: PropTypes){
+    constructor(props: PropTypes) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
@@ -25,31 +25,32 @@ class TagsHandler extends React.Component<PropTypes>{
     }
 
     public render() {
-        const {selectedIcon,tags} = this.props;
+        const {selectedIcon, tags} = this.props;
         return (
-           <div className="tags-container">
+            <div className="tags-container">
                 <ReactTags tags={selectedIcon.tags}
                            suggestions={tags.filter((tag: Tag) => this.isTagUsed(tag.text))}
                            placeholder={'Legg til tagger'}
                            handleAddition={this.handleAddition}
                            handleDelete={this.handleDelete}
                 />
-           </div>
+            </div>
         );
     }
 
-    private handleAddition(tag : Tag) {
-        this.props.insertTag(tag.text, this.props.selectedIcon.title, this.props.iconStyle)
+    private handleAddition(tag: Tag) {
+        const {selectedIcon, insertTag, iconStyle} = this.props;
+        insertTag(tag.text, selectedIcon.title, iconStyle)
     }
 
-    private handleDelete(position : number) {
+    private handleDelete(position: number) {
         const {selectedIcon, deleteTag, iconStyle} = this.props;
-        if(selectedIcon.tags[position]) {
+        if (selectedIcon.tags[position]) {
             deleteTag(selectedIcon.tags[position].id, selectedIcon.title, iconStyle)
         }
     }
 
-    private isTagUsed(text:string){
+    private isTagUsed(text: string) {
         return this.props.selectedIcon.tags.filter((tag: Tag) => tag.text === text).length === 0;
     }
 }
@@ -62,10 +63,10 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    deleteTag : (id:string, icon: string,  style: IconStyle)  => api.deleteTag(id, icon, style)(dispatch),
-    insertTag : (tag: string, icon:string, style: IconStyle)  => api.insertTag(tag, icon, style)(dispatch),
-    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText)),
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    deleteTag: (id: string, icon: string, style: IconStyle) => api.deleteTag(id, icon, style)(dispatch),
+    insertTag: (tag: string, icon: string, style: IconStyle) => api.insertTag(tag, icon, style)(dispatch),
+    setSearchText: (searchText: string) => dispatch(setSearchText(searchText)),
 });
 
 

@@ -12,9 +12,9 @@ interface PropTypes {
     fetchTags: () => Promise<ReceiveTagsAction>
 };
 
-class App extends React.Component <PropTypes>  {
+class App extends React.Component <PropTypes> {
 
-    public componentDidMount(){
+    public componentDidMount() {
         this.props.fetchTags();
     }
 
@@ -40,8 +40,7 @@ const mapStateToProps = (state: Store) => {
     return {};
 };
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchTags : ()  => api.fetchTags()(dispatch)
+    fetchTags: () => api.fetchTags()(dispatch)
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(App);

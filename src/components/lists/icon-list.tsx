@@ -20,7 +20,7 @@ interface PropTypes {
     iconStyle: IconStyle;
     icons: Icons;
     searchText: SearchText;
-    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string) => Promise<ReceiveIconsAction>;
+    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText: string) => Promise<ReceiveIconsAction>;
     fetchFrom: number;
     fetchHasMore: boolean;
     fetchTo: number;
@@ -28,17 +28,17 @@ interface PropTypes {
     setFetchInterval: (fetchFrom: number, fetchTo: number) => FetchingInterval;
 }
 
-class IconList extends React.Component <PropTypes>{
+class IconList extends React.Component <PropTypes> {
 
-    constructor(props: PropTypes){
+    constructor(props: PropTypes) {
         super(props);
         props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         this.loadMore = this.loadMore.bind(this);
     }
 
-    public componentWillReceiveProps(props: PropTypes){
+    public componentWillReceiveProps(props: PropTypes) {
         if (this.props.searchText !== props.searchText ||
-            this.props.iconStyle !== props.iconStyle  ||
+            this.props.iconStyle !== props.iconStyle ||
             this.props.fetchFrom !== props.fetchFrom ||
             this.props.fetchTo !== props.fetchTo
         ) {
@@ -47,7 +47,7 @@ class IconList extends React.Component <PropTypes>{
     }
 
     public loadMore() {
-        if(this.props.icons.length > 0){
+        if (this.props.icons.length > 0) {
             const fetchFrom = this.props.fetchTo;
             const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
@@ -63,9 +63,13 @@ class IconList extends React.Component <PropTypes>{
                     <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
                 next={this.loadMore}
                 hasMore={fetchHasMore}
-                loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}>
-                {icons.map((icon:IconBasic, index: number) =>
-                    <IconSelect key={index} id={icon.id} title={icon.title} imageLink={icon.link} extension={icon.extension}/>
+                loader={<div className="icon-list-spinner"><NavFrontendSpinner/></div>}>
+                {icons.map((icon: IconBasic, index: number) =>
+                    <IconSelect key={index}
+                                id={icon.id}
+                                title={icon.title}
+                                imageLink={icon.link}
+                                extension={icon.extension}/>
                 )}
             </InfiniteScroll>
         );
@@ -81,14 +85,12 @@ const mapStateToProps = (state: Store) => {
         iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
-
     };
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchIcons : ( iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText:string)  => api.fetchIcons(iconStyle, fetchFrom, fetchTo, searchText)(dispatch),
-    setFetchInterval : ( fetchFrom: number, fetchTo: number)  => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
+    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText: string) => api.fetchIcons(iconStyle, fetchFrom, fetchTo, searchText)(dispatch),
+    setFetchInterval: (fetchFrom: number, fetchTo: number) => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconList);

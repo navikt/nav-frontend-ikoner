@@ -1,18 +1,19 @@
+import Language from "../language/norwegian";
 import {IconStyle} from "../redux/store-interfaces";
 
-function iconStyleToString(iStyle : IconStyle) : string{
-    return iStyle === IconStyle.FILLED ? "Filled" : "Line";
+function iconStyleToString(iStyle: IconStyle): string {
+    return iStyle === IconStyle.FILLED ? Language.FILLED_ICON : Language.LINE_ICON;
 }
 
-function iconStyle(style : IconStyle) : string{
-    return style === IconStyle.FILLED ? `style=${iconStyleToString(style)}` : `style=${iconStyleToString(style)}`
+function iconStyle(style: IconStyle): string {
+    return `style=${iconStyleToString(style)}`;
 }
 
-function searchText(search :string) : string {
+function searchText(search: string): string {
     return search ? `&search=${search}` : "";
 }
 
-function fetchInterval(fetchFrom: number, fetchTo:number) : string{
+function fetchInterval(fetchFrom: number, fetchTo: number): string {
     return fetchFrom !== undefined || fetchTo !== undefined ? `&from=${fetchFrom}&to=${fetchTo}` : "";
 }
 

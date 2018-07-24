@@ -2,7 +2,7 @@ import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import * as React from "react";
 import * as Redux from "react-redux";
 import Language from "../../language/norwegian";
-import {toggleChosenExtensions} from "../../redux/actions";
+import {toggleChosenExtension} from "../../redux/actions";
 import {getChosenExtensions} from "../../redux/selectors";
 import {IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
 import DownloadButton from "../buttons/download-button";
@@ -12,7 +12,7 @@ interface PropTypes {
     chosenExtensions: string[];
     icon: IconExpanded;
     iconStyle: IconStyle;
-    toggleChosenExtensions: typeof toggleChosenExtensions;
+    toggleChosenExtension: typeof toggleChosenExtension;
 }
 
 function findUniqueLocations(icon: IconExpanded, style: IconStyle) {
@@ -32,7 +32,7 @@ function IconDownload(props: PropTypes) {
             label={extension}
             id={extension}
             checked={props.chosenExtensions.indexOf(extension) >= 0}
-            onClick={props.toggleChosenExtensions}
+            onClick={props.toggleChosenExtension}
         />
     ));
 
@@ -53,7 +53,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    toggleChosenExtensions: (chosenExtensions: React.MouseEvent<HTMLInputElement>) => dispatch(toggleChosenExtensions(chosenExtensions)),
+    toggleChosenExtension: (extension: React.MouseEvent<HTMLInputElement>) => dispatch(toggleChosenExtension(extension)),
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconDownload);

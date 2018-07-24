@@ -9,35 +9,40 @@ import IconDownload from "./sidebar/icon-download";
 import IconTitle from './sidebar/icon-title'
 import TagsHandler from './sidebar/tags-handler';
 
-interface PropTypes { selectedIcon: IconExpanded, iconStyle: IconStyle};
-interface StateTypes { tags: Tags; suggestions:Tags };
+interface PropTypes {
+    selectedIcon: IconExpanded,
+    iconStyle: IconStyle
+};
 
-class Sidebar extends React.Component<PropTypes, StateTypes>{
+interface StateTypes {
+    tags: Tags;
+    suggestions: Tags
+};
 
-    public render() {
-
-        const {selectedIcon} = this.props;
-        if(!selectedIcon || !selectedIcon.bestLocation){
-            return (
-                <div className="icon-side-panel" />
-            );
-        }
-
+function Sidebar(props: PropTypes, state: StateTypes) {
+    const {selectedIcon} = props;
+    if (!selectedIcon || !selectedIcon.bestLocation) {
         return (
-            <div className="icon-side-panel">
-                <div className="icon-side-panel-content">
-                    <IconTitle />
-                    <Icon imageLink={selectedIcon.bestLocation.url} extension={selectedIcon.bestLocation.extension} iconType={IconType.IN_PANEL} iconColor="black"/>
-                    <IconDescription />
-                    <TagsHandler />
-                    <Seperator />
-                    <IconDownload />
-                </div>
-            </div>
+            <div className="icon-side-panel"/>
         );
     }
-}
 
+    return (
+        <div className="icon-side-panel">
+            <div className="icon-side-panel-content">
+                <IconTitle/>
+                <Icon imageLink={selectedIcon.bestLocation.url}
+                      extension={selectedIcon.bestLocation.extension}
+                      iconType={IconType.IN_PANEL}
+                      iconColor="black"/>
+                <IconDescription/>
+                <TagsHandler/>
+                <Seperator/>
+                <IconDownload/>
+            </div>
+        </div>
+    );
+}
 
 const mapStateToProps = (state: Store) => {
     return {
@@ -45,6 +50,5 @@ const mapStateToProps = (state: Store) => {
         selectedIcon: state.iconsStore.selectedIcon,
     };
 };
-
 
 export default Redux.connect(mapStateToProps)(Sidebar);

@@ -8,13 +8,17 @@ import './icon-title.less';
 import './tags.less';
 
 interface PropTypes {
-    selectedIcon: IconExpanded,
-    editIcon:  ( id: string, title: string, description: string, style: IconStyle) => Promise<any>,
-    iconStyle: IconStyle
-};
-interface StateTypes { tags: Tags; suggestions: Tags };
+    selectedIcon: IconExpanded;
+    editIcon: (id: string, title: string, description: string, style: IconStyle) => Promise<any>;
+    iconStyle: IconStyle;
+}
 
-class IconTitle extends React.Component<PropTypes, StateTypes>{
+interface StateTypes {
+    tags: Tags;
+    suggestions: Tags;
+}
+
+class IconTitle extends React.Component<PropTypes, StateTypes> {
 
     constructor(props: PropTypes) {
         super(props);
@@ -24,9 +28,9 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
     public render() {
 
         const {selectedIcon} = this.props;
-        if(!selectedIcon){
+        if (!selectedIcon) {
             return (
-                <div className="icon-side-panel" />
+                <div className="icon-side-panel"/>
             );
         }
 
@@ -42,10 +46,10 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
     }
 
     private handleTitleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        this.props.editIcon(this.props.selectedIcon.id, event.target.value, this.props.selectedIcon.description, this.props.iconStyle);
+        const {selectedIcon, editIcon, iconStyle} = this.props;
+        editIcon(selectedIcon.id, event.target.value, selectedIcon.description, iconStyle);
     }
 }
-
 
 const mapStateToProps = (state: Store) => {
     return {
@@ -54,9 +58,8 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    editIcon : ( id: string, title: string, description: string, style: IconStyle)  => api.editIcon(id, title, description, style)(dispatch)
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    editIcon: (id: string, title: string, description: string, style: IconStyle) => api.editIcon(id, title, description, style)(dispatch)
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconTitle);

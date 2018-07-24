@@ -6,8 +6,8 @@ import SearchBar from './search-bar';
 function IconListHeader() {
     return (
         <div className="icon-list-header">
-            <SearchBar />
-            <IconStyleSelect />
+            <SearchBar/>
+            <IconStyleSelect/>
         </div>
     );
 }

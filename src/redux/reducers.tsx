@@ -7,14 +7,13 @@ import {
     SET_FETCHING_ICONS,
     SET_ICON_COLOR,
     SET_ICON_STYLE,
-    // SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
     SET_SELECTED_ICON,
-    TOGGLE_CHOSEN_EXTENSIONS
+    TOGGLE_CHOSEN_EXTENSION
 } from "./actions";
 import {IconsStore, IconStyle} from "./store-interfaces";
 
-const initialState : IconsStore = {
+const initialState: IconsStore = {
     chosenExtensions: {},
     fetchFrom: 0,
     fetchHasMore: true,
@@ -36,58 +35,69 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
         fetchHasMore: true,
         fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
         icons: [],
-    }
+    };
 
     switch (action.type) {
         case SET_SELECTED_ICON:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     chosenExtensions: {},
                     selectedIcon: action.icon,
-                }};
+                }
+            };
         case SET_FETCHING_ICONS:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     fetchingCounter: state.fetchingCounter++,
-                }};
+                }
+            };
         case SET_ICON_STYLE:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     iconStyle: action.iconStyle,
-                    ... RESET_FETCH
-                }};
+                    ...RESET_FETCH
+                }
+            };
         case SET_ICON_COLOR:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     iconColor: action.iconColor,
-                }};
+                }
+            };
         case SET_SEARCH_TEXT:
-            return {...state, ... {
+            return {
+                ...state, ... {
                     searchText: action.searchText,
-                    ... RESET_FETCH
-                }};
+                    ...RESET_FETCH
+                }
+            };
         case SET_FETCH_INTERVAL:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     fetchFrom: action.fetchFrom,
                     fetchTo: action.fetchTo,
-                }};
+                }
+            };
         case RECEIVE_ICONS:
             const icons = state.fetchFrom > 0 ? state.icons.concat(action.icons) : action.icons;
-            return {...state, ...{
+            return {
+                ...state, ...{
                     fetchHasMore: action.icons.length === Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
                     fetchingCounter: state.fetchingCounter--,
                     icons,
                     lastUpdated: new Date()
-                }};
+                }
+            };
         case RECEIVE_TAGS:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     tags: action.tags,
-                }};
-        // case SET_ICON_TITLE_DESCRIPTION:
-        //     return {...state, ...{
-        //             description: action.description,
-        //             title: action.title,
-        //         }};
-        case TOGGLE_CHOSEN_EXTENSIONS:
-            const nState = { ...state.chosenExtensions };
-            nState[action.chosenExtensions] = !nState[action.chosenExtensions];
-            return {...state, chosenExtensions: { ...nState } };
+                }
+            };
+        case TOGGLE_CHOSEN_EXTENSION:
+            const nState = {...state.chosenExtensions};
+            nState[action.extension] = !nState[action.extension];
+            return {...state, chosenExtensions: {...nState}};
         default:
             return state
     }
