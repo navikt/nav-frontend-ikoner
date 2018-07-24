@@ -5,8 +5,7 @@ import Language from "../../language/norwegian";
 import {toggleChosenExtension} from "../../redux/actions";
 import {getChosenExtensions} from "../../redux/selectors";
 import {IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
-import DownloadButton from "../buttons/download-button";
-import './icon-download.less';
+import './icon-download-types.less';
 
 interface PropTypes {
     chosenExtensions: string[];
@@ -24,22 +23,21 @@ function findUniqueLocations(icon: IconExpanded, style: IconStyle) {
     return Array.from(new Set(locations));
 }
 
-function IconDownload(props: PropTypes) {
-    const uniqueLocation = findUniqueLocations(props.icon, props.iconStyle);
-    const checkboxes = uniqueLocation.map((extension, index) => (
+function IconDownloadTypes(props: PropTypes) {
+    const uniqueLocations = findUniqueLocations(props.icon, props.iconStyle);
+    const checkboxes = uniqueLocations.map((extension, index) => (
         <Checkbox
             key={index}
             label={extension}
             id={extension}
             checked={props.chosenExtensions.indexOf(extension) >= 0}
-            onClick={props.toggleChosenExtension}
+            onChange={props.toggleChosenExtension}
         />
     ));
 
     return (
         <div className="download-types-row">
             {checkboxes}
-            <DownloadButton/>
         </div>
     );
 }
@@ -53,8 +51,8 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    toggleChosenExtension: (extension: React.MouseEvent<HTMLInputElement>) => dispatch(toggleChosenExtension(extension)),
+    toggleChosenExtension: (event: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleChosenExtension(event)),
 });
 
-export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconDownload);
+export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconDownloadTypes);
 

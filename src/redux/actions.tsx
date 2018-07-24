@@ -95,7 +95,7 @@ export function setFetchingInterval(fetchFrom: number, fetchTo: number): Fetchin
     return {type: SET_FETCH_INTERVAL, fetchFrom, fetchTo}
 }
 
-export function toggleChosenExtension(event: React.MouseEvent<HTMLInputElement>): ChosenExtensions {
+export function toggleChosenExtension(event: React.ChangeEvent<HTMLInputElement>): ChosenExtensions {
     const extension: string = event.currentTarget.id;
     return {type: TOGGLE_CHOSEN_EXTENSION, extension}
 }
