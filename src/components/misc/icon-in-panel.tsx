@@ -8,7 +8,6 @@ import IconUnknownExtension from "./icon-unknown-extension";
 import './misc.less';
 
 interface PropTypes {
-    icon: IconExpanded,
     iconStyle: IconStyle,
     iconBackgroundColor: string,
     iconColor: string,
