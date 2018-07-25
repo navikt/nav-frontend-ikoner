@@ -4,8 +4,8 @@ import LinkCreator from './api-link-creator';
 
 export function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText?: string) : Promise<Response> {
     const iStyle = LinkCreator.iconStyle(iconStyle);
-    const iSearch = LinkCreator.searchText(searchText);
-    const iFetchInterval = LinkCreator.fetchInterval(fetchFrom, fetchTo);
+    const iSearch = LinkCreator.iconSearchText(searchText);
+    const iFetchInterval = LinkCreator.iconFetchInterval(fetchFrom, fetchTo);
     return fetch(`${Config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${iFetchInterval}`);
 }
 

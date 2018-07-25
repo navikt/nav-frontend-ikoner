@@ -35,6 +35,11 @@ export interface IconColorAction {
     iconColor: string;
 }
 
+export interface IconColorBackgroundAction {
+    type: string;
+    iconBackgroundColor: string;
+}
+
 export interface IconColorStyle{
     type: string,
     iconStyle: IconStyle,

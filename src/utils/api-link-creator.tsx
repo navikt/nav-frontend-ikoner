@@ -1,26 +1,31 @@
-import {IconStyle} from "../redux/store-interfaces";
+import Config from "../appconfig";
+import {IconExpanded, IconStyle} from "../redux/store-interfaces";
 
-function iconStyleToString(iStyle : IconStyle) : string{
-    return iStyle === IconStyle.FILLED ? "Filled" : "Line";
+function iconStyleToString(style : IconStyle) : string{
+    return style === IconStyle.FILLED ? "Filled" : "Line";
 }
 
 function iconStyle(style : IconStyle) : string{
     return style === IconStyle.FILLED ? `style=${iconStyleToString(style)}` : `style=${iconStyleToString(style)}`
 }
+function iconDisplay(style: IconStyle, iconColor: string, selectedIcon: IconExpanded){
+    return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(style)}/${iconColor}/${selectedIcon.bestLocation.filename}`.replace("#", "%23");
+}
 
-function searchText(search :string | undefined) : string {
+function iconSearchText(search? :string) : string {
     return search ? `&search=${search}` : "";
 }
 
-function fetchInterval(fetchFrom: number, fetchTo:number) : string{
+function iconFetchInterval(fetchFrom: number, fetchTo:number) : string{
     return fetchFrom !== undefined || fetchTo !== undefined ? `&from=${fetchFrom}&to=${fetchTo}` : "";
 }
 
 const LinkCreator = {
-    fetchInterval,
+    iconDisplay,
+    iconFetchInterval,
+    iconSearchText,
     iconStyle,
     iconStyleToString,
-    searchText,
 };
 
 export default LinkCreator;

@@ -9,7 +9,7 @@ import IconDescription from './sidebar/icon-description'
 import IconTitle from './sidebar/icon-title'
 import TagsHandler from './sidebar/tags-handler';
 
-interface PropTypes { selectedIcon: IconExpanded, iconStyle: IconStyle};
+interface PropTypes { iconBackgroundColor: string, selectedIcon: IconExpanded, iconStyle: IconStyle, iconColor: string};
 interface StateTypes { tags: Tags; suggestions:Tags };
 
 class Sidebar extends React.PureComponent<PropTypes, StateTypes>{
@@ -41,6 +41,8 @@ class Sidebar extends React.PureComponent<PropTypes, StateTypes>{
 
 const mapStateToProps = (state: Store) => {
     return {
+        iconBackgroundColor: state.iconsStore.iconBackgroundColor,
+        iconColor: state.iconsStore.iconColor,
         iconStyle: state.iconsStore.iconStyle,
         selectedIcon: state.iconsStore.selectedIcon,
     };

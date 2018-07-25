@@ -4,13 +4,21 @@ import * as api from "../utils/api";
 import {
     RECEIVE_ICONS,
     RECEIVE_TAGS, SET_FETCH_INTERVAL,
-    SET_FETCHING_ICONS, SET_ICON_COLOR, SET_ICON_STYLE, SET_ICON_TITLE_DESCRIPTION, SET_SEARCH_TEXT,
+    SET_FETCHING_ICONS, SET_ICON_BACKGROUND_COLOR,
+    SET_ICON_COLOR,
+    SET_ICON_STYLE,
+    SET_ICON_TITLE_DESCRIPTION,
+    SET_SEARCH_TEXT,
     SET_SELECTED_ICON,
     SET_SELECTED_ICON_INDEX
 } from "./actions-constants";
 import {
-    FetchingIconsAction, FetchingInterval,
-    IconColorAction, IconColorStyle, IconTitleDescription,
+    FetchingIconsAction,
+    FetchingInterval,
+    IconColorAction,
+    IconColorBackgroundAction,
+    IconColorStyle,
+    IconTitleDescription,
     ReceiveIconsAction,
     ReceiveTagsAction,
     SearchTextAction,
@@ -50,11 +58,15 @@ export function setIconColor(iconColor: string): IconColorAction {
 }
 
 export function setIconStyle(iconStyle: IconStyle):
-    ThunkAction<void, Store, {}, IconColorStyle> {
-    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+    ThunkAction<void, Store, {}, IconColorStyle> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
         dispatch({type: SET_ICON_STYLE, iconStyle})
         dispatch(fetchIcons());
     });
+}
+
+export function setIconBackgroundColor(iconBackgroundColor: string): IconColorBackgroundAction {
+    return { type: SET_ICON_BACKGROUND_COLOR, iconBackgroundColor }
 }
 
 export function setFetchingIcons(): FetchingIconsAction {
