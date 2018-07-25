@@ -12,6 +12,7 @@ interface PropTypes {
     iconStyle: IconStyle,
     iconBackgroundColor: string,
     iconColor: string,
+    selectedIcon: IconExpanded,
 };
 
 class IconInPanel extends React.Component <PropTypes> {
@@ -20,14 +21,14 @@ class IconInPanel extends React.Component <PropTypes> {
         super(props);
     }
     public render() {
-        const {icon, iconBackgroundColor, iconColor, iconStyle} = this.props;
+        const {selectedIcon, iconBackgroundColor, iconColor, iconStyle} = this.props;
         return (
             <div
                 className="icon-in-panel"
                 style={{
                     backgroundColor: iconBackgroundColor,
-                    backgroundImage: `url(${LinkCreator.iconDisplay(iconStyle, iconColor, icon)})`}} >
-                <IconUnknownExtension extension={icon.bestLocation.extension}/>
+                    backgroundImage: `url(${LinkCreator.iconDisplay(iconStyle, iconColor, selectedIcon)})`}} >
+                <IconUnknownExtension extension={selectedIcon.bestLocation.extension}/>
                 <div className="icon-color-picker-container">
                     <div className="icon-color-picker-box" />
                     <IconColorPicker type={ColorPickerType.FOREGROUND} />

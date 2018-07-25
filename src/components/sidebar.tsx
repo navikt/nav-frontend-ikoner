@@ -27,7 +27,7 @@ class Sidebar extends React.PureComponent<PropTypes, StateTypes>{
             <div className="icon-side-panel">
                 <div className="icon-side-panel-content">
                     <IconTitle />
-                    <IconInPanel icon={selectedIcon}/>
+                    <IconInPanel />
                     <IconDescription />
                     <TagsHandler />
                     <Seperator/>

@@ -5,7 +5,7 @@ import {IconExpanded} from "../../redux/store-interfaces";
 import './buttons.less';
 
 interface PropTypes { icon:IconExpanded};
-class DownloadButton extends React.Component <PropTypes> {
+class DownloadButton extends React.PureComponent <PropTypes> {
 
     public render() {
         return (
