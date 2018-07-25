@@ -44,10 +44,12 @@ function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
             </a>
             <ReactTooltip id={"contrastRatio"} place={"bottom"} type={"dark"} effect={"solid"}>
                 <div className="icon-contrast-ratio-title">
-                    {Language.RATIO_BAR}
+                    {Language.WCAG}
                 </div>
                 <hr />
-                <div className="icon-contrast-ratio-subtitle">{contrast.ratio(iconColor, iconBackgroundColor).toFixed(2)}</div>
+                <div className="icon-contrast-ratio-subtitle">
+                    {contrast.ratio(iconColor, iconBackgroundColor).toFixed(2)}
+                    </div>
                 <div className="icon-contrast-ratio-subtitle">{contrast.score(iconColor, iconBackgroundColor)}</div>
             </ReactTooltip>
         </div>

@@ -7,6 +7,8 @@ export default {
     LINE_ICON: 'Line',
     NO_DESCRIPTION: 'Ingen beskrivelse',
     NO_RESULTS: 'Ingen ikoner passer ditt søk',
-    RATIO_BAR: 'WCAG 2.0 Ratio',
+    RATIO: 'Forhold : ',
     SEARCH: 'Søk',
+    WCAG: 'WCAG 2.0 Kontrast',
+
 };
