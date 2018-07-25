@@ -34,7 +34,7 @@ class Sidebar extends React.Component<PropTypes, StateTypes>{
                         iconType={IconType.IN_PANEL}
                         backgroundColor={iconBackgroundColor}
                         colorPickers={true}
-                        iconColor="black"/>
+                        iconColor={this.props.iconColor}/>
                     <IconDescription />
                     <TagsHandler />
                     <Seperator/>

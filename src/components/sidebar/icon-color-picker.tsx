@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { ColorResult, TwitterPicker } from 'react-color';
 import * as Redux from "react-redux";
