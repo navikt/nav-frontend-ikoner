@@ -4,8 +4,6 @@ export default {
     APP_TITLE: 'NAV ikon-base',
     DOWNLOAD_ICON: "Last ned ikon",
     FILLED_ICON: 'Filled',
-    ICON_IN_LIST: 'icon-in-list',
-    ICON_IN_PANEL: 'icon-in-panel',
     LINE_ICON: 'Line',
     NO_RESULTS: 'Ingen ikoner passer ditt søk',
     SEARCH: 'Søk'

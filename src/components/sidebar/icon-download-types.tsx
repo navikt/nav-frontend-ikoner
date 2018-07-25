@@ -29,7 +29,7 @@ function IconDownloadTypes(props: PropTypes) {
     const uniqueExtensions = findUniqueExtensions(props.icon, props.iconStyle);
     const defaultColor = "black";
     const checkboxes = uniqueExtensions.map((extension, index) => (
-        <div key={index}>
+        <div key={index} >
             <a data-tip="" data-for={extension}>
                 <Checkbox
                     label={extension}
@@ -47,8 +47,6 @@ function IconDownloadTypes(props: PropTypes) {
         </div>
     ));
 
-    console.log(uniqueExtensions)
-    console.log(props.chosenExtensions)
 
     return (
         <div className="download-types-row">

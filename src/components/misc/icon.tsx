@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Language from '../../language/norwegian';
 import {IconType} from '../../redux/store-interfaces';
 import './misc.less';
 
@@ -12,7 +11,7 @@ interface PropTypes {
 }
 
 function getIconClass(iconType: IconType): string {
-    return iconType === IconType.IN_LIST ? Language.ICON_IN_LIST : Language.ICON_IN_PANEL;
+    return iconType === IconType.IN_LIST ? "icon-in-list" : "icon-in-panel";
 }
 
 function Icon(props: PropTypes) {
