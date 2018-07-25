@@ -6,6 +6,6 @@ function ColorButton() {
             <p>[Choose color]</p>
         </div>
     );
-}
+
 
 export default ColorButton;

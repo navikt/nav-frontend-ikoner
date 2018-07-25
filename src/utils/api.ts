@@ -40,9 +40,9 @@ function fetchIconsDispatch(dispatch: Redux.Dispatch<ReceiveIconsAction | Fetchi
 
     // Build parameters
     const iStyle = LinkCreator.iconStyle(iconStyle);
-    const iSearch = LinkCreator.searchText(searchText);
-    const iFetchInterval = LinkCreator.fetchInterval(fetchFrom, fetchTo);
-    return fetch(`${Config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${iFetchInterval}`)
+    const iSearch = LinkCreator.iconSearchText(searchText);
+    const iFetchInterval = LinkCreator.iconFetchInterval(fetchFrom, fetchTo);
+    return fetch  (`${Config.NAV_ICONS_API_LINK}/icons?${iStyle}${iSearch}${iFetchInterval}`)
         .then(response => response.json())
         .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
         .then(json => dispatch(receiveIcons(json.icons, json.numberOfIcons)));

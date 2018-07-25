@@ -5,6 +5,7 @@ export const RECEIVE_TAGS = 'RECEIVE_TAGS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_SELECTED_ICON = 'SET_SELECTED_ICON'
 export const SET_ICON_COLOR = 'SET_ICON_COLOR'
+export const SET_ICON_BACKGROUND_COLOR = 'SET_ICON_BACKGROUND_COLOR'
 export const SET_ICON_STYLE = 'SET_ICON_STYLE'
 export const SET_FETCHING_ICONS = 'SET_FETCHING_ICONS'
 export const SET_FETCH_INTERVAL = 'SET_FETCH_INTERVAL'
@@ -39,7 +40,12 @@ export interface IconColorAction {
     iconColor: string;
 }
 
-export interface IconColorStyle {
+export interface IconColorBackgroundAction {
+    type: string;
+    iconBackgroundColor: string;
+}
+
+export interface IconColorStyle{
     type: string,
     iconStyle: IconStyle,
 }
@@ -83,8 +89,12 @@ export function setIconColor(iconColor: string): IconColorAction {
     return {type: SET_ICON_COLOR, iconColor}
 }
 
-export function setIconStyle(iconStyle: IconStyle): IconColorStyle {
-    return {type: SET_ICON_STYLE, iconStyle}
+export function setIconBackgroundColor(iconBackgroundColor: string): IconColorBackgroundAction {
+    return { type: SET_ICON_BACKGROUND_COLOR, iconBackgroundColor }
+}
+
+export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
+    return { type: SET_ICON_STYLE, iconStyle}
 }
 
 export function setFetchingIcons(): FetchingIconsAction {
