@@ -4,8 +4,19 @@ import IconColorPicker from "../sidebar/icon-color-picker";
 import '../sidebar/icon-color-picker.less';
 import './misc.less';
 
-interface PropTypes { backgroundColor?: string, colorPickers?: boolean, imageLink:string, extension: string, iconType: IconType, iconColor: string, iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void};
-interface StateTypes { fetchingIcon : boolean, backgroundImage: HTMLImageElement}
+interface PropTypes {
+    backgroundColor?: string,
+    colorPickers?: boolean,
+    imageLink:string,
+    extension: string,
+    iconType: IconType,
+    iconColor: string,
+    iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void
+};
+interface StateTypes {
+    fetchingIcon : boolean,
+    backgroundImage: HTMLImageElement
+}
 
 class Icon extends React.Component <PropTypes, StateTypes> {
 
