@@ -1,14 +1,17 @@
 import * as React from "react";
+import TextareaAutosize from 'react-autosize-textarea';
 import * as Redux from "react-redux";
-import {Input} from "../../../node_modules/nav-frontend-skjema";
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from "redux-thunk";
+import {editIcon} from "../../redux/actions";
 import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
-import api from "../../utils/api";
 import '../misc/misc.less';
+import './icon-title.less';
 import './tags.less';
 
 interface PropTypes {
     selectedIcon: IconExpanded,
-    editIcon:  ( id: string, title: string, description: string, style: IconStyle) => Promise<any>,
+    editIcon:  ( id: string, title: string, description: string) => Promise<any>,
     iconStyle: IconStyle
 };
 interface StateTypes { tags: Tags; suggestions: Tags };
@@ -31,14 +34,17 @@ class IconTitle extends React.Component<PropTypes, StateTypes>{
 
         return (
             <div className="icon-title-container">
-                <Input inputClassName="icon-title" label="" value={selectedIcon.title}
-                       onChange={this.handleTitleChange}/>
+                <TextareaAutosize
+                    className="icon-title"
+                    value={selectedIcon.title}
+                    onChange={this.handleTitleChange}
+                />
             </div>
         );
     }
 
-    private handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        this.props.editIcon(this.props.selectedIcon.id, event.target.value, this.props.selectedIcon.description, this.props.iconStyle);
+    private handleTitleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+        this.props.editIcon(this.props.selectedIcon.id, event.target.value, this.props.selectedIcon.description);
     }
 }
 
@@ -50,8 +56,8 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    editIcon : ( id: string, title: string, description: string, style: IconStyle)  => api.editIcon(id, title, description, style)(dispatch)
+const mapDispatchToProps = (dispatch:ThunkDispatch<Store, {}, AnyAction>) => ({
+    editIcon : ( id: string, title: string, description: string, style: IconStyle)  => dispatch(editIcon(id, title, description))
 });
 
 

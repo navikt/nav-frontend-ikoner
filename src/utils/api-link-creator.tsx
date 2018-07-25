@@ -8,12 +8,11 @@ function iconStyleToString(style : IconStyle) : string{
 function iconStyle(style : IconStyle) : string{
     return style === IconStyle.FILLED ? `style=${iconStyleToString(style)}` : `style=${iconStyleToString(style)}`
 }
-
 function iconDisplay(style: IconStyle, iconColor: string, selectedIcon: IconExpanded){
     return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(style)}/${iconColor}/${selectedIcon.bestLocation.filename}`.replace("#", "%23");
 }
 
-function iconSearchText(search :string) : string {
+function iconSearchText(search? :string) : string {
     return search ? `&search=${search}` : "";
 }
 

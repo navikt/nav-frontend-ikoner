@@ -1,3 +1,8 @@
+:focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 3px #ffbd66;
+  box-shadow: 0 0 0 3px #ffbd66;
+}
 
 .search-bar-row {
   width: 100%;
@@ -10,6 +15,13 @@
   align-items:center;
   justify-content: center;
   margin-right:50px;
+}
+
+.icon-in-list-button{
+  background-color: Transparent;
+  border: none;
+  padding: 2px;
+  margin: 0;
 }
 
 
@@ -25,6 +37,7 @@
 }
 
 .icon-in-list {
+  border: 0px;
   height: 100px;
   width: 100px;
   background-repeat: no-repeat;
@@ -36,7 +49,7 @@
   justify-content: center;
 }
 
-.icon-in-list:hover{
+.icon-in-list:hover, .icon-in-list-selected{
   background-color: #f3f3f3;
   cursor:pointer;
   border-radius:5px;
@@ -46,7 +59,9 @@
 }
 
 .icon-in-panel {
+  border: 0px;
   height: 220px;
+  margin-height:15px;
   width:70%;
   background-repeat: no-repeat;
   background-size: 50%;
@@ -75,7 +90,7 @@
   text-align: center;
 }
 
-.pdf-replacement-container{
+.unknown-extension-container{
   width:70%;
   height:70%;
   border-radius: 5px;
@@ -87,27 +102,8 @@
 
 }
 
-.icon-title-container, .icon-description-container{
-  width:70%;
-}
-
-.icon-description-container{
-  padding-top: 15px;
-}
-
-.icon-title{
-  height: 35px;
-  width:100%;
-  word-break: break-word;
-  text-align: center;
-  font-family: 'Source Sans Pro', sans-serif;
-  border: none;
-  font-size: 25px;
-  color: #3e3833;
-}
-
 .textarea--medMeta{
-  height:100px !important;
+  min-height:100px !important;
 }
 
 .skjemaelement__input{

@@ -3,10 +3,12 @@ import * as React from "react";
 import { ColorResult, TwitterPicker } from 'react-color';
 import * as Redux from "react-redux";
 import Language from "../../language/norwegian";
-import {IconColorAction, IconColorBackgroundAction, setIconBackgroundColor, setIconColor} from "../../redux/actions";
+import {setIconBackgroundColor, setIconColor} from "../../redux/actions";
+import {IconColorAction, IconColorBackgroundAction} from "../../redux/actions-interfaces";
 import {ColorPickerType, Store} from "../../redux/store-interfaces";
 import {colors} from "../../utils/colors";
 import '../misc/misc.less';
+import './icon-color-picker.less';
 import './tags.less';
 
 interface PropTypes {
@@ -27,46 +29,67 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
 
     constructor(props: PropTypes) {
         super(props);
+        this.color = this.color.bind(this);
+        this.buttonStyle = this.buttonStyle.bind(this);
         this.handleChangeComplete = this.handleChangeComplete.bind(this);
         this.handleHover = this.handleHover.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.renderFooter = this.renderFooter.bind(this);
 
         this.state = {
-            colorDescription: "",
+            colorDescription: Language.NO_DESCRIPTION,
             colorTitle: "",
             displayColorPicker: false,
         }
     }
 
     public render() {
+        const {type} = this.props;
+        return (
+            <>
+                <div className={this.buttonStyle(type)}
+                     onClick={this.handleClick}
+                     style={{backgroundColor: this.color()}}
+                />
+                {this.state.displayColorPicker ?
+                    <div className="icon-color-picker-popover">
+                        <div className="icon-color-picker-cover" onClick={this.handleClose}/>
+                        <TwitterPicker onSwatchHover={this.handleHover}
+                                       triangle="top-right"
+                                       color={this.color()}
+                                       colors={colors.basic}
+                                       onChange={this.handleChangeComplete}/>
+                        {this.renderFooter()}
+                    </div>
+                    : null
+                }
+            </>
+        );
+    }
 
-        let buttonStyle = "icon-color-picker-foreground";
-        if(this.props.type === ColorPickerType.BACKGROUND) {
-            buttonStyle = "icon-color-picker-background";
+    private color(){
+        return this.props.type === ColorPickerType.FOREGROUND
+            ? this.props.iconColor
+            : this.props.iconBackgroundColor;
+    }
+
+    private buttonStyle(type: ColorPickerType | undefined){
+        return type === ColorPickerType.FOREGROUND
+            ? "icon-color-picker-foreground"
+            : "icon-color-picker-background";
+    }
+
+    private renderFooter() {
+        if (this.state.colorDescription && this.state.colorTitle) {
+            return (
+                <div className="icon-color-picker-popover-footer">
+                    {this.state.colorTitle}
+                    <hr/>
+                    <p>{this.state.colorDescription ? this.state.colorDescription : Language.NO_DESCRIPTION}</p>
+                </div>);
         }
-
-        return <>
-            <div className={buttonStyle}
-                 onClick={this.handleClick}
-                 style={{backgroundColor: this.props.type === ColorPickerType.FOREGROUND ? this.props.iconColor : this.props.iconBackgroundColor}}
-            />
-            {this.state.displayColorPicker ?
-                <div className="icon-color-picker-popover">
-                    <div className="icon-color-picker-cover" onClick={this.handleClose}/>
-                    <TwitterPicker onSwatchHover={this.handleHover} triangle="top-right" colors={colors.basic}
-                                   onChange={this.handleChangeComplete}/>
-                    {(this.state.colorDescription && this.state.colorTitle) &&
-                        <div className="icon-color-picker-popover-footer">
-                            {this.state.colorTitle}
-                            <hr/>
-                            <p>{this.state.colorDescription ? this.state.colorDescription : Language.NO_DESCRIPTION}</p>
-                        </div>
-                    }
-                </div>
-                : null
-            }
-        </>;
+        return null;
     }
 
     private handleChangeComplete (color : ColorResult) {
@@ -97,7 +120,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
 
     private handleClose = () => {
         this.setState({
-            colorDescription: "",
+            colorDescription: Language.NO_DESCRIPTION,
             colorTitle:  "",
             displayColorPicker: false ,
         })
