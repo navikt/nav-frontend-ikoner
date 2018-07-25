@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from 'redux-thunk';
 import './app.less';
 import IconList from './components/lists/icon-list';
 import IconListHeader from "./components/misc/icon-list-header";
 import Sidebar from "./components/sidebar";
-import {ReceiveTagsAction} from "./redux/actions";
+import {fetchTags} from "./redux/actions";
+import {ReceiveTagsAction} from "./redux/actions-interfaces";
 import {Store} from "./redux/store-interfaces";
-import api from "./utils/api";
 
 interface PropTypes {
     fetchTags: () => Promise<ReceiveTagsAction>
@@ -39,8 +41,8 @@ class App extends React.Component <PropTypes>  {
 const mapStateToProps = (state: Store) => {
     return {};
 };
-const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchTags : ()  => api.fetchTags()(dispatch)
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
+    fetchTags : ()  => dispatch(fetchTags())
 });
 
 

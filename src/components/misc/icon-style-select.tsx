@@ -1,17 +1,19 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
+import {AnyAction} from 'redux';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {ToggleGruppe, ToggleKnapp} from '../../../node_modules/nav-frontend-skjema';
 import Language from '../../language/norwegian';
-import {IconColorStyle, SelectedIconAction, setIconStyle} from "../../redux/actions";
+import {fetchIcon, setIconStyle} from "../../redux/actions";
+import {IconColorStyle, SelectedIconAction} from "../../redux/actions-interfaces";
 import {IconExpanded, IconStyle, Store} from '../../redux/store-interfaces';
-import api from "../../utils/api";
 import './misc.less';
 
 interface PropTypes {
     iconStyle : IconStyle;
     selectedIcon: IconExpanded;
     setIconStyle: (iconStyle: IconStyle) => IconColorStyle;
-    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
+    fetchIcon: (filename:string) => ThunkAction<void, Store, {}, SelectedIconAction>;
 };
 
 class IconStyleSelect extends React.Component <PropTypes> {
@@ -25,7 +27,7 @@ class IconStyleSelect extends React.Component <PropTypes> {
         const newStyle = this.props.iconStyle === IconStyle.FILLED ? IconStyle.LINE : IconStyle.FILLED;
         this.props.setIconStyle(newStyle);
         if(this.props.selectedIcon){
-            this.props.fetchIcon(this.props.selectedIcon.id, newStyle);
+            this.props.fetchIcon(this.props.selectedIcon.id);
         }
     }
 
@@ -50,8 +52,8 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
+    fetchIcon : (filename:string)  => dispatch(fetchIcon(filename)),
     setIconStyle : (iconStyle: IconStyle)  => dispatch(setIconStyle(iconStyle)),
 });
 

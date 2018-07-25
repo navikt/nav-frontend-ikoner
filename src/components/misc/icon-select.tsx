@@ -1,55 +1,31 @@
 import * as React from 'react';
-import * as Redux from 'react-redux';
-import {SelectedIconAction} from "../../redux/actions";
-import {IconStyle, IconType, Store} from '../../redux/store-interfaces';
-import api from "../../utils/api";
-import Icon from "./icon";
+import { connect } from 'react-redux';
+import {IconBasic, Store} from '../../redux/store-interfaces';
+import IconInList from "./icon-in-list";
 import './misc.less';
 
 interface PropTypes {
-    id: string;
-    title: string;
-    imageLink: string;
-    extension: string;
-    iconStyle: IconStyle;
-    key: number;
-    fetchIcon: (filename:string, style: IconStyle) => Promise<SelectedIconAction>;
-};
-interface StateTypes {iconStyle: IconStyle, iconColor: string}
+    index: number;
+    onClick: () => void;
+    icon: IconBasic;
+}
 
-class IconSelect extends React.Component <PropTypes,StateTypes> {
-
-    constructor(props: PropTypes){
-        super(props);
-        this.onIconClick = this.onIconClick.bind(this);
-    }
-
-    public onIconClick(){
-        this.props.fetchIcon(this.props.id, this.props.iconStyle);
-    }
-
+class IconSelect extends React.PureComponent<PropTypes & { selected: boolean }, {}> {
     public render() {
-        return (
-            <Icon
-                key={this.props.key}
-                imageLink={this.props.imageLink}
-                extension={this.props.extension}
-                iconType={IconType.IN_LIST}
-                iconClickTrigger={this.onIconClick}
-                iconColor="black"/>
+        return(
+            <button
+                tabIndex={this.props.selected ? 0 : -1}
+                onClick={this.props.onClick}
+                className="icon-in-list-button">
+                <IconInList selected={this.props.selected!} {...this.props} />
+            </button>
+
         );
     }
 }
 
-const mapStateToProps = (state: Store) => {
-    return {
-        iconColor: state.iconsStore.iconColor,
-        iconStyle: state.iconsStore.iconStyle,
-    };
-};
-
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    fetchIcon : (filename:string, style: IconStyle)  => api.fetchIcon(filename, style)(dispatch),
+const mapStateToProps = (state: Store, props: PropTypes) => ({
+    selected: state.iconsStore.selectedIconIndex === props.index
 });
 
-export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconSelect);
+export default connect(mapStateToProps)(IconSelect);

@@ -1,17 +1,19 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
 import { WithContext as ReactTags } from 'react-tag-input';
-import {ReceiveTagsAction, setSearchText} from "../../redux/actions";
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from 'redux-thunk';
+import {deleteTag, insertTag, setSearchText} from "../../redux/actions";
+import {ReceiveTagsAction} from "../../redux/actions-interfaces";
 import {IconExpanded, IconStyle, Store, Tag, Tags} from "../../redux/store-interfaces";
-import api from "../../utils/api";
 import '../misc/misc.less';
 import './tags.less';
 
 interface PropTypes {
     tags: Tags;
     selectedIcon: IconExpanded;
-    insertTag: (tag: string, icon:string, style: IconStyle) => Promise<ReceiveTagsAction>;
-    deleteTag: (id:string, icon: string,  style: IconStyle) => Promise<ReceiveTagsAction>;
+    insertTag: (tag: string, icon:string) => Promise<ReceiveTagsAction>;
+    deleteTag: (id:string, icon: string) => Promise<ReceiveTagsAction>;
     iconStyle: IconStyle;
 };
 
@@ -39,13 +41,13 @@ class TagsHandler extends React.Component<PropTypes>{
     }
 
     private handleAddition(tag : Tag) {
-        this.props.insertTag(tag.text, this.props.selectedIcon.title, this.props.iconStyle)
+        this.props.insertTag(tag.text, this.props.selectedIcon.title)
     }
 
     private handleDelete(position : number) {
-        const {selectedIcon, deleteTag, iconStyle} = this.props;
+        const {selectedIcon} = this.props;
         if(selectedIcon.tags[position]) {
-            deleteTag(selectedIcon.tags[position].id, selectedIcon.title, iconStyle)
+            this.props.deleteTag(selectedIcon.tags[position].id, selectedIcon.title)
         }
     }
 
@@ -62,9 +64,9 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    deleteTag : (id:string, icon: string,  style: IconStyle)  => api.deleteTag(id, icon, style)(dispatch),
-    insertTag : (tag: string, icon:string, style: IconStyle)  => api.insertTag(tag, icon, style)(dispatch),
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
+    deleteTag : (id:string, icon: string)  => dispatch(deleteTag(id, icon)),
+    insertTag : (tag: string, icon:string)  => dispatch(insertTag(tag, icon)),
     setSearchText : (searchText:string)  => dispatch(setSearchText(searchText)),
 });
 
