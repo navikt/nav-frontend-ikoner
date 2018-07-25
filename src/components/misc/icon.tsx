@@ -21,9 +21,7 @@ interface StateTypes {
 class Icon extends React.Component <PropTypes, StateTypes> {
 
     public render() {
-
-        const {imageLink, extension, iconClickTrigger, iconType, backgroundColor} = this.props;
-
+        const {imageLink, extension, iconClickTrigger, iconType, backgroundColor, colorPickers} = this.props;
         return (
             <div
                 className={this.getIconClass(iconType)}
@@ -33,23 +31,27 @@ class Icon extends React.Component <PropTypes, StateTypes> {
                     backgroundImage: `url(${imageLink})`
                 }}>
                 {extension !== "svg" && extension !== "png" &&
-                    <div className="pdf-replacement-container">
-                        <div className="pdf-replacement">
-                            {extension.toLocaleUpperCase()}
-                        </div>
+                <div className="pdf-replacement-container">
+                    <div className="pdf-replacement">
+                        {extension.toLocaleUpperCase()}
                     </div>
-                }
-                <div className="icon-color-picker-container">
-                    {this.props.colorPickers && <div className="icon-color-picker-box" />}
-                    {this.props.colorPickers && <IconColorPicker type={ColorPickerType.FOREGROUND} /> }
-                    {this.props.colorPickers && <IconColorPicker type={ColorPickerType.BACKGROUND} /> }
                 </div>
+                }
+                {colorPickers &&
+                <div className="icon-color-picker-container">
+                        <div className="icon-color-picker-box" />
+                        <IconColorPicker type={ColorPickerType.FOREGROUND} />
+                        <IconColorPicker type={ColorPickerType.BACKGROUND} />
+                </div>
+                }
             </div>
         );
     }
 
     private getIconClass (iconType : IconType ) : string{
-        return iconType === IconType.IN_LIST ? 'icon-in-list' : 'icon-in-panel';
+        return iconType === IconType.IN_LIST
+            ? 'icon-in-list'
+            : 'icon-in-panel';
     }
 }
 
