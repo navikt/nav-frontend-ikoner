@@ -4,6 +4,7 @@ export interface IconsStore {
     fetchFrom: number,
     fetchTo: number,
     icons: Icons,
+    iconBackgroundColor: string,
     iconColor: string,
     iconStyle: IconStyle,
     lastUpdated?: Date,
@@ -56,4 +57,8 @@ export enum IconType {
 export enum IconStyle {
     FILLED,
     LINE
+};
+export enum ColorPickerType {
+    FOREGROUND,
+    BACKGROUND
 };
