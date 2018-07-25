@@ -27,8 +27,6 @@ import {
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
-// const debounce = require('lodash.debounce'); // tslint:disable-line
-
 interface PropTypes {
     iconStyle: IconStyle;
     iconColor: string;

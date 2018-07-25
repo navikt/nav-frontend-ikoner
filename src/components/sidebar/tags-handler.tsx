@@ -33,7 +33,6 @@ class TagsHandler extends React.Component<PropTypes>{
                 <ReactTags tags={selectedIcon.tags}
                            suggestions={tags.filter((tag: Tag) => this.isTagUsed(tag.text))}
                            placeholder={'Legg til tagger'}
-                           autofocus={false}
                            handleAddition={this.handleAddition}
                            handleDelete={this.handleDelete}
                 />
