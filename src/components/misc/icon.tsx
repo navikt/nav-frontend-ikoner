@@ -14,12 +14,6 @@ interface PropTypes {
     iconClickTrigger?: (event: React.MouseEvent<HTMLDivElement>) => void
 };
 
-/*
-interface StateTypes {
-    fetchingIcon: boolean,
-    backgroundImage: HTMLImageElement
-}*/
-
 function getIconClass(iconType: IconType): string {
     return iconType === IconType.IN_LIST
         ? 'icon-in-list'

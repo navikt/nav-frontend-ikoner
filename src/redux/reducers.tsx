@@ -15,7 +15,7 @@ import {
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState: IconsStore = {
-    chosenExtensions: { svg: true },
+    chosenExtensions: {svg: true},
     fetchFrom: 0,
     fetchHasMore: true,
     fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
@@ -43,7 +43,7 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
         case SET_SELECTED_ICON:
             return {
                 ...state, ...{
-                    chosenExtensions: { svg: true },
+                    chosenExtensions: {svg: true},
                     selectedIcon: action.icon,
                 }
             };
@@ -67,7 +67,8 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
                 }
             };
         case SET_ICON_BACKGROUND_COLOR:
-            return {...state, ...{
+            return {
+                ...state, ...{
                     iconBackgroundColor: action.iconBackgroundColor,
                 }
             };

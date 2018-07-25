@@ -14,7 +14,7 @@ interface PropTypes {
 class SearchBar extends React.Component<PropTypes> {
 
     constructor(props: PropTypes) {
-        super(props)
+        super(props);
         this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 

@@ -45,7 +45,7 @@ export interface IconColorBackgroundAction {
     iconBackgroundColor: string;
 }
 
-export interface IconColorStyle{
+export interface IconColorStyle {
     type: string,
     iconStyle: IconStyle,
 }
@@ -90,11 +90,11 @@ export function setIconColor(iconColor: string): IconColorAction {
 }
 
 export function setIconBackgroundColor(iconBackgroundColor: string): IconColorBackgroundAction {
-    return { type: SET_ICON_BACKGROUND_COLOR, iconBackgroundColor }
+    return {type: SET_ICON_BACKGROUND_COLOR, iconBackgroundColor}
 }
 
-export function setIconStyle(iconStyle: IconStyle): IconColorStyle{
-    return { type: SET_ICON_STYLE, iconStyle}
+export function setIconStyle(iconStyle: IconStyle): IconColorStyle {
+    return {type: SET_ICON_STYLE, iconStyle}
 }
 
 export function setFetchingIcons(): FetchingIconsAction {

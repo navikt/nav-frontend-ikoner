@@ -11,7 +11,6 @@ import IconDownloadTypes from "./sidebar/icon-download-types";
 import IconTitle from './sidebar/icon-title'
 import TagsHandler from './sidebar/tags-handler';
 
-
 interface PropTypes {
     iconBackgroundColor: string;
     selectedIcon: IconExpanded;

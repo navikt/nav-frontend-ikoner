@@ -15,9 +15,9 @@ interface PropTypes {
 }
 
 function DownloadButton(props: PropTypes) {
-
     const {icon, chosenExtensions, iconStyle, iconColor} = props;
     const style = LinkCreator.iconStyleToString(iconStyle);
+
     return (
         <a download={true}
            href={`${Config.NAV_ICONS_API_LINK}/icon/download?title=${icon.title}&style=${style}&color=${iconColor}&extensions=${chosenExtensions.join(",")}`}
