@@ -27,7 +27,8 @@ class IconInPanel extends React.Component <PropTypes> {
                 className="icon-in-panel"
                 style={{
                     backgroundColor: iconBackgroundColor,
-                    backgroundImage: `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`}} >
+                    backgroundImage: `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`
+                }} >
                 <IconUnknownExtension extension={selectedIcon.bestLocation.extension}/>
                 <div className="icon-color-picker-container">
                     <div className="icon-color-picker-box" />
