@@ -13,18 +13,10 @@ function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
 
     function getStatusColor(score: string){
         switch(score){
-            case "AAA":
-                return "green";
-                break;
-            case "AA":
-                return "orange";
-                break;
-            case "A":
-                return "red";
-                break;
-            case "F":
-                return "red";
-                break;
+            case "AAA": return "green";
+            case "AA" : return "orange";
+            case "A"  : return "red";
+            case "F"  : return "red";
         }
         return "red";
     }
