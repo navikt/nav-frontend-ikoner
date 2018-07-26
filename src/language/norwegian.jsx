@@ -10,5 +10,4 @@ export default {
     RATIO: 'Forhold : ',
     SEARCH: 'Søk',
     WCAG: 'WCAG 2.0 Kontrast',
-
 };

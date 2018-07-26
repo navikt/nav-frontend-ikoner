@@ -55,12 +55,7 @@ export interface FetchingInterval {
     fetchTo: number,
 }
 
-export interface ResetFetch{
+export interface ChosenExtensions {
     type: string,
-}
-
-export interface IconTitleDescription {
-    type: string,
-    title: string,
-    description: string,
+    extension: string,
 }

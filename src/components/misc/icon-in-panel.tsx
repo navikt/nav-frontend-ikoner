@@ -1,24 +1,25 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
 import {ColorPickerType, IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
-import LinkCreator from "../../utils/api-link-creator";
+import {iconDisplay} from "../../utils/api-link-creator";
 import IconColorPicker from '../sidebar/icon-color-picker'
-import IconContrastRatio from '../sidebar/icon-contrast-ratio';
+import IconContrastRatio from "../sidebar/icon-contrast-ratio";
 import IconUnknownExtension from "./icon-unknown-extension";
 import './misc.less';
 
 interface PropTypes {
-    iconStyle: IconStyle,
-    iconBackgroundColor: string,
-    iconColor: string,
-    selectedIcon: IconExpanded,
+    iconStyle: IconStyle;
+    iconBackgroundColor: string;
+    iconColor: string;
+    selectedIcon: IconExpanded;
 };
 
 class IconInPanel extends React.Component <PropTypes> {
 
-    constructor(props:PropTypes){
+    constructor(props: PropTypes) {
         super(props);
     }
+
     public render() {
         const {selectedIcon, iconBackgroundColor, iconColor, iconStyle} = this.props;
         return (
@@ -26,7 +27,7 @@ class IconInPanel extends React.Component <PropTypes> {
                 className="icon-in-panel"
                 style={{
                     backgroundColor: iconBackgroundColor,
-                    backgroundImage: `url(${LinkCreator.iconDisplay(iconStyle, iconColor, selectedIcon)})`}} >
+                    backgroundImage: `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`}} >
                 <IconUnknownExtension extension={selectedIcon.bestLocation.extension}/>
                 <div className="icon-color-picker-container">
                     <div className="icon-color-picker-box" />
@@ -47,6 +48,5 @@ const mapStateToProps = (state: Store) => {
         selectedIcon: state.iconsStore.selectedIcon,
     };
 };
-
 
 export default Redux.connect(mapStateToProps)(IconInPanel)

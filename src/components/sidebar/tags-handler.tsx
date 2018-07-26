@@ -15,11 +15,11 @@ interface PropTypes {
     insertTag: (tag: string, icon:string) => Promise<ReceiveTagsAction>;
     deleteTag: (id:string, icon: string) => Promise<ReceiveTagsAction>;
     iconStyle: IconStyle;
-};
+}
 
-class TagsHandler extends React.Component<PropTypes>{
+class TagsHandler extends React.Component<PropTypes> {
 
-    constructor(props: PropTypes){
+    constructor(props: PropTypes) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
@@ -27,16 +27,17 @@ class TagsHandler extends React.Component<PropTypes>{
     }
 
     public render() {
-        const {selectedIcon,tags} = this.props;
+        const {selectedIcon, tags} = this.props;
         return (
-           <div className="tags-container">
+            <div className="tags-container">
                 <ReactTags tags={selectedIcon.tags}
                            suggestions={tags.filter((tag: Tag) => this.isTagUsed(tag.text))}
                            placeholder={'Legg til tagger'}
+                           autofocus={false}
                            handleAddition={this.handleAddition}
                            handleDelete={this.handleDelete}
                 />
-           </div>
+            </div>
         );
     }
 
@@ -51,7 +52,7 @@ class TagsHandler extends React.Component<PropTypes>{
         }
     }
 
-    private isTagUsed(text:string){
+    private isTagUsed(text: string) {
         return this.props.selectedIcon.tags.filter((tag: Tag) => tag.text === text).length === 0;
     }
 }
@@ -60,14 +61,14 @@ const mapStateToProps = (state: Store) => {
     return {
         iconStyle: state.iconsStore.iconStyle,
         selectedIcon: state.iconsStore.selectedIcon,
-        tags: state.iconsStore.tags,
+        tags: state.iconsStore.tags
     };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
     deleteTag : (id:string, icon: string)  => dispatch(deleteTag(id, icon)),
     insertTag : (tag: string, icon:string)  => dispatch(insertTag(tag, icon)),
-    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText)),
+    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText))
 });
 
 
