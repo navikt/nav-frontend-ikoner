@@ -31,8 +31,6 @@ function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
         return "red";
     }
 
-    console.log(iconColor);
-    console.log(iconBackgroundColor);
     return (
         <div className="icon-contrast-ratio-bar">
             <a data-tip="" data-for={"contrastRatio"}>
