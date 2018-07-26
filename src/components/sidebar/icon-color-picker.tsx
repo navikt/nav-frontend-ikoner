@@ -2,10 +2,12 @@ import * as React from "react";
 import {ColorResult, TwitterPicker} from 'react-color';
 import * as Redux from "react-redux";
 import Language from "../../language/norwegian";
-import {IconColorAction, IconColorBackgroundAction, setIconBackgroundColor, setIconColor} from "../../redux/actions";
+import {setIconBackgroundColor, setIconColor} from "../../redux/actions";
+import {IconColorAction, IconColorBackgroundAction} from "../../redux/actions-interfaces";
 import {ColorPickerType, Store} from "../../redux/store-interfaces";
 import {colors} from "../../utils/colors";
 import '../misc/misc.less';
+import './icon-color-picker.less';
 import './tags.less';
 
 interface PropTypes {
@@ -14,7 +16,7 @@ interface PropTypes {
     iconColor: string;
     iconBackgroundColor: string;
     type?: ColorPickerType;
-};
+}
 
 interface StateTypes {
     displayColorPicker: boolean;
@@ -37,7 +39,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
         this.state = {
             colorDescription: Language.NO_DESCRIPTION,
             colorTitle: "",
-            displayColorPicker: false,
+            displayColorPicker: false
         }
     }
 
@@ -127,7 +129,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
 const mapStateToProps = (state: Store) => {
     return {
         iconBackgroundColor: state.iconsStore.iconBackgroundColor,
-        iconColor: state.iconsStore.iconColor,
+        iconColor: state.iconsStore.iconColor
     };
 };
 

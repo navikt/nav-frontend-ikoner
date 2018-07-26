@@ -10,8 +10,10 @@ import {
     SET_ICON_STYLE,
     SET_SEARCH_TEXT,
     SET_SELECTED_ICON,
+    SET_SELECTED_ICON_INDEX,
     TOGGLE_CHOSEN_EXTENSION
-} from "./actions";
+} from "./actions-constants";
+
 import {IconsStore, IconStyle} from "./store-interfaces";
 
 const initialState: IconsStore = {
@@ -27,8 +29,9 @@ const initialState: IconsStore = {
     lastUpdated: undefined,
     searchText: '',
     selectedIcon: undefined,
-    tags: []
-};
+    selectedIconIndex: 0,
+    tags: [],
+}
 
 export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): IconsStore {
 
@@ -37,7 +40,8 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
         fetchHasMore: true,
         fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
         icons: [],
-    };
+        selectedIconIndex: 0,
+    }
 
     switch (action.type) {
         case SET_SELECTED_ICON:
@@ -45,6 +49,12 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
                 ...state, ...{
                     chosenExtensions: {svg: true},
                     selectedIcon: action.icon,
+                }
+            };
+        case SET_SELECTED_ICON_INDEX:
+            return {
+                ...state, ...{
+                    selectedIconIndex: action.index,
                 }
             };
         case SET_FETCHING_ICONS:
@@ -63,7 +73,8 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
         case SET_ICON_COLOR:
             return {
                 ...state, ...{
-                    iconColor: action.iconColor,
+                    chosenExtensions: action.iconColor === "#000000" ? state.chosenExtensions : {svg: true},
+                    iconColor: action.iconColor
                 }
             };
         case SET_ICON_BACKGROUND_COLOR:

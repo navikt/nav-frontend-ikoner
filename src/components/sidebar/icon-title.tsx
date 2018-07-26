@@ -1,16 +1,17 @@
 import * as React from "react";
 import TextareaAutosize from 'react-autosize-textarea';
 import * as Redux from "react-redux";
-import {SelectedIconAction} from "../../redux/actions";
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from "redux-thunk";
+import {editIcon} from "../../redux/actions";
 import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
-import api from "../../utils/api";
 import '../misc/misc.less';
 import './icon-title.less';
 import './tags.less';
 
 interface PropTypes {
     selectedIcon: IconExpanded;
-    editIcon: (id: string, title: string, description: string, style: IconStyle) => Promise<SelectedIconAction>;
+    editIcon:  ( id: string, title: string, description: string) => Promise<any>;
     iconStyle: IconStyle;
 }
 
@@ -47,20 +48,19 @@ class IconTitle extends React.Component<PropTypes, StateTypes> {
     }
 
     private handleTitleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        const {selectedIcon, editIcon, iconStyle} = this.props;
-        editIcon(selectedIcon.id, event.target.value, selectedIcon.description, iconStyle);
+        this.props.editIcon(this.props.selectedIcon.id, event.target.value, this.props.selectedIcon.description);
     }
 }
 
 const mapStateToProps = (state: Store) => {
     return {
         iconStyle: state.iconsStore.iconStyle,
-        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIcon: state.iconsStore.selectedIcon
     };
 };
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    editIcon: (id: string, title: string, description: string, style: IconStyle) => api.editIcon(id, title, description, style)(dispatch)
+const mapDispatchToProps = (dispatch:ThunkDispatch<Store, {}, AnyAction>) => ({
+    editIcon : ( id: string, title: string, description: string, style: IconStyle)  => dispatch(editIcon(id, title, description))
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconTitle);

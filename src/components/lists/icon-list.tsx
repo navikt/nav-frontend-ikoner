@@ -2,77 +2,150 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import * as React from 'react';
 import * as InfiniteScroll from 'react-infinite-scroll-component';
 import * as Redux from "react-redux";
+import {AnyAction} from "redux";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import Config from '../../appconfig';
 import Language from '../../language/norwegian';
-import {FetchingInterval, ReceiveIconsAction, setFetchingInterval} from "../../redux/actions";
 import {
-    IconBasic,
+    fetchIcon,
+    fetchIcons,
+    setFetchingInterval,
+    setSelectedIconIndex
+} from "../../redux/actions";
+import {
+    FetchingIconsAction, FetchingInterval,
+    ReceiveIconsAction,
+    SelectedIconAction,
+    SelectedIconIndexAction
+} from "../../redux/actions-interfaces";
+import {
+    IconBasic, IconExpanded,
     Icons,
     IconStyle,
-    SearchText,
     Store
 } from "../../redux/store-interfaces";
-import api from "../../utils/api";
 import IconSelect from '../misc/icon-select';
 import './lists.less';
 
 interface PropTypes {
     iconStyle: IconStyle;
+    iconColor: string;
     icons: Icons;
-    searchText: SearchText;
-    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText: string) => Promise<ReceiveIconsAction>;
+    searchText: string;
+    fetchIcon: (filename: string) => ThunkAction<void, Store, {}, SelectedIconAction>;
+    fetchIcons: (fetchFrom: number, fetchTo: number, searchText?: string | undefined)
+        => ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction>;
     fetchFrom: number;
     fetchHasMore: boolean;
     fetchTo: number;
     fetchingCounter: number;
-    setFetchInterval: (fetchFrom: number, fetchTo: number) => FetchingInterval;
+    selectedIcon: IconExpanded,
+    selectedIconIndex: number,
+    setIconIndex: (index: number) => SelectedIconIndexAction;
+    setFetchInterval: (fetchFrom: number, fetchTo: number) => ThunkAction<void, Store, {}, FetchingInterval>;
 }
 
-class IconList extends React.Component <PropTypes> {
-
+class IconList extends React.Component <PropTypes, {}> {
     constructor(props: PropTypes) {
         super(props);
-        props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
         this.loadMore = this.loadMore.bind(this);
+        this.handle = this.handle.bind(this);
     }
 
-    public componentWillReceiveProps(props: PropTypes) {
-        if (this.props.searchText !== props.searchText ||
-            this.props.iconStyle !== props.iconStyle ||
-            this.props.fetchFrom !== props.fetchFrom ||
-            this.props.fetchTo !== props.fetchTo
-        ) {
-            props.fetchIcons(props.iconStyle, props.fetchFrom, props.fetchTo, props.searchText);
+    public componentDidMount() {
+        const {fetchFrom, fetchTo, searchText} = this.props;
+        this.props.fetchIcons(fetchFrom, fetchTo, searchText);
+    }
+
+    public handle = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        const container = event.currentTarget;
+        const children = Array.from(container.children) as HTMLElement[];
+        const currentFocus = container.querySelector(':focus') as HTMLElement;
+        if (!currentFocus) {
+            return;
         }
+
+        const currentIndex = children.indexOf(currentFocus);
+        let newIndex = 0;
+        const actions = {
+            'ArrowDown': () => {
+                const iconOnRow = Math.floor(container.offsetWidth / currentFocus.offsetWidth);
+                if (currentIndex + iconOnRow < children.length) {
+                    newIndex = currentIndex + iconOnRow;
+                } else {
+                    newIndex = children.length - 1;
+                }
+            },
+            'ArrowLeft': () => {
+                if (currentIndex > 0) {
+                    newIndex = currentIndex - 1;
+                }
+            },
+            'ArrowRight': () => {
+                if (currentIndex < children.length - 1) {
+                    newIndex = currentIndex + 1;
+                }
+            },
+            'ArrowUp': () => {
+                const iconOnRow = Math.floor(container.offsetWidth / currentFocus.offsetWidth);
+                if (currentIndex - iconOnRow >= 0) {
+                    newIndex = currentIndex - iconOnRow;
+                } else {
+                    newIndex = 0;
+                }
+            },
+        };
+        (actions[event.key] || (() => {
+        }))(); // tslint:disable-line
+        children[newIndex].focus();
+        this.props.setIconIndex(newIndex);
+        this.props.fetchIcon(this.props.icons[newIndex].id);
+    };
+
+    public iconOnclickFactory(index: number): () => void {
+        return () => {
+            this.props.setIconIndex(index);
+            this.props.fetchIcon(this.props.icons[index].id);
+        };
     }
 
-    public loadMore() {
+    public shouldComponentUpdate(nextProps: PropTypes) {
+        return this.props.icons !== nextProps.icons;
+    }
+
+    public render() {
+        const {icons, fetchingCounter, fetchHasMore} = this.props;
+        const iconElements = icons.map((icon: IconBasic, index: number) =>
+            <IconSelect
+                index={index}
+                key={icon.id}
+                onClick={this.iconOnclickFactory(index)}
+                icon={icon}/>
+        );
+
+        return (
+            <div>
+                <InfiniteScroll
+                    endMessage={!icons.length && !fetchingCounter ?
+                        <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
+                    loader={<div className="icon-list-spinner"><NavFrontendSpinner/></div>}
+                    dataLength={icons.length}
+                    hasMore={fetchHasMore}
+                    next={this.loadMore}>
+                    <div onKeyDown={this.handle}>
+                        {iconElements}
+                    </div>
+                </InfiniteScroll>
+            </div>
+        );
+    }
+
+    private loadMore() {
         if (this.props.icons.length > 0) {
             const fetchFrom = this.props.fetchTo;
             const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
         }
-    }
-
-    public render() {
-        const {icons, fetchingCounter, fetchHasMore} = this.props;
-        return (
-            <InfiniteScroll
-                dataLength={icons.length}
-                endMessage={icons.length === 0 && fetchingCounter === 0 ?
-                    <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
-                next={this.loadMore}
-                hasMore={fetchHasMore}
-                loader={<div className="icon-list-spinner"><NavFrontendSpinner/></div>}>
-                {icons.map((icon: IconBasic, index: number) =>
-                    <IconSelect key={index}
-                                id={icon.id}
-                                title={icon.title}
-                                imageLink={icon.link}
-                                extension={icon.extension}/>
-                )}
-            </InfiniteScroll>
-        );
     }
 }
 
@@ -82,15 +155,20 @@ const mapStateToProps = (state: Store) => {
         fetchHasMore: state.iconsStore.fetchHasMore,
         fetchTo: state.iconsStore.fetchTo,
         fetchingCounter: state.iconsStore.fetchingCounter,
+        iconColor: state.iconsStore.iconColor,
         iconStyle: state.iconsStore.iconStyle,
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
+        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIconIndex: state.iconsStore.selectedIconIndex
     };
 };
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    fetchIcons: (iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText: string) => api.fetchIcons(iconStyle, fetchFrom, fetchTo, searchText)(dispatch),
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
+    fetchIcon: (filename: string) => dispatch(fetchIcon(filename)),
+    fetchIcons: (fetchFrom: number, fetchTo: number, searchText?: string) => dispatch(fetchIcons(fetchFrom, fetchTo, searchText)),
     setFetchInterval: (fetchFrom: number, fetchTo: number) => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
+    setIconIndex: (index: number) => dispatch(setSelectedIconIndex(index))
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconList);

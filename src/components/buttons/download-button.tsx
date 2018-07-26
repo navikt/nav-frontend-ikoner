@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
-import Config from "../../appconfig";
 import Language from '../../language/norwegian';
 import {getChosenExtensions} from "../../redux/selectors";
 import {IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
-import LinkCreator from "../../utils/api-link-creator";
+import {iconDownload} from "../../utils/api-link-creator";
 import './buttons.less';
 
 interface PropTypes {
@@ -16,11 +15,11 @@ interface PropTypes {
 
 function DownloadButton(props: PropTypes) {
     const {icon, chosenExtensions, iconStyle, iconColor} = props;
-    const style = LinkCreator.iconStyleToString(iconStyle);
+    const link = iconDownload(iconStyle, iconColor, icon, chosenExtensions)
 
     return (
         <a download={true}
-           href={`${Config.NAV_ICONS_API_LINK}/icon/download?title=${icon.title}&style=${style}&color=${iconColor}&extensions=${chosenExtensions.join(",")}`}
+           href={link}
            className="knapp knapp--hoved icon-download-button"
         >
             {Language.DOWNLOAD_ICON}

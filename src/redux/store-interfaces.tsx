@@ -11,6 +11,7 @@ export interface IconsStore {
     lastUpdated?: Date,
     searchText: string,
     selectedIcon?: IconExpanded,
+    selectedIconIndex: number,
     tags: Tags,
 }
 
@@ -48,9 +49,13 @@ export interface IconBasic {
     link: string,
 }
 
+export interface IconsResult {
+    icons: Icons;
+    numberOfIcons: number;
+}
+
 export type Tags = Tag[];
 export type Icons = IconBasic[];
-export type SearchText = string;
 
 export enum IconType {
     IN_LIST,
