@@ -11,7 +11,8 @@ interface PropTypes {
 
 function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
 
-    function getStatusColor(score: string){
+    function getStatusColor(){
+        const score = Contrast.score(iconColor, iconBackgroundColor)
         switch(score){
             case "AAA": return "green";
             case "AA" : return "orange";
@@ -21,22 +22,22 @@ function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
         return "red";
     }
 
-    return (
-        <a className="icon-contrast-ratio-bar-container"
-           data-tip=""
-           data-for="contrastRatio">
-            <div className="icon-contrast-ratio-bar"
-                 style={{backgroundColor: getStatusColor(Contrast.score(iconColor, iconBackgroundColor))}} />
+    function getTooltip(){
+        const ratio = Contrast.ratio(iconColor, iconBackgroundColor).toFixed(2);
+        const score = Contrast.score(iconColor, iconBackgroundColor);
+        return (
             <ReactTooltip id={"contrastRatio"} offset={{'top': -10}} place={"bottom"} type={"dark"} effect={"solid"}>
-                <div className="icon-contrast-ratio-title">
-                    {Language.WCAG}
-                </div>
-                <hr />
-                <div className="icon-contrast-ratio-subtitle">
-                    {Contrast.ratio(iconColor, iconBackgroundColor).toFixed(2)}
-                    </div>
-                <div className="icon-contrast-ratio-subtitle">{Contrast.score(iconColor, iconBackgroundColor)}</div>
+                <div className="icon-contrast-ratio-title">{Language.WCAG}</div> <hr />
+                <div className="icon-contrast-ratio-subtitle">{ratio}</div>
+                <div className="icon-contrast-ratio-subtitle">{score}</div>
             </ReactTooltip>
+        )
+    }
+
+    return (
+        <a className="icon-contrast-ratio-bar-container" data-tip="" data-for="contrastRatio">
+            <div className="icon-contrast-ratio-bar" style={{backgroundColor: getStatusColor()}} />
+            {getTooltip()}
         </a>
     )
 }
