@@ -78,12 +78,12 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     }
 
     private renderFooter() {
-        if (this.state.colorDescription && this.state.colorTitle) {
+        if (this.state.colorTitle) {
             return (
                 <div className="icon-color-picker-popover-footer">
                     {this.state.colorTitle}
                     <hr/>
-                    <p>{this.state.colorDescription ? this.state.colorDescription : Language.NO_DESCRIPTION}</p>
+                    <p>{this.state.colorDescription}</p>
                 </div>);
         }
         return null;

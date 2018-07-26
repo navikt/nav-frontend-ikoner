@@ -27,7 +27,7 @@ function findUniqueExtensions(icon: IconExpanded, style: IconStyle) {
 
 function IconDownloadTypes(props: PropTypes) {
     const uniqueExtensions = findUniqueExtensions(props.icon, props.iconStyle);
-    const defaultColor = "black";
+    const defaultColor = "#000000";
     const checkboxes = uniqueExtensions.map((extension, index) => (
         <div key={index}>
             <a data-tip="" data-for={extension}>
@@ -41,7 +41,7 @@ function IconDownloadTypes(props: PropTypes) {
             </a>
             {extension !== "svg" && props.iconColor !== defaultColor &&
             <ReactTooltip id={extension} place="top" type="dark" effect="solid">
-                <span>Finnes bare i svart</span>
+                <span>Finnes bare i sort</span>
             </ReactTooltip>
             }
         </div>

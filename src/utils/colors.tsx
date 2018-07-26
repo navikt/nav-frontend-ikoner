@@ -1,5 +1,6 @@
 export const colors = {
     basic: [
+        '#000000', // Default sort
         // Hovedfarger
         '#c30000', // NAV Rød
         '#3e3832', // NAV Mørk grå
@@ -19,6 +20,11 @@ export const colors = {
         '#66cbec', // NAV Lys blå
     ],
     detailed: [
+        {   // Default sort
+            color: '#000000',
+            description: '',
+            title: 'Sort',
+        },
         {   // NAV Rød
             color: '#c30000',
             description: 'NAV Rød er hovedprofilfarge. Brukes i logoen og enkelte elementer som bærer identiteten til NAV.',
@@ -47,7 +53,7 @@ export const colors = {
         {   // NAV Lilla
             color: '#634689',
             description: 'NAV Lilla benyttes som støtte farge til NAV dyp blå for å indikere en tredje status forskjell. Fra aktivt til “besøkt”.',
-            title: 'NAV Lilla.',
+            title: 'NAV Lilla',
         },
         {   // NAV Murstein Rød
             color: '#ba3a26',
