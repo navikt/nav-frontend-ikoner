@@ -11,7 +11,7 @@ export function iconStyle(style: IconStyle): string {
 }
 
 export function iconDisplay(style: IconStyle, color: string, selectedIcon: IconExpanded) {
-    return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(style)}/${color}/${selectedIcon.bestLocation.filename}/`
+    return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(style)}/${color}/${selectedIcon.bestLocation.filename}`
         .replace("#", "%23");
 }
 
