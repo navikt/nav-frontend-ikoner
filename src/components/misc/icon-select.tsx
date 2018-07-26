@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {IconBasic, Store} from '../../redux/store-interfaces';
 import IconInList from "./icon-in-list";
 import './misc.less';
@@ -12,7 +12,7 @@ interface PropTypes {
 
 class IconSelect extends React.PureComponent<PropTypes & { selected: boolean }, {}> {
     public render() {
-        return(
+        return (
             <button
                 tabIndex={this.props.selected ? 0 : -1}
                 onClick={this.props.onClick}

@@ -1,4 +1,5 @@
 export interface IconsStore {
+    chosenExtensions: { [key: string]: boolean },
     fetchingCounter: number,
     fetchHasMore: boolean
     fetchFrom: number,
@@ -14,24 +15,24 @@ export interface IconsStore {
     tags: Tags,
 }
 
-export interface Store{
+export interface Store {
     iconsStore: IconsStore
 }
 
-export interface Location{
-    filename:string,
+export interface Location {
+    filename: string,
     extension: string,
     path: string,
     size: string,
     url: string,
 }
 
-export interface Tag{
+export interface Tag {
     id: string,
     text: string,
 }
 
-export interface IconExpanded{
+export interface IconExpanded {
     id: string,
     title: string,
     description: string,
@@ -41,10 +42,10 @@ export interface IconExpanded{
     tagsSuggestions: Tag[],
 }
 
-export interface IconBasic{
+export interface IconBasic {
     id: string,
     title: string,
-    extension:string,
+    extension: string,
     link: string,
 }
 
@@ -55,14 +56,17 @@ export interface IconsResult {
 
 export type Tags = Tag[];
 export type Icons = IconBasic[];
+
 export enum IconType {
     IN_LIST,
     IN_PANEL
 };
+
 export enum IconStyle {
     FILLED,
     LINE
 };
+
 export enum ColorPickerType {
     FOREGROUND,
     BACKGROUND

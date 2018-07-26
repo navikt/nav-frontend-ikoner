@@ -1,6 +1,6 @@
 import Config from '../appconfig';
 import {IconStyle} from "../redux/store-interfaces";
-import LinkCreator from './api-link-creator';
+import * as LinkCreator from './api-link-creator';
 
 export function fetchIcons(iconStyle: IconStyle, fetchFrom: number, fetchTo: number, searchText?: string) : Promise<Response> {
     const iStyle = LinkCreator.iconStyle(iconStyle);

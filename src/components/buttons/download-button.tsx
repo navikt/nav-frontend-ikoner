@@ -1,19 +1,39 @@
 import * as React from 'react';
-import Config from "../../appconfig";
+import * as Redux from "react-redux";
 import Language from '../../language/norwegian';
-import {IconExpanded} from "../../redux/store-interfaces";
+import {getChosenExtensions} from "../../redux/selectors";
+import {IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
+import {iconDownload} from "../../utils/api-link-creator";
 import './buttons.less';
 
-interface PropTypes { icon:IconExpanded};
-class DownloadButton extends React.Component <PropTypes> {
-
-    public render() {
-        return (
-            <a download={true} href={`${Config.NAV_ICONS_API_LINK}/icon/download?title=${this.props.icon.title}`} className="knapp knapp--hoved icon-download-button">
-                {Language.DOWNLOAD_ICON}
-            </a>
-        );
-    }
+interface PropTypes {
+    icon: IconExpanded;
+    chosenExtensions: string[];
+    iconStyle: IconStyle;
+    iconColor: string,
 }
 
-export default DownloadButton;
+function DownloadButton(props: PropTypes) {
+    const {icon, chosenExtensions, iconStyle, iconColor} = props;
+    const link = iconDownload(iconStyle, iconColor, icon, chosenExtensions)
+
+    return (
+        <a download={true}
+           href={link}
+           className="knapp knapp--hoved icon-download-button"
+        >
+            {Language.DOWNLOAD_ICON}
+        </a>
+    );
+}
+
+const mapStateToProps = (state: Store) => {
+    return {
+        chosenExtensions: getChosenExtensions(state),
+        icon: state.iconsStore.selectedIcon,
+        iconColor: state.iconsStore.iconColor,
+        iconStyle: state.iconsStore.iconStyle,
+    };
+};
+
+export default Redux.connect(mapStateToProps)(DownloadButton);

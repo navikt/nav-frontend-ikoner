@@ -11,29 +11,29 @@ import '../misc/misc.less';
 import './tags.less';
 
 interface PropTypes {
-    selectedIcon: IconExpanded,
-    editIcon:  ( id: string, title: string, description: string) => Promise<SelectedIconAction>,
-    iconStyle: IconStyle
-};
-interface StateTypes { tags: Tags; suggestions: Tags };
+    selectedIcon: IconExpanded;
+    editIcon: (id: string, title: string, description: string) => Promise<SelectedIconAction>;
+    iconStyle: IconStyle;
+}
 
-class IconDescription extends React.Component<PropTypes, StateTypes>{
+interface StateTypes {
+    tags: Tags;
+    suggestions: Tags;
+}
+
+class IconDescription extends React.Component<PropTypes, StateTypes> {
 
     constructor(props: PropTypes) {
         super(props);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     }
 
-    public handleDescriptionChange(event: React.ChangeEvent<HTMLInputElement>) {
-        this.props.editIcon(this.props.selectedIcon.id, this.props.selectedIcon.title, event.target.value);
-    }
-
     public render() {
 
         const {selectedIcon} = this.props;
-        if(!selectedIcon){
+        if (!selectedIcon) {
             return (
-                <div className="icon-side-panel" />
+                <div className="icon-side-panel"/>
             );
         }
 
@@ -45,12 +45,15 @@ class IconDescription extends React.Component<PropTypes, StateTypes>{
                     label={""}
                     onChange={this.handleDescriptionChange}
                     value={selectedIcon.description}
-                    maxLength={100} />
+                    maxLength={100}/>
             </div>
         );
     }
-}
 
+    private handleDescriptionChange(event: React.ChangeEvent<HTMLInputElement>) {
+        this.props.editIcon(this.props.selectedIcon.id, this.props.selectedIcon.title, event.target.value);
+    }
+}
 
 const mapStateToProps = (state: Store) => {
     return {
@@ -59,9 +62,8 @@ const mapStateToProps = (state: Store) => {
     };
 };
 
-const mapDispatchToProps = (dispatch:ThunkDispatch<Store, {}, AnyAction>) => ({
-    editIcon : ( id: string, title: string, description: string)  => dispatch(editIcon(id, title, description))
+const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
+    editIcon: (id: string, title: string, description: string) => dispatch(editIcon(id, title, description))
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconDescription);

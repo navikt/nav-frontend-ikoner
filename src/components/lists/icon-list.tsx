@@ -32,20 +32,21 @@ interface PropTypes {
     iconColor: string;
     icons: Icons;
     searchText: string;
-    fetchIcon: (filename:string) => ThunkAction<void, Store, {}, SelectedIconAction>;
-    fetchIcons: (fetchFrom: number, fetchTo: number, searchText?: string | undefined) => ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction>;
+    fetchIcon: (filename: string) => ThunkAction<void, Store, {}, SelectedIconAction>;
+    fetchIcons: (fetchFrom: number, fetchTo: number, searchText?: string | undefined)
+        => ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction>;
     fetchFrom: number;
     fetchHasMore: boolean;
     fetchTo: number;
     fetchingCounter: number;
     selectedIcon: IconExpanded,
     selectedIconIndex: number,
-    setIconIndex: (index:number) => SelectedIconIndexAction;
+    setIconIndex: (index: number) => SelectedIconIndexAction;
     setFetchInterval: (fetchFrom: number, fetchTo: number) => ThunkAction<void, Store, {}, FetchingInterval>;
 }
 
-class IconList extends React.Component <PropTypes, {}>{
-    constructor(props: PropTypes){
+class IconList extends React.Component <PropTypes, {}> {
+    constructor(props: PropTypes) {
         super(props);
         this.loadMore = this.loadMore.bind(this);
         this.handle = this.handle.bind(this);
@@ -77,7 +78,7 @@ class IconList extends React.Component <PropTypes, {}>{
             },
             'ArrowLeft': () => {
                 if (currentIndex > 0) {
-                     newIndex = currentIndex - 1;
+                    newIndex = currentIndex - 1;
                 }
             },
             'ArrowRight': () => {
@@ -94,7 +95,8 @@ class IconList extends React.Component <PropTypes, {}>{
                 }
             },
         };
-        (actions[event.key] || (() => {}))(); // tslint:disable-line
+        (actions[event.key] || (() => {
+        }))(); // tslint:disable-line
         children[newIndex].focus();
         this.props.setIconIndex(newIndex);
         this.props.fetchIcon(this.props.icons[newIndex].id);
@@ -112,8 +114,8 @@ class IconList extends React.Component <PropTypes, {}>{
     }
 
     public render() {
-        const { icons, fetchingCounter, fetchHasMore } = this.props;
-        const iconElements = icons.map((icon:IconBasic, index: number) =>
+        const {icons, fetchingCounter, fetchHasMore} = this.props;
+        const iconElements = icons.map((icon: IconBasic, index: number) =>
             <IconSelect
                 index={index}
                 key={icon.id}
@@ -124,22 +126,22 @@ class IconList extends React.Component <PropTypes, {}>{
         return (
             <div>
                 <InfiniteScroll
-                    endMessage={!icons.length && !fetchingCounter ? <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
-                    loader={<div className="icon-list-spinner"><NavFrontendSpinner /></div>}
+                    endMessage={!icons.length && !fetchingCounter ?
+                        <div className="no-results">{Language.NO_RESULTS}</div> : undefined}
+                    loader={<div className="icon-list-spinner"><NavFrontendSpinner/></div>}
                     dataLength={icons.length}
                     hasMore={fetchHasMore}
-                    next={this.loadMore} >
+                    next={this.loadMore}>
                     <div onKeyDown={this.handle}>
                         {iconElements}
                     </div>
                 </InfiniteScroll>
             </div>
-
         );
     }
 
     private loadMore() {
-        if(this.props.icons.length > 0){
+        if (this.props.icons.length > 0) {
             const fetchFrom = this.props.fetchTo;
             const fetchTo = this.props.fetchTo + Config.NAV_ICONS_FETCH_INTERVAL_SIZE;
             this.props.setFetchInterval(fetchFrom, fetchTo)
@@ -158,16 +160,15 @@ const mapStateToProps = (state: Store) => {
         icons: state.iconsStore.icons,
         searchText: state.iconsStore.searchText,
         selectedIcon: state.iconsStore.selectedIcon,
-        selectedIconIndex: state.iconsStore.selectedIconIndex,
+        selectedIconIndex: state.iconsStore.selectedIconIndex
     };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
-    fetchIcon : (filename:string)  => dispatch(fetchIcon(filename)),
-    fetchIcons : ( fetchFrom: number, fetchTo: number, searchText?:string)  => dispatch(fetchIcons(fetchFrom, fetchTo, searchText)),
-    setFetchInterval : ( fetchFrom: number, fetchTo: number)  => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
-    setIconIndex: (index: number) => dispatch(setSelectedIconIndex(index)),
+    fetchIcon: (filename: string) => dispatch(fetchIcon(filename)),
+    fetchIcons: (fetchFrom: number, fetchTo: number, searchText?: string) => dispatch(fetchIcons(fetchFrom, fetchTo, searchText)),
+    setFetchInterval: (fetchFrom: number, fetchTo: number) => dispatch(setFetchingInterval(fetchFrom, fetchTo)),
+    setIconIndex: (index: number) => dispatch(setSelectedIconIndex(index))
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconList);

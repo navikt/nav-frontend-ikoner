@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ColorResult, TwitterPicker } from 'react-color';
+import {ColorResult, TwitterPicker} from 'react-color';
 import * as Redux from "react-redux";
 import Language from "../../language/norwegian";
 import {setIconBackgroundColor, setIconColor} from "../../redux/actions";
@@ -11,20 +11,20 @@ import './icon-color-picker.less';
 import './tags.less';
 
 interface PropTypes {
-    setIconColor:  (color: string) => IconColorAction,
-    setIconBackgroundColor:  (color: string) => IconColorBackgroundAction,
-    iconColor: string,
-    iconBackgroundColor: string,
-    type?: ColorPickerType,
-};
-
-interface StateTypes{
-    displayColorPicker: boolean,
-    colorTitle: string,
-    colorDescription: string,
+    setIconColor: (color: string) => IconColorAction;
+    setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
+    iconColor: string;
+    iconBackgroundColor: string;
+    type?: ColorPickerType;
 }
 
-class IconColorPicker extends React.Component<PropTypes, StateTypes>{
+interface StateTypes {
+    displayColorPicker: boolean;
+    colorTitle: string;
+    colorDescription: string;
+}
+
+class IconColorPicker extends React.Component<PropTypes, StateTypes> {
 
     constructor(props: PropTypes) {
         super(props);
@@ -39,7 +39,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
         this.state = {
             colorDescription: Language.NO_DESCRIPTION,
             colorTitle: "",
-            displayColorPicker: false,
+            displayColorPicker: false
         }
     }
 
@@ -67,35 +67,35 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
         );
     }
 
-    private color(){
+    private color() {
         return this.props.type === ColorPickerType.FOREGROUND
             ? this.props.iconColor
             : this.props.iconBackgroundColor;
     }
 
-    private buttonStyle(type: ColorPickerType | undefined){
+    private buttonStyle(type: ColorPickerType | undefined) {
         return type === ColorPickerType.FOREGROUND
             ? "icon-color-picker-foreground"
             : "icon-color-picker-background";
     }
 
     private renderFooter() {
-        if (this.state.colorDescription && this.state.colorTitle) {
+        if (this.state.colorTitle) {
             return (
                 <div className="icon-color-picker-popover-footer">
                     {this.state.colorTitle}
                     <hr/>
-                    <p>{this.state.colorDescription ? this.state.colorDescription : Language.NO_DESCRIPTION}</p>
+                    <p>{this.state.colorDescription}</p>
                 </div>);
         }
         return null;
     }
 
-    private handleChangeComplete (color : ColorResult) {
-        if(this.props.type === ColorPickerType.FOREGROUND) {
+    private handleChangeComplete(color: ColorResult) {
+        if (this.props.type === ColorPickerType.FOREGROUND) {
             this.props.setIconColor(color.hex);
         }
-        if(this.props.type === ColorPickerType.BACKGROUND) {
+        if (this.props.type === ColorPickerType.BACKGROUND) {
             this.props.setIconBackgroundColor(color.hex);
         }
     };
@@ -107,7 +107,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
 
         this.setState({
             colorDescription: detailedColor.description,
-            colorTitle:  detailedColor.title,
+            colorTitle: detailedColor.title,
         });
     };
 
@@ -120,8 +120,8 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
     private handleClose = () => {
         this.setState({
             colorDescription: Language.NO_DESCRIPTION,
-            colorTitle:  "",
-            displayColorPicker: false ,
+            colorTitle: "",
+            displayColorPicker: false,
         })
     };
 }
@@ -129,14 +129,13 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes>{
 const mapStateToProps = (state: Store) => {
     return {
         iconBackgroundColor: state.iconsStore.iconBackgroundColor,
-        iconColor: state.iconsStore.iconColor,
+        iconColor: state.iconsStore.iconColor
     };
 };
 
-const mapDispatchToProps = (dispatch:Redux.Dispatch) => ({
-    setIconBackgroundColor : ( color : string )  => dispatch(setIconBackgroundColor(color)),
-    setIconColor : ( color : string )  => dispatch(setIconColor(color))
+const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
+    setIconBackgroundColor: (color: string) => dispatch(setIconBackgroundColor(color)),
+    setIconColor: (color: string) => dispatch(setIconColor(color))
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconColorPicker);

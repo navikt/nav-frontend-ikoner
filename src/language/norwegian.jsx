@@ -7,5 +7,5 @@ export default {
     LINE_ICON: 'Line',
     NO_DESCRIPTION: 'Ingen beskrivelse',
     NO_RESULTS: 'Ingen ikoner passer ditt søk',
-    SEARCH: 'Søk',
+    SEARCH: 'Søk'
 };

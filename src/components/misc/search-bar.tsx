@@ -11,18 +11,14 @@ import './misc.less';
 
 interface PropTypes {
     searchText: string;
-    setSearchText: (searchText:string) => SearchTextAction;
+    setSearchText: (searchText: string) => SearchTextAction;
 }
 
 class SearchBar extends React.Component<PropTypes> {
 
     constructor(props: PropTypes) {
-        super(props)
+        super(props);
         this.handleSearchChange = this.handleSearchChange.bind(this);
-    }
-
-    public handleSearchChange (event: React.ChangeEvent<HTMLInputElement>) {
-        this.props.setSearchText(event.target.value);
     }
 
     public render() {
@@ -40,6 +36,10 @@ class SearchBar extends React.Component<PropTypes> {
             </div>
         );
     }
+
+    private handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+        this.props.setSearchText(event.target.value);
+    }
 }
 
 const mapStateToProps = (state: Store) => {
@@ -49,7 +49,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
-    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText)),
+    setSearchText: (searchText: string) => dispatch(setSearchText(searchText)),
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(SearchBar);

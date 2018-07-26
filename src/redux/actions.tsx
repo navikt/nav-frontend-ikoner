@@ -7,18 +7,18 @@ import {
     SET_FETCHING_ICONS, SET_ICON_BACKGROUND_COLOR,
     SET_ICON_COLOR,
     SET_ICON_STYLE,
-    SET_ICON_TITLE_DESCRIPTION,
     SET_SEARCH_TEXT,
     SET_SELECTED_ICON,
-    SET_SELECTED_ICON_INDEX
+    SET_SELECTED_ICON_INDEX,
+    TOGGLE_CHOSEN_EXTENSION
 } from "./actions-constants";
 import {
+    ChosenExtensions,
     FetchingIconsAction,
     FetchingInterval,
     IconColorAction,
     IconColorBackgroundAction,
     IconColorStyle,
-    IconTitleDescription,
     ReceiveIconsAction,
     ReceiveTagsAction,
     SearchTextAction,
@@ -29,11 +29,11 @@ import {IconExpanded, Icons, IconsResult, IconStyle, Store, Tags} from "./store-
 const debounce = require('lodash.debounce'); // tslint:disable-line
 
 export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsAction {
-    return { type: RECEIVE_ICONS, icons , numberOfIcons}
+    return {type: RECEIVE_ICONS, icons, numberOfIcons}
 }
 
 export function receiveTags(tags: Tags): ReceiveTagsAction {
-    return { type: RECEIVE_TAGS, tags }
+    return {type: RECEIVE_TAGS, tags}
 }
 
 export function setSelectedIcon(icon: IconExpanded | undefined): SelectedIconAction {
@@ -54,7 +54,7 @@ export function setSearchText(searchText: string):
 }
 
 export function setIconColor(iconColor: string): IconColorAction {
-    return { type: SET_ICON_COLOR, iconColor }
+    return {type: SET_ICON_COLOR, iconColor}
 }
 
 export function setIconStyle(iconStyle: IconStyle):
@@ -71,10 +71,6 @@ export function setIconBackgroundColor(iconBackgroundColor: string): IconColorBa
 
 export function setFetchingIcons(): FetchingIconsAction {
     return { type: SET_FETCHING_ICONS }
-}
-
-export function setIconTitleDescription(title: string, description: string): IconTitleDescription {
-    return { type: SET_ICON_TITLE_DESCRIPTION, title, description }
 }
 
 export function setFetchingInterval(fetchFrom: number, fetchTo: number):
@@ -159,3 +155,8 @@ export function fetchIcons(fetchFrom?: number, fetchTo?: number, searchText?: st
         });
     });
 }
+export function toggleChosenExtension(event: React.ChangeEvent<HTMLInputElement>): ChosenExtensions {
+    const extension: string = event.currentTarget.id;
+    return {type: TOGGLE_CHOSEN_EXTENSION, extension}
+}
+
