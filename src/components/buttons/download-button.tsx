@@ -6,8 +6,6 @@ import {IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
 import {iconDownload} from "../../utils/api-link-creator";
 import './buttons.less';
 
-interface PropTypes { icon:IconExpanded};
-
 interface PropTypes {
     icon: IconExpanded;
     chosenExtensions: string[];
