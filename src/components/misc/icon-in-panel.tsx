@@ -11,32 +11,31 @@ interface PropTypes {
     iconStyle: IconStyle;
     iconBackgroundColor: string;
     iconColor: string;
-};
+}
 
-class IconInPanel extends React.Component <PropTypes> {
+function IconInPanel(props: PropTypes) {
+    const {icon, iconBackgroundColor, iconColor, iconStyle} = props;
+    const iconLink = `url(${iconDisplay(iconStyle, iconColor, icon)})`;
+    const extension = icon.bestLocation.extension;
+    const style = {
+        backgroundColor: iconBackgroundColor,
+        backgroundImage: extension === "svg" || extension === "png"
+            ? iconLink
+            : undefined
+    };
 
-    constructor(props: PropTypes) {
-        super(props);
-    }
-
-    public render() {
-        const {icon, iconBackgroundColor, iconColor, iconStyle} = this.props;
-        return (
-            <div
-                className="icon-in-panel"
-                style={{
-                    backgroundColor: iconBackgroundColor,
-                    backgroundImage: `url(${iconDisplay(iconStyle, iconColor, icon)})`
-                }}>
-                <IconUnknownExtension extension={icon.bestLocation.extension}/>
-                <div className="icon-color-picker-container">
-                    <div className="icon-color-picker-box"/>
-                    <IconColorPicker type={ColorPickerType.FOREGROUND}/>
-                    <IconColorPicker type={ColorPickerType.BACKGROUND}/>
-                </div>
+    return (
+        <div
+            className="icon-in-panel"
+            style={style}>
+            <IconUnknownExtension extension={icon.bestLocation.extension}/>
+            <div className="icon-color-picker-container">
+                <div className="icon-color-picker-box"/>
+                <IconColorPicker type={ColorPickerType.FOREGROUND}/>
+                <IconColorPicker type={ColorPickerType.BACKGROUND}/>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 const mapStateToProps = (state: Store) => {
