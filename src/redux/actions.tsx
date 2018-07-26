@@ -3,8 +3,10 @@ import Language from "../language/norwegian";
 import * as api from "../utils/api";
 import {
     RECEIVE_ICONS,
-    RECEIVE_TAGS, SET_FETCH_INTERVAL,
-    SET_FETCHING_ICONS, SET_ICON_BACKGROUND_COLOR,
+    RECEIVE_TAGS,
+    SET_FETCH_INTERVAL,
+    SET_FETCHING_ICONS,
+    SET_ICON_BACKGROUND_COLOR,
     SET_ICON_COLOR,
     SET_ICON_STYLE,
     SET_SEARCH_TEXT,
@@ -26,6 +28,7 @@ import {
     SelectedIconIndexAction
 } from "./actions-interfaces";
 import {IconExpanded, Icons, IconsResult, IconStyle, Store, Tags} from "./store-interfaces";
+
 const debounce = require('lodash.debounce'); // tslint:disable-line
 
 export function receiveIcons(icons: Icons, numberOfIcons: number): ReceiveIconsAction {
@@ -37,11 +40,11 @@ export function receiveTags(tags: Tags): ReceiveTagsAction {
 }
 
 export function setSelectedIcon(icon: IconExpanded | undefined): SelectedIconAction {
-    return { type: SET_SELECTED_ICON, icon }
+    return {type: SET_SELECTED_ICON, icon}
 }
 
 export function setSelectedIconIndex(index: number): SelectedIconIndexAction {
-    return { type: SET_SELECTED_ICON_INDEX, index }
+    return {type: SET_SELECTED_ICON_INDEX, index}
 }
 
 export function setSearchText(searchText: string):
@@ -66,31 +69,31 @@ export function setIconStyle(iconStyle: IconStyle):
 }
 
 export function setIconBackgroundColor(iconBackgroundColor: string): IconColorBackgroundAction {
-    return { type: SET_ICON_BACKGROUND_COLOR, iconBackgroundColor }
+    return {type: SET_ICON_BACKGROUND_COLOR, iconBackgroundColor}
 }
 
 export function setFetchingIcons(): FetchingIconsAction {
-    return { type: SET_FETCHING_ICONS }
+    return {type: SET_FETCHING_ICONS}
 }
 
 export function setFetchingInterval(fetchFrom: number, fetchTo: number):
-    ThunkAction<void, Store, {}, FetchingInterval> {
-    return (dispatch)=> {
-        dispatch({ type: SET_FETCH_INTERVAL, fetchFrom, fetchTo });
+    ThunkAction<void, Store, {}, FetchingInterval> {
+    return (dispatch) => {
+        dispatch({type: SET_FETCH_INTERVAL, fetchFrom, fetchTo});
         dispatch(fetchIcons(fetchFrom, fetchTo));
     };
 }
 
 export function fetchTags():
     ThunkAction<void, Store, {}, ReceiveTagsAction> {
-    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
         api.fetchTags().then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
             .then(json => dispatch(receiveTags(json)));
     });
 }
 
-export function insertTag(tag: string, icon:string):
+export function insertTag(tag: string, icon: string):
     ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
     return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
         api.insertTag(tag, icon)
@@ -101,7 +104,7 @@ export function insertTag(tag: string, icon:string):
     });
 }
 
-export function deleteTag(tag: string, icon:string):
+export function deleteTag(tag: string, icon: string):
     ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
     return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
         api.deleteTag(tag)
@@ -115,27 +118,27 @@ export function deleteTag(tag: string, icon:string):
 export function editIcon(id: string, title: string, description: string):
     ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
     return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-        api.editIcon(id, title,description)
+        api.editIcon(id, title, description)
             .then(response => response.json())
             .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
             .then(() => dispatch(fetchIcon(id)));
     });
 }
 
-export function fetchIcon(id: string) :
+export function fetchIcon(id: string):
     ThunkAction<void, Store, {}, SelectedIconAction> {
-    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
         const store = getState().iconsStore;
-            api.fetchIcon(store.iconStyle, id)
-                .then((response: Response) => response.json())
-                .catch((error: Error) => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-                .then((json: IconExpanded) => dispatch(setSelectedIcon(json)));
+        api.fetchIcon(store.iconStyle, id)
+            .then((response: Response) => response.json())
+            .catch((error: Error) => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+            .then((json: IconExpanded) => dispatch(setSelectedIcon(json)));
     });
 }
 
 export function fetchIcons(fetchFrom?: number, fetchTo?: number, searchText?: string):
     ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction> {
-    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store)=> {
+    return debounce((dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
         dispatch(setFetchingIcons());
         const store = getState().iconsStore;
         api.fetchIcons(store.iconStyle,
@@ -146,15 +149,16 @@ export function fetchIcons(fetchFrom?: number, fetchTo?: number, searchText?: st
             .catch((error: Error) => console.log(Language.AN_ERROR_HAS_ACCURED, error))
             .then((json: IconsResult) => dispatch(receiveIcons(json.icons, json.numberOfIcons)))
             .then((json: IconsResult) => {
-                if(json.icons.length && !fetchFrom && searchText){
+                if (json.icons.length && !fetchFrom && searchText) {
                     dispatch(fetchIcon(json.icons[0].id))
                 }
-                if(!json.icons.length){
+                if (!json.icons.length) {
                     dispatch(setSelectedIcon(undefined));
                 }
-        });
+            });
     });
 }
+
 export function toggleChosenExtension(event: React.ChangeEvent<HTMLInputElement>): ChosenExtensions {
     const extension: string = event.currentTarget.id;
     return {type: TOGGLE_CHOSEN_EXTENSION, extension}

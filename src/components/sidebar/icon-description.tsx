@@ -6,7 +6,7 @@ import {Textarea} from "../../../node_modules/nav-frontend-skjema";
 import Language from "../../language/norwegian";
 import {editIcon} from "../../redux/actions";
 import {SelectedIconAction} from "../../redux/actions-interfaces";
-import {IconExpanded, IconStyle, Store, Tags} from "../../redux/store-interfaces";
+import {IconExpanded, IconStyle, Store} from "../../redux/store-interfaces";
 import '../misc/misc.less';
 import './tags.less';
 
@@ -16,12 +16,7 @@ interface PropTypes {
     iconStyle: IconStyle;
 }
 
-interface StateTypes {
-    tags: Tags;
-    suggestions: Tags;
-}
-
-class IconDescription extends React.Component<PropTypes, StateTypes> {
+class IconDescription extends React.Component<PropTypes> {
 
     constructor(props: PropTypes) {
         super(props);
@@ -58,7 +53,7 @@ class IconDescription extends React.Component<PropTypes, StateTypes> {
 const mapStateToProps = (state: Store) => {
     return {
         iconStyle: state.iconsStore.iconStyle,
-        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIcon: state.iconsStore.selectedIcon
     };
 };
 

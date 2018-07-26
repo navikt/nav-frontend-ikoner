@@ -43,7 +43,7 @@ const mapStateToProps = (state: Store) => {
         iconBackgroundColor: state.iconsStore.iconBackgroundColor,
         iconColor: state.iconsStore.iconColor,
         iconStyle: state.iconsStore.iconStyle,
-        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIcon: state.iconsStore.selectedIcon
     };
 };
 

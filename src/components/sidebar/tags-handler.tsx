@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Redux from "react-redux";
-import { WithContext as ReactTags } from 'react-tag-input';
+import {WithContext as ReactTags} from 'react-tag-input';
 import {AnyAction} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {deleteTag, insertTag, setSearchText} from "../../redux/actions";
@@ -12,8 +12,8 @@ import './tags.less';
 interface PropTypes {
     tags: Tags;
     selectedIcon: IconExpanded;
-    insertTag: (tag: string, icon:string) => Promise<ReceiveTagsAction>;
-    deleteTag: (id:string, icon: string) => Promise<ReceiveTagsAction>;
+    insertTag: (tag: string, icon: string) => Promise<ReceiveTagsAction>;
+    deleteTag: (id: string, icon: string) => Promise<ReceiveTagsAction>;
     iconStyle: IconStyle;
 }
 
@@ -41,13 +41,13 @@ class TagsHandler extends React.Component<PropTypes> {
         );
     }
 
-    private handleAddition(tag : Tag) {
+    private handleAddition(tag: Tag) {
         this.props.insertTag(tag.text, this.props.selectedIcon.title)
     }
 
-    private handleDelete(position : number) {
+    private handleDelete(position: number) {
         const {selectedIcon} = this.props;
-        if(selectedIcon.tags[position]) {
+        if (selectedIcon.tags[position]) {
             this.props.deleteTag(selectedIcon.tags[position].id, selectedIcon.title)
         }
     }
@@ -66,10 +66,9 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
-    deleteTag : (id:string, icon: string)  => dispatch(deleteTag(id, icon)),
-    insertTag : (tag: string, icon:string)  => dispatch(insertTag(tag, icon)),
-    setSearchText : (searchText:string)  => dispatch(setSearchText(searchText))
+    deleteTag: (id: string, icon: string) => dispatch(deleteTag(id, icon)),
+    insertTag: (tag: string, icon: string) => dispatch(insertTag(tag, icon)),
+    setSearchText: (searchText: string) => dispatch(setSearchText(searchText))
 });
-
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(TagsHandler);

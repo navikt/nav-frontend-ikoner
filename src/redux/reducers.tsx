@@ -30,8 +30,8 @@ const initialState: IconsStore = {
     searchText: '',
     selectedIcon: undefined,
     selectedIconIndex: 0,
-    tags: [],
-}
+    tags: []
+};
 
 export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): IconsStore {
 
@@ -40,8 +40,8 @@ export function iconsReducer<T>(state = initialState, action: Redux.AnyAction): 
         fetchHasMore: true,
         fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
         icons: [],
-        selectedIconIndex: 0,
-    }
+        selectedIconIndex: 0
+    };
 
     switch (action.type) {
         case SET_SELECTED_ICON:

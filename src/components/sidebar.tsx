@@ -40,7 +40,7 @@ function Sidebar(props: PropTypes) {
 
 const mapStateToProps = (state: Store) => {
     return {
-        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIcon: state.iconsStore.selectedIcon
     };
 };
 

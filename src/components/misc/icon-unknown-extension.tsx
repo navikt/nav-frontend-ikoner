@@ -5,20 +5,18 @@ interface PropTypes {
     extension: string;
 }
 
-class IconUnknownExtension extends React.PureComponent<PropTypes> {
-    public render() {
-        const {extension} = this.props;
-        if (extension !== "svg" && extension !== "png") {
-            return (
-                <div className="unknown-extension-container">
-                    <div className="unknown-extension">
-                        {extension.toLocaleUpperCase()}
-                    </div>
+function IconUnknownExtension(props: PropTypes) {
+    const {extension} = props;
+    if (extension !== "svg" && extension !== "png") {
+        return (
+            <div className="unknown-extension-container">
+                <div className="unknown-extension">
+                    {extension.toLocaleUpperCase()}
                 </div>
-            );
-        }
-        return null;
+            </div>
+        );
     }
+    return null;
 }
 
 export default IconUnknownExtension;

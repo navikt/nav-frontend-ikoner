@@ -44,12 +44,12 @@ class SearchBar extends React.Component<PropTypes> {
 
 const mapStateToProps = (state: Store) => {
     return {
-        searchText: state.iconsStore.searchText,
+        searchText: state.iconsStore.searchText
     };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
-    setSearchText: (searchText: string) => dispatch(setSearchText(searchText)),
+    setSearchText: (searchText: string) => dispatch(setSearchText(searchText))
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(SearchBar);
