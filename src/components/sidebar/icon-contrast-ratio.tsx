@@ -1,10 +1,8 @@
+import * as Contrast from 'get-contrast';
 import * as React from "react";
 import * as ReactTooltip from 'react-tooltip';
 import Language from '../../language/norwegian';
 import './icon-contrast-ratio.less';
-
-var Line = require('rc-progress').Line; // tslint:disable-line
-var contrast = require('get-contrast'); // tslint:disable-line
 
 interface PropTypes {
     iconColor: string;
@@ -13,7 +11,7 @@ interface PropTypes {
 
 function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
 
-    function getCRStatusColor(score: string){
+    function getStatusColor(score: string){
         switch(score){
             case "AAA":
                 return "green";
@@ -32,25 +30,22 @@ function IconContrastRatio({iconColor, iconBackgroundColor} : PropTypes) {
     }
 
     return (
-        <div className="icon-contrast-ratio-bar">
-            <a data-tip="" data-for={"contrastRatio"}>
-                <Line key={1}
-                      percent="100"
-                      strokeWidth="15"
-                      strokeColor={getCRStatusColor(contrast.score(iconColor, iconBackgroundColor))}
-                />
-            </a>
-            <ReactTooltip id={"contrastRatio"} place={"bottom"} type={"dark"} effect={"solid"}>
+        <a className="icon-contrast-ratio-bar-container"
+           data-tip=""
+           data-for="contrastRatio">
+            <div className="icon-contrast-ratio-bar"
+                 style={{backgroundColor: getStatusColor(Contrast.score(iconColor, iconBackgroundColor))}} />
+            <ReactTooltip id={"contrastRatio"} offset={{'top': -10}} place={"bottom"} type={"dark"} effect={"solid"}>
                 <div className="icon-contrast-ratio-title">
                     {Language.WCAG}
                 </div>
                 <hr />
                 <div className="icon-contrast-ratio-subtitle">
-                    {contrast.ratio(iconColor, iconBackgroundColor).toFixed(2)}
+                    {Contrast.ratio(iconColor, iconBackgroundColor).toFixed(2)}
                     </div>
-                <div className="icon-contrast-ratio-subtitle">{contrast.score(iconColor, iconBackgroundColor)}</div>
+                <div className="icon-contrast-ratio-subtitle">{Contrast.score(iconColor, iconBackgroundColor)}</div>
             </ReactTooltip>
-        </div>
+        </a>
     )
 }
 export default IconContrastRatio;

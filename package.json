@@ -32,7 +32,6 @@
     "nav-frontend-typografi-style": "^1.0.9",
     "npm": "^6.1.0",
     "prop-types": "^15.6.2",
-    "rc-progress": "^2.2.5",
     "react": "^16.4.1",
     "react-autosize-textarea": "^4.0.0",
     "react-background-image-loader": "0.0.5",
