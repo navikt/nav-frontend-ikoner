@@ -55,11 +55,18 @@
     "test:coverage": "echo not implemented",
     "eject": "react-scripts eject",
     "lint": "echo not implemented, part of the build script",
-    "prettier": "prettier --parser typescript --write src/**/*",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint --fix", "prettier --parser typescript --write", "git add"]
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "prettier --parser typescript --write",
+      "git add"
+    ],
+    "*.less": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "proxy": {
     "nav-frontend-ikoner-backend/": {
