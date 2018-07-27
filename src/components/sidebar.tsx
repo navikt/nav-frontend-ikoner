@@ -1,47 +1,45 @@
 import * as React from "react";
 import * as Redux from "react-redux";
-import {IconExpanded, Store} from "../redux/store-interfaces";
+import { IconExpanded, Store } from "../redux/store-interfaces";
 import DownloadButton from "./buttons/download-button";
-import IconInPanel from './misc/icon-in-panel';
-import './misc/misc.less';
+import IconInPanel from "./misc/icon-in-panel";
+import "./misc/misc.less";
 import Seperator from "./misc/seperator";
-import IconDescription from './sidebar/icon-description'
+import IconDescription from "./sidebar/icon-description";
 import IconDownloadTypes from "./sidebar/icon-download-types";
-import IconTitle from './sidebar/icon-title'
-import TagsHandler from './sidebar/tags-handler';
+import IconTitle from "./sidebar/icon-title";
+import TagsHandler from "./sidebar/tags-handler";
 
 interface PropTypes {
-    selectedIcon: IconExpanded;
+  selectedIcon: IconExpanded;
 }
 
 function Sidebar(props: PropTypes) {
-    const {selectedIcon} = props;
+  const { selectedIcon } = props;
 
-    if (!selectedIcon || !selectedIcon.bestLocation) {
-        return (
-            <div className="icon-side-panel"/>
-        );
-    }
+  if (!selectedIcon || !selectedIcon.bestLocation) {
+    return <div className="icon-side-panel" />;
+  }
 
-    return (
-        <div className="icon-side-panel">
-            <div className="icon-side-panel-content">
-                <IconTitle/>
-                <IconInPanel/>
-                <IconDescription/>
-                <TagsHandler/>
-                <Seperator/>
-                <IconDownloadTypes/>
-                <DownloadButton/>
-            </div>
-        </div>
-    );
+  return (
+    <div className="icon-side-panel">
+      <div className="icon-side-panel-content">
+        <IconTitle />
+        <IconInPanel />
+        <IconDescription />
+        <TagsHandler />
+        <Seperator />
+        <IconDownloadTypes />
+        <DownloadButton />
+      </div>
+    </div>
+  );
 }
 
 const mapStateToProps = (state: Store) => {
-    return {
-        selectedIcon: state.iconsStore.selectedIcon
-    };
+  return {
+    selectedIcon: state.iconsStore.selectedIcon
+  };
 };
 
 export default Redux.connect(mapStateToProps)(Sidebar);
