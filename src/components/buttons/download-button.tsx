@@ -16,12 +16,10 @@ interface PropTypes {
 function DownloadButton(props: PropTypes) {
     const {icon, chosenExtensions, iconStyle, iconColor} = props;
     const link = iconDownload(iconStyle, iconColor, icon, chosenExtensions)
-
     return (
         <a download={true}
-           href={link}
            className="knapp knapp--hoved icon-download-button"
-        >
+           href={link} >
             {Language.DOWNLOAD_ICON}
         </a>
     );

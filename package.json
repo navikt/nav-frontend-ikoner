@@ -10,6 +10,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
+    "get-contrast": "^2.0.0",
     "install": "^0.12.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
@@ -53,7 +54,19 @@
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "echo not implemented",
     "eject": "react-scripts eject",
-    "lint": "echo not implemented, part of the build script"
+    "lint": "echo not implemented, part of the build script",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "prettier --parser typescript --write",
+      "git add"
+    ],
+    "*.less": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "proxy": {
     "nav-frontend-ikoner-backend/": {
@@ -74,8 +87,11 @@
     "@types/react-svg": "^3.0.0",
     "@types/react-tag-input": "^5.0.0",
     "@types/react-tooltip": "^3.3.5",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
     "nav-frontend-chevron-style": "^0.3.4",
     "nav-frontend-paneler-style": "^0.3.9",
+    "prettier": "1.13.7",
     "react-edit-inline": "^1.0.8",
     "typescript": "^2.9.2",
     "yet-another-fetch-mock": "^2.3.3"
