@@ -10,18 +10,15 @@ interface PropTypes {
     icon: IconBasic;
 }
 
-class IconSelect extends React.PureComponent<PropTypes & { selected: boolean }, {}> {
-    public render() {
-        return (
-            <button
-                tabIndex={this.props.selected ? 0 : -1}
-                onClick={this.props.onClick}
-                className="icon-in-list-button">
-                <IconInList selected={this.props.selected!} {...this.props} />
-            </button>
-
-        );
-    }
+function IconSelect(props: PropTypes & { selected: boolean }) {
+    return (
+        <button
+            tabIndex={props.selected ? 0 : -1}
+            onClick={props.onClick}
+            className="icon-in-list-button">
+            <IconInList selected={props.selected!} {...props} />
+        </button>
+    );
 }
 
 const mapStateToProps = (state: Store, props: PropTypes) => ({

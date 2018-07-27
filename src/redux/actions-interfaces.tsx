@@ -1,4 +1,3 @@
-
 /*
     Interfaces
  */
@@ -40,22 +39,22 @@ export interface IconColorBackgroundAction {
     iconBackgroundColor: string;
 }
 
-export interface IconColorStyle{
-    type: string,
-    iconStyle: IconStyle,
+export interface IconColorStyle {
+    type: string;
+    iconStyle: IconStyle;
 }
 
 export interface FetchingIconsAction {
-    type: string,
+    type: string;
 }
 
 export interface FetchingInterval {
-    type: string,
-    fetchFrom: number,
-    fetchTo: number,
+    type: string;
+    fetchFrom: number;
+    fetchTo: number;
 }
 
 export interface ChosenExtensions {
-    type: string,
-    extension: string,
+    type: string;
+    extension: string;
 }

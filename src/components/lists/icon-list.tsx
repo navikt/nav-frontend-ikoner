@@ -132,7 +132,8 @@ class IconList extends React.Component <PropTypes, {}> {
                     dataLength={icons.length}
                     hasMore={fetchHasMore}
                     next={this.loadMore}>
-                    <div onKeyDown={this.handle}>
+                    <div className="icon-list"
+                         onKeyDown={this.handle} >
                         {iconElements}
                     </div>
                 </InfiniteScroll>
