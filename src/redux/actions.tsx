@@ -71,7 +71,7 @@ export function setSearchText(
   );
 }
 
-export function setIconColor(iconColor: string): IconColorAction {
+export function setIconColor(iconColor: string | undefined): IconColorAction {
   return { type: SET_ICON_COLOR, iconColor };
 }
 

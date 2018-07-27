@@ -6,7 +6,7 @@ export interface IconsStore {
   fetchTo: number;
   icons: Icons;
   iconBackgroundColor: string;
-  iconColor: string;
+  iconColor: string | undefined;
   iconStyle: IconStyle;
   lastUpdated?: Date;
   searchText: string;
