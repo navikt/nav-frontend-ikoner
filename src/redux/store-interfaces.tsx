@@ -1,52 +1,52 @@
 export interface IconsStore {
-    chosenExtensions: { [key: string]: boolean },
-    fetchingCounter: number,
-    fetchHasMore: boolean
-    fetchFrom: number,
-    fetchTo: number,
-    icons: Icons,
-    iconBackgroundColor: string,
-    iconColor: string,
-    iconStyle: IconStyle,
-    lastUpdated?: Date,
-    searchText: string,
-    selectedIcon?: IconExpanded,
-    selectedIconIndex: number,
-    tags: Tags,
+    chosenExtensions: { [key: string]: boolean };
+    fetchingCounter: number;
+    fetchHasMore: boolean;
+    fetchFrom: number;
+    fetchTo: number;
+    icons: Icons;
+    iconBackgroundColor: string;
+    iconColor: string;
+    iconStyle: IconStyle;
+    lastUpdated?: Date;
+    searchText: string;
+    selectedIcon?: IconExpanded;
+    selectedIconIndex: number;
+    tags: Tags;
 }
 
 export interface Store {
-    iconsStore: IconsStore
+    iconsStore: IconsStore;
 }
 
 export interface Location {
-    filename: string,
-    extension: string,
-    path: string,
-    size: string,
-    url: string,
+    filename: string;
+    extension: string;
+    path: string;
+    size: string;
+    url: string;
 }
 
 export interface Tag {
-    id: string,
-    text: string,
+    id: string;
+    text: string;
 }
 
 export interface IconExpanded {
-    id: string,
-    title: string,
-    description: string,
-    bestLocation: Location,
-    locations: Location[],
-    tags: Tag[],
-    tagsSuggestions: Tag[],
+    id: string;
+    title: string;
+    description: string;
+    bestLocation: Location;
+    locations: Location[];
+    tags: Tag[];
+    tagsSuggestions: Tag[];
 }
 
 export interface IconBasic {
-    id: string,
-    title: string,
-    extension: string,
-    link: string,
+    id: string;
+    title: string;
+    extension: string;
+    link: string;
 }
 
 export interface IconsResult {

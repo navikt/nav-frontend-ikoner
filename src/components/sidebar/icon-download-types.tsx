@@ -64,7 +64,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-    toggleChosenExtension: (event: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleChosenExtension(event)),
+    toggleChosenExtension: (event: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleChosenExtension(event))
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(IconDownloadTypes);

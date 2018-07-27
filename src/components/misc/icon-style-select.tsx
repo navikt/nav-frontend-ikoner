@@ -48,7 +48,7 @@ class IconStyleSelect extends React.Component <PropTypes> {
 const mapStateToProps = (state: Store) => {
     return {
         iconStyle: state.iconsStore.iconStyle,
-        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIcon: state.iconsStore.selectedIcon
     };
 };
 

@@ -11,8 +11,8 @@ import {ReceiveTagsAction} from "./redux/actions-interfaces";
 import {Store} from "./redux/store-interfaces";
 
 interface PropTypes {
-    fetchTags: () => Promise<ReceiveTagsAction>
-};
+    fetchTags: () => Promise<ReceiveTagsAction>;
+}
 
 class App extends React.Component <PropTypes> {
 
@@ -43,7 +43,7 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
-    fetchTags : ()  => dispatch(fetchTags())
+    fetchTags: () => dispatch(fetchTags())
 });
 
 export default Redux.connect(mapStateToProps, mapDispatchToProps)(App);

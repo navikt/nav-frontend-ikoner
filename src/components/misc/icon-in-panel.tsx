@@ -14,31 +14,30 @@ interface PropTypes {
     selectedIcon: IconExpanded;
 };
 
-class IconInPanel extends React.Component <PropTypes> {
+function IconInPanel(props: PropTypes) {
+    const {selectedIcon, iconBackgroundColor, iconColor, iconStyle} = props;
+    const iconLink = `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`;
+    const extension = selectedIcon.bestLocation.extension;
+    const style = {
+        backgroundColor: iconBackgroundColor,
+        backgroundImage: extension === "svg" || extension === "png"
+            ? iconLink
+            : undefined
+    };
 
-    constructor(props: PropTypes) {
-        super(props);
-    }
-
-    public render() {
-        const {selectedIcon, iconBackgroundColor, iconColor, iconStyle} = this.props;
-        return (
-            <div
-                className="icon-in-panel"
-                style={{
-                    backgroundColor: iconBackgroundColor,
-                    backgroundImage: `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`
-                }} >
-                <IconUnknownExtension extension={selectedIcon.bestLocation.extension}/>
-                <div className="icon-color-picker-container">
-                    <div className="icon-color-picker-box" />
-                    <IconColorPicker type={ColorPickerType.FOREGROUND} />
-                    <IconColorPicker type={ColorPickerType.BACKGROUND} />
-                    <IconContrastRatio iconColor={iconColor} iconBackgroundColor={iconBackgroundColor}/>
-                </div>
+    return (
+        <div
+            className="icon-in-panel"
+            style={style}>
+            <IconUnknownExtension extension={selectedIcon.bestLocation.extension}/>
+            <div className="icon-color-picker-container">
+                <div className="icon-color-picker-box"/>
+                <IconColorPicker type={ColorPickerType.FOREGROUND}/>
+                <IconColorPicker type={ColorPickerType.BACKGROUND}/>
+                <IconContrastRatio iconColor={iconColor} iconBackgroundColor={iconBackgroundColor}/>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 const mapStateToProps = (state: Store) => {
@@ -46,7 +45,7 @@ const mapStateToProps = (state: Store) => {
         iconBackgroundColor: state.iconsStore.iconBackgroundColor,
         iconColor: state.iconsStore.iconColor,
         iconStyle: state.iconsStore.iconStyle,
-        selectedIcon: state.iconsStore.selectedIcon,
+        selectedIcon: state.iconsStore.selectedIcon
     };
 };
 

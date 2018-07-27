@@ -10,7 +10,7 @@ interface PropTypes {
     icon: IconExpanded;
     chosenExtensions: string[];
     iconStyle: IconStyle;
-    iconColor: string,
+    iconColor: string;
 }
 
 function DownloadButton(props: PropTypes) {
@@ -30,7 +30,7 @@ const mapStateToProps = (state: Store) => {
         chosenExtensions: getChosenExtensions(state),
         icon: state.iconsStore.selectedIcon,
         iconColor: state.iconsStore.iconColor,
-        iconStyle: state.iconsStore.iconStyle,
+        iconStyle: state.iconsStore.iconStyle
     };
 };
 
