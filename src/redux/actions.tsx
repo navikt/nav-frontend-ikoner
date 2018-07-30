@@ -1,3 +1,4 @@
+import * as loadash from "lodash";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import Language from "../language/norwegian";
 import * as api from "../utils/api";
@@ -36,7 +37,7 @@ import {
   Tags
 } from "./store-interfaces";
 
-const debounce = require("lodash.debounce"); // tslint:disable-line
+const debounce = loadash.debounce;
 
 export function receiveIcons(
   icons: Icons,
