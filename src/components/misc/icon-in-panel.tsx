@@ -22,7 +22,7 @@ interface PropTypes {
 function IconInPanel(props: PropTypes) {
   const { selectedIcon, iconBackgroundColor, iconColor, iconStyle } = props;
   const iconLink =
-    iconColor !== "original"
+    iconColor !== "original" && selectedIcon.bestLocation.extension === "svg"
       ? `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`
       : `url(${selectedIcon.bestLocation.url})`;
   const extension = selectedIcon.bestLocation.extension;
