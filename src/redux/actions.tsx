@@ -1,4 +1,3 @@
-import * as loadash from "lodash";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import Language from "../language/norwegian";
 import * as api from "../utils/api";
@@ -37,7 +36,7 @@ import {
   Tags
 } from "./store-interfaces";
 
-const debounce = loadash.debounce;
+const debounce = require("lodash.debounce"); // tslint:disable-line
 
 export function receiveIcons(
   icons: Icons,
@@ -63,13 +62,11 @@ export function setSelectedIconIndex(index: number): SelectedIconIndexAction {
 export function setSearchText(
   searchText: string
 ): ThunkAction<void, Store, {}, SearchTextAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      const store = getState().iconsStore;
-      dispatch({ type: SET_SEARCH_TEXT, searchText });
-      dispatch(fetchIcons(store.fetchFrom, store.fetchTo, searchText));
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    const store = getState().iconsStore;
+    dispatch({ type: SET_SEARCH_TEXT, searchText });
+    dispatch(fetchIcons(store.fetchFrom, store.fetchTo, searchText));
+  };
 }
 
 export function setIconColor(iconColor: string): IconColorAction {
@@ -79,12 +76,10 @@ export function setIconColor(iconColor: string): IconColorAction {
 export function setIconStyle(
   iconStyle: IconStyle
 ): ThunkAction<void, Store, {}, IconColorStyle> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      dispatch({ type: SET_ICON_STYLE, iconStyle });
-      dispatch(fetchIcons());
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    dispatch({ type: SET_ICON_STYLE, iconStyle });
+    dispatch(fetchIcons());
+  };
 }
 
 export function setIconBackgroundColor(
@@ -107,48 +102,43 @@ export function setFetchingInterval(
   };
 }
 
-export function fetchTags(): ThunkAction<void, Store, {}, ReceiveTagsAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      api
-        .fetchTags()
-        .then(response => response.json())
-        .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-        .then(json => dispatch(receiveTags(json)));
-    }
-  );
+export const fetchTags = debounce(fetchTagsBase, 100);
+function fetchTagsBase(): ThunkAction<void, Store, {}, ReceiveTagsAction> {
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    api
+      .fetchTags()
+      .then(response => response.json())
+      .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+      .then(json => dispatch(receiveTags(json)));
+  };
 }
 
 export function insertTag(
   tag: string,
   icon: string
 ): ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      api
-        .insertTag(tag, icon)
-        .then(response => response.json())
-        .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-        .then(() => dispatch(fetchTags()))
-        .then(() => dispatch(fetchIcon(icon)));
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    api
+      .insertTag(tag, icon)
+      .then(response => response.json())
+      .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+      .then(() => dispatch(fetchTags()))
+      .then(() => dispatch(fetchIcon(icon)));
+  };
 }
 
 export function deleteTag(
   tag: string,
   icon: string
 ): ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      api
-        .deleteTag(tag)
-        .then(response => response.json())
-        .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-        .then(() => dispatch(fetchIcon(icon)))
-        .then(() => dispatch(fetchTags()));
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    api
+      .deleteTag(tag)
+      .then(response => response.json())
+      .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+      .then(() => dispatch(fetchIcon(icon)))
+      .then(() => dispatch(fetchTags()));
+  };
 }
 
 export function editIcon(
@@ -156,67 +146,63 @@ export function editIcon(
   title: string,
   description: string
 ): ThunkAction<void, Store, {}, ReceiveTagsAction | SelectedIconAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      api
-        .editIcon(id, title, description)
-        .then(response => response.json())
-        .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
-        .then(() => dispatch(fetchIcon(id)));
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    api
+      .editIcon(id, title, description)
+      .then(response => response.json())
+      .catch(error => console.log(Language.AN_ERROR_HAS_ACCURED, error))
+      .then(() => dispatch(fetchIcon(id)));
+  };
 }
 
-export function fetchIcon(
+export const fetchIcon = debounce(fetchIconBase, 100);
+function fetchIconBase(
   id: string
 ): ThunkAction<void, Store, {}, SelectedIconAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      const store = getState().iconsStore;
-      api
-        .fetchIcon(store.iconStyle, id)
-        .then((response: Response) => response.json())
-        .catch((error: Error) =>
-          console.log(Language.AN_ERROR_HAS_ACCURED, error)
-        )
-        .then((json: IconExpanded) => dispatch(setSelectedIcon(json)));
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    const store = getState().iconsStore;
+    api
+      .fetchIcon(store.iconStyle, id)
+      .then((response: Response) => response.json())
+      .catch((error: Error) =>
+        console.log(Language.AN_ERROR_HAS_ACCURED, error)
+      )
+      .then((json: IconExpanded) => dispatch(setSelectedIcon(json)));
+  };
 }
 
-export function fetchIcons(
+export const fetchIcons = debounce(fetchIconsBase, 100);
+function fetchIconsBase(
   fetchFrom?: number,
   fetchTo?: number,
   searchText?: string
 ): ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction> {
-  return debounce(
-    (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
-      dispatch(setFetchingIcons());
-      const store = getState().iconsStore;
-      api
-        .fetchIcons(
-          store.iconStyle,
-          fetchFrom ? fetchFrom : store.fetchFrom,
-          fetchTo ? fetchTo : store.fetchTo,
-          searchText ? searchText : store.searchText
-        )
-        .then((response: Response) => response.json())
-        .catch((error: Error) =>
-          console.log(Language.AN_ERROR_HAS_ACCURED, error)
-        )
-        .then((json: IconsResult) =>
-          dispatch(receiveIcons(json.icons, json.numberOfIcons))
-        )
-        .then((json: IconsResult) => {
-          if (json.icons.length && !fetchFrom && searchText) {
-            dispatch(fetchIcon(json.icons[0].id));
-          }
-          if (!json.icons.length) {
-            dispatch(setSelectedIcon(undefined));
-          }
-        });
-    }
-  );
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    dispatch(setFetchingIcons());
+    const store = getState().iconsStore;
+    api
+      .fetchIcons(
+        store.iconStyle,
+        fetchFrom ? fetchFrom : store.fetchFrom,
+        fetchTo ? fetchTo : store.fetchTo,
+        searchText ? searchText : store.searchText
+      )
+      .then((response: Response) => response.json())
+      .catch((error: Error) =>
+        console.log(Language.AN_ERROR_HAS_ACCURED, error)
+      )
+      .then((json: IconsResult) =>
+        dispatch(receiveIcons(json.icons, json.numberOfIcons))
+      )
+      .then((json: IconsResult) => {
+        if (json.icons.length && !fetchFrom && searchText) {
+          dispatch(fetchIcon(json.icons[0].id));
+        }
+        if (!json.icons.length) {
+          dispatch(setSelectedIcon(undefined));
+        }
+      });
+  };
 }
 
 export function toggleChosenExtension(
