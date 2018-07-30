@@ -9,7 +9,7 @@ import { ColorPickerType, Store } from "../../redux/store-interfaces";
 
 interface PropTypes {
   color: string;
-  setIconColor: (color: string | undefined) => IconColorAction;
+  setIconColor: (color: string) => IconColorAction;
   setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
   handleHover: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   type: ColorPickerType | undefined;
@@ -52,18 +52,14 @@ class IconColorPickerSwatch extends React.Component<PropTypes> {
       (type === ColorPickerType.FOREGROUND &&
         (color === selectedIconColor ||
           (color === "original" && !selectedIconColor))) ||
-      (type === ColorPickerType.BACKGROUND &&
-        (color === iconBackgroundColor ||
-          (color === "original" && iconBackgroundColor === "white")))
+      (type === ColorPickerType.BACKGROUND && color === iconBackgroundColor)
     );
   }
   private handleClick() {
     const { color, type } = this.props;
     type === ColorPickerType.FOREGROUND
-      ? this.props.setIconColor(color !== "original" ? color : undefined)
-      : this.props.setIconBackgroundColor(
-          color !== "original" ? color : "white"
-        );
+      ? this.props.setIconColor(color)
+      : this.props.setIconBackgroundColor(color);
   }
 }
 

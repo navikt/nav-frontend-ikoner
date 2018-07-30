@@ -4,12 +4,13 @@ import Language from "../../language/norwegian";
 import { ColorPickerType, Store } from "../../redux/store-interfaces";
 import { colors } from "../../utils/colors";
 import "../misc/misc.less";
+import IconColorPickerInput from "./icon-color-picker-input";
 import IconColorPickerSwatch from "./icon-color-picker-swatch";
 import "./icon-color-picker.less";
 import "./tags.less";
 
 interface PropTypes {
-  iconColor: string | undefined;
+  iconColor: string;
   iconBackgroundColor: string;
   type?: ColorPickerType;
 }
@@ -41,34 +42,44 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     const { type } = this.props;
     return (
       <>
-        <div
+        <button
           className={this.buttonStyle(type)}
           onClick={this.handleClick}
           style={{ backgroundColor: this.color() }}
         />
         {this.state.displayColorPicker ? (
-          <div className="icon-color-picker-popover">
-            <div className="icon-color-picker-swatch-container">
-              {colors.map((NAVcolor, index) => (
-                <IconColorPickerSwatch
-                  key={index}
-                  color={NAVcolor.color}
-                  type={type}
-                  handleHover={this.handleHover}
-                />
-              ))}
+          <>
+            <div
+              className="icon-color-picker-cover"
+              onClick={this.handleClose}
+            />
+            <div className="icon-color-picker-popover">
+              <div className="icon-color-picker-swatch-container">
+                {colors.map((NAVcolor, index) => (
+                  <IconColorPickerSwatch
+                    key={index}
+                    color={NAVcolor.color}
+                    type={type}
+                    handleHover={this.handleHover}
+                  />
+                ))}
+                <IconColorPickerInput type={type} />
+              </div>
+              {this.renderFooter()}
             </div>
-            {this.renderFooter()}
-          </div>
+          </>
         ) : null}
       </>
     );
   }
 
   private color() {
-    return this.props.type === ColorPickerType.FOREGROUND
-      ? this.props.iconColor
-      : this.props.iconBackgroundColor;
+    const { type, iconColor, iconBackgroundColor } = this.props;
+    return type === ColorPickerType.FOREGROUND
+      ? iconColor
+      : iconBackgroundColor !== "original"
+        ? iconBackgroundColor
+        : "white";
   }
 
   private buttonStyle(type: ColorPickerType | undefined) {
