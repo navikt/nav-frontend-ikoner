@@ -21,17 +21,36 @@
 .icon-color-picker-foreground {
   position: absolute;
   z-index: 2;
+  background-color: white;
   bottom: 30px;
   right: 17px;
 }
+
+.icon-color-picker-original {
+  @containerSize: 25px;
+  @thinkness: 2px;
+  &:after {
+    content: "";
+    width: 100%;
+    height: @thinkness;
+    display: block;
+    background-color: red;
+    border-radius: 10px;
+    transform: rotate(-45deg);
+  }
+}
+
 .icon-color-picker-background {
   position: absolute;
+  background-color: white;
   bottom: 20px;
   right: 7px;
 }
 
 .icon-color-picker-foreground,
 .icon-color-picker-background {
+  border: 0px;
+  padding: 0px;
   border-radius: 1px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   display: inline-block;
@@ -43,6 +62,7 @@
 
 .icon-color-picker-cover {
   position: fixed;
+  z-index: 3;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -51,7 +71,45 @@
 
 .icon-color-picker-popover {
   position: absolute;
-  z-index: 2;
+  z-index: 10;
+  background-color: white;
+  padding: 10px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px;
+  border-radius: 4px;
+  top: 20px;
+}
+
+.icon-color-picker-swatch-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.icon-color-picker-swatch {
+  padding: 0px;
+  margin: 2px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px;
+  border-radius: 4px;
+}
+
+.icon-color-picker-swatch-selected {
+  box-shadow: 0 0 2px 2px #ffbd66;
+}
+
+.icon-color-picker-swatch:hover {
+  box-shadow: 0 0 2px 2px #ffbd66;
+}
+
+.icon-color-picker-popover {
+  position: absolute;
+  z-index: 4;
+  background-color: white;
+  padding: 10px;
+  width: 100%;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px;
   border-radius: 4px;
   top: 20px;
@@ -65,5 +123,21 @@
 .icon-color-picker-popover-footer {
   background: white;
   border-radius: 4px;
-  padding: 15px;
+  padding: 25px 2px 25px 2px;
+}
+
+.icon-color-picker-swatch-original {
+  background: none !important;
+  border: 1px solid #e7e9e9;
+  @containerSize: 30px;
+  @thinkness: 3px;
+  &:after {
+    content: "";
+    width: 100%;
+    height: @thinkness;
+    display: block;
+    background-color: red;
+    border-radius: 10px;
+    transform: rotate(-45deg);
+  }
 }

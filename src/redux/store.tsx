@@ -1,7 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { iconsReducer } from "./reducers";
-
 import thunkMiddleware from "redux-thunk";
+import { iconsReducer } from "./reducers";
 
 /* tslint:disable */
 const composeEnhancers =
