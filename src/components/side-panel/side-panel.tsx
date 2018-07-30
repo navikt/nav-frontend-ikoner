@@ -2,13 +2,13 @@ import * as React from "react";
 import * as Redux from "react-redux";
 import { IconExpanded, Store } from "../../redux/store-interfaces";
 import IconInPanel from "../icon-list/icon-element/icon-in-panel";
+import IconDownloadButton from "./icon-download/icon-download-button";
+import IconDownloadTypes from "./icon-download/icon-download-types";
+import IconDescription from "./icon-information/icon-description";
+import IconTagsHandler from "./icon-information/icon-tags-handler";
+import IconTitle from "./icon-information/icon-title";
 import Seperator from "./seperator";
 import "./side-panel.less";
-import IconDownloadButton from "./side-panel/icon-download/icon-download-button";
-import IconDownloadTypes from "./side-panel/icon-download/icon-download-types";
-import IconDescription from "./side-panel/icon-information/icon-description";
-import IconTagsHandler from "./side-panel/icon-information/icon-tags-handler";
-import IconTitle from "./side-panel/icon-information/icon-title";
 
 interface PropTypes {
   selectedIcon: IconExpanded;
