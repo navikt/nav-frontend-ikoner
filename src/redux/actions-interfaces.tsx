@@ -31,7 +31,7 @@ export interface SelectedIconIndexAction {
 
 export interface IconColorAction {
   type: string;
-  iconColor: string | undefined;
+  iconColor: string;
 }
 
 export interface IconColorBackgroundAction {
