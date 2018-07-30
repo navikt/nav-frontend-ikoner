@@ -11,7 +11,7 @@ interface PropTypes {
   color: string;
   setIconColor: (color: string) => IconColorAction;
   setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
-  handleHover: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  handleHover: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type: ColorPickerType | undefined;
   selectedIconColor: string;
   iconBackgroundColor: string;
@@ -36,7 +36,7 @@ class IconColorPickerSwatch extends React.Component<PropTypes> {
     }
 
     return (
-      <a
+      <button
         title={color}
         className={className}
         style={{ backgroundColor: color }}

@@ -25,6 +25,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
   constructor(props: PropTypes) {
     super(props);
     this.color = this.color.bind(this);
+    this.keyPress = this.keyPress.bind(this);
     this.buttonStyle = this.buttonStyle.bind(this);
     this.handleHover = this.handleHover.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -43,6 +44,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     return (
       <>
         <button
+          tabIndex={0}
           className={this.buttonStyle(type)}
           onClick={this.handleClick}
           style={{ backgroundColor: this.color() }}
@@ -54,7 +56,10 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
               onClick={this.handleClose}
             />
             <div className="icon-color-picker-popover">
-              <div className="icon-color-picker-swatch-container">
+              <div
+                className="icon-color-picker-swatch-container"
+                onKeyDown={this.keyPress}
+              >
                 {colors.map((NAVcolor, index) => (
                   <IconColorPickerSwatch
                     key={index}
@@ -73,10 +78,19 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     );
   }
 
+  private keyPress(event: React.KeyboardEvent<HTMLDivElement>) {
+    console.log(event.key);
+    if (event.key === "Escape") {
+      this.handleClose();
+    }
+  }
+
   private color() {
     const { type, iconColor, iconBackgroundColor } = this.props;
     return type === ColorPickerType.FOREGROUND
-      ? iconColor
+      ? iconColor !== "original"
+        ? iconColor
+        : "white"
       : iconBackgroundColor !== "original"
         ? iconBackgroundColor
         : "white";
@@ -85,7 +99,9 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
   private buttonStyle(type: ColorPickerType | undefined) {
     return type === ColorPickerType.FOREGROUND
       ? "icon-color-picker-foreground" +
-          (!this.props.iconColor ? " icon-color-picker-original" : "")
+          (this.props.iconColor === "original"
+            ? " icon-color-picker-original"
+            : "")
       : "icon-color-picker-background";
   }
 
@@ -102,7 +118,7 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     return null;
   }
 
-  private handleHover = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  private handleHover = (event: React.MouseEvent<HTMLButtonElement>) => {
     const detailedColor = colors.filter(
       c => c.color === event.currentTarget.title
     )[0];

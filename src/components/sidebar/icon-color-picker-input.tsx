@@ -34,14 +34,14 @@ class IconColorPickerInput extends React.Component<PropTypes, StateTypes> {
     const { type, selectedIconColor, iconBackgroundColor } = this.props;
     return (
       <>
-        <a
+        <button
           className="knapp knapp--hoved knapp--mini icon-color-picker-button"
           onClick={this.handleClick}
         >
           {!this.state.displayColorPicker
             ? Language.PICK_COLOR
             : Language.PICK_COLOR_CLOSE}
-        </a>
+        </button>
         {this.state.displayColorPicker ? (
           <ChromePicker
             disableAlpha={true}
