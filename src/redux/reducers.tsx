@@ -23,7 +23,7 @@ const initialState: IconsStore = {
   fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
   fetchingCounter: 0,
   iconBackgroundColor: "white",
-  iconColor: "#3E3832",
+  iconColor: "#3e3832",
   iconStyle: IconStyle.FILLED,
   icons: [],
   lastUpdated: undefined,
