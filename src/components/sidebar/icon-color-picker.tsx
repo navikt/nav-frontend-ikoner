@@ -44,7 +44,6 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     return (
       <>
         <button
-          tabIndex={0}
           className={this.buttonStyle(type)}
           onClick={this.handleClick}
           style={{ backgroundColor: this.color() }}
