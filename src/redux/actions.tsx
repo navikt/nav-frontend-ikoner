@@ -102,8 +102,7 @@ export function setFetchingInterval(
   };
 }
 
-export const fetchTags = debounce(fetchTagsBase, 100);
-function fetchTagsBase(): ThunkAction<void, Store, {}, ReceiveTagsAction> {
+export function fetchTags(): ThunkAction<void, Store, {}, ReceiveTagsAction> {
   return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
     api
       .fetchTags()
@@ -155,13 +154,12 @@ export function editIcon(
   };
 }
 
-export const fetchIcon = debounce(fetchIconBase, 100);
-function fetchIconBase(
+export function fetchIcon(
   id: string
 ): ThunkAction<void, Store, {}, SelectedIconAction> {
   return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
     const store = getState().iconsStore;
-    api
+    return api
       .fetchIcon(store.iconStyle, id)
       .then((response: Response) => response.json())
       .catch((error: Error) =>
@@ -171,21 +169,22 @@ function fetchIconBase(
   };
 }
 
-export const fetchIcons = debounce(fetchIconsBase, 100);
-function fetchIconsBase(
-  fetchFrom?: number,
-  fetchTo?: number,
-  searchText?: string
-): ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction> {
-  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+const handleFetchIcons = debounce(
+  (
+    store: Store,
+    dispatch: ThunkDispatch<Store, {}, any>,
+    fetchFrom?: number,
+    fetchTo?: number,
+    searchText?: string
+  ) => {
     dispatch(setFetchingIcons());
-    const store = getState().iconsStore;
+    const iconStore = store.iconsStore;
     api
       .fetchIcons(
-        store.iconStyle,
-        fetchFrom ? fetchFrom : store.fetchFrom,
-        fetchTo ? fetchTo : store.fetchTo,
-        searchText ? searchText : store.searchText
+        iconStore.iconStyle,
+        fetchFrom ? fetchFrom : iconStore.fetchFrom,
+        fetchTo ? fetchTo : iconStore.fetchTo,
+        searchText ? searchText : iconStore.searchText
       )
       .then((response: Response) => response.json())
       .catch((error: Error) =>
@@ -202,6 +201,23 @@ function fetchIconsBase(
           dispatch(setSelectedIcon(undefined));
         }
       });
+  },
+  100
+);
+
+export function fetchIcons(
+  fetchFrom?: number,
+  fetchTo?: number,
+  searchText?: string
+): ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction> {
+  return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
+    return handleFetchIcons(
+      getState(),
+      dispatch,
+      fetchFrom,
+      fetchTo,
+      searchText
+    );
   };
 }
 
