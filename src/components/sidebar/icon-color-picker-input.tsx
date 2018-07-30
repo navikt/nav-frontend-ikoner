@@ -63,14 +63,6 @@ class IconColorPickerInput extends React.Component<PropTypes, StateTypes> {
     });
   };
 
-  /*
-  private handleClose = () => {
-    this.setState({
-      displayColorPicker: false
-    });
-  };
-  */
-
   private handleChange(color: ColorResult) {
     const { type } = this.props;
     type === ColorPickerType.FOREGROUND
