@@ -42,7 +42,7 @@ export function iconCDNRelative(
 ) {
   return `${Config.NAV_ICONS_API_DISPLAY_ICON_LINK}/${iconStyleToString(
     style
-  )}/${color}/${selectedIcon.title}.${extension}/`.replace("#", "%23");
+  )}/${color}/${selectedIcon.title}.${extension}`.replace("#", "%23");
 }
 
 export function iconCDNAbsolute(

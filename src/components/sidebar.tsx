@@ -5,10 +5,10 @@ import DownloadButton from "./buttons/download-button";
 import IconInPanel from "./misc/icon-in-panel";
 import "./misc/misc.less";
 import Seperator from "./misc/seperator";
-import CDNClipboard from "./sidebar/cdn-modal";
 import IconDescription from "./sidebar/icon-description";
 import IconDownloadTypes from "./sidebar/icon-download-types";
 import IconTitle from "./sidebar/icon-title";
+import SvgUrlClipboard from "./sidebar/svg-url-clipboard";
 import TagsHandler from "./sidebar/tags-handler";
 
 interface PropTypes {
@@ -32,7 +32,7 @@ function Sidebar(props: PropTypes) {
         <Seperator />
         <IconDownloadTypes />
         <DownloadButton />
-        <CDNClipboard />
+        <SvgUrlClipboard />
       </div>
     </div>
   );
