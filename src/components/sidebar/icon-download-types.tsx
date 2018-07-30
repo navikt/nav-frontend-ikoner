@@ -45,7 +45,7 @@ function IconDownloadTypes(props: PropTypes) {
       {extension !== "svg" &&
         props.iconColor !== defaultColor && (
           <ReactTooltip id={extension} place="top" type="dark" effect="solid">
-            <span>Finnes bare i sort</span>
+            <span>{Language.ORIGINAL_COLOR_ONLY}</span>
           </ReactTooltip>
         )}
     </div>

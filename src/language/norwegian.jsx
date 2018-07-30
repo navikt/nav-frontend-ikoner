@@ -7,6 +7,7 @@ export default {
   LINE_ICON: "Line",
   NO_DESCRIPTION: "Ingen beskrivelse",
   NO_RESULTS: "Ingen ikoner passer ditt søk",
+  ORIGINAL_COLOR_ONLY: "Kun original farge",
   PICK_COLOR: 'Fargevelger',
   PICK_COLOR_CLOSE: 'Lukk',
   RATIO: "Forhold : ",
