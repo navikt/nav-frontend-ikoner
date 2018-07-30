@@ -31,6 +31,7 @@ import {
   IconExpanded,
   Icons,
   IconsResult,
+  IconsStore,
   IconStyle,
   Store,
   Tags
@@ -171,20 +172,19 @@ export function fetchIcon(
 
 const handleFetchIcons = debounce(
   (
-    store: Store,
+    store: IconsStore,
     dispatch: ThunkDispatch<Store, {}, any>,
     fetchFrom?: number,
     fetchTo?: number,
     searchText?: string
   ) => {
     dispatch(setFetchingIcons());
-    const iconStore = store.iconsStore;
     api
       .fetchIcons(
-        iconStore.iconStyle,
-        fetchFrom ? fetchFrom : iconStore.fetchFrom,
-        fetchTo ? fetchTo : iconStore.fetchTo,
-        searchText ? searchText : iconStore.searchText
+        store.iconStyle,
+        fetchFrom ? fetchFrom : store.fetchFrom,
+        fetchTo ? fetchTo : store.fetchTo,
+        searchText ? searchText : store.searchText
       )
       .then((response: Response) => response.json())
       .catch((error: Error) =>
@@ -212,7 +212,7 @@ export function fetchIcons(
 ): ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction> {
   return (dispatch: ThunkDispatch<Store, {}, any>, getState: () => Store) => {
     return handleFetchIcons(
-      getState(),
+      getState().iconsStore,
       dispatch,
       fetchFrom,
       fetchTo,
