@@ -1,17 +1,15 @@
 import * as React from "react";
 import { ColorResult, TwitterPicker } from "react-color";
 import * as Redux from "react-redux";
-import Language from "../../language/norwegian";
-import { setIconBackgroundColor, setIconColor } from "../../redux/actions";
+import Language from "../../../language/norwegian";
+import { setIconBackgroundColor, setIconColor } from "../../../redux/actions";
 import {
   IconColorAction,
   IconColorBackgroundAction
-} from "../../redux/actions-interfaces";
-import { ColorPickerType, Store } from "../../redux/store-interfaces";
-import { colors } from "../../utils/colors";
-import "../misc/misc.less";
+} from "../../../redux/actions-interfaces";
+import { ColorPickerType, Store } from "../../../redux/store-interfaces";
+import { colors } from "../../../utils/colors";
 import "./icon-color-picker.less";
-import "./tags.less";
 
 interface PropTypes {
   setIconColor: (color: string) => IconColorAction;

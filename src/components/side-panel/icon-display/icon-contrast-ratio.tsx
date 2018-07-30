@@ -1,7 +1,7 @@
 import * as Contrast from "get-contrast";
 import * as React from "react";
 import * as ReactTooltip from "react-tooltip";
-import Language from "../../language/norwegian";
+import Language from "../../../language/norwegian";
 import "./icon-contrast-ratio.less";
 
 interface PropTypes {
