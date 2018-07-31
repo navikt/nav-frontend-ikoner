@@ -1,4 +1,3 @@
-import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import * as React from "react";
 import * as Redux from "react-redux";
 import * as ReactTooltip from "react-tooltip";
@@ -10,6 +9,7 @@ import {
   IconStyle,
   Store
 } from "../../../redux/store-interfaces";
+import Checkbox from "./checkbox-debug";
 import "./icon-download-types.less";
 
 interface PropTypes {
@@ -37,7 +37,7 @@ function IconDownloadTypes(props: PropTypes) {
   const defaultColor = "#000000";
   const checkboxes = uniqueExtensions.map((extension, index) => (
     <div key={index}>
-      <a data-tip="" data-for={extension}>
+      <div data-tip="" data-for={extension}>
         <Checkbox
           label={extension}
           id={extension}
@@ -45,7 +45,7 @@ function IconDownloadTypes(props: PropTypes) {
           checked={props.chosenExtensions.indexOf(extension) >= 0}
           onChange={props.toggleChosenExtension}
         />
-      </a>
+      </div>
       {extension !== "svg" &&
         props.iconColor !== defaultColor && (
           <ReactTooltip id={extension} place="top" type="dark" effect="solid">
