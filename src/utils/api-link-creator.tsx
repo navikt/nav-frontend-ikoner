@@ -45,22 +45,6 @@ export function iconCDNRelative(
   )}/${color}/${selectedIcon.title}.${extension}`.replace("#", "%23");
 }
 
-export function iconCDNAbsolute(
-  style: IconStyle,
-  color: string,
-  selectedIcon: IconExpanded,
-  extension: string
-) {
-  console.log({ location });
-  return `${location.origin}${
-    Config.NAV_ICONS_API_DISPLAY_ICON_LINK
-  }/${iconStyleToString(style)}/${color}/${
-    selectedIcon.title
-  }.${extension}/`.replace("#", "%23");
-}
-
-// http://localhost:8080/nav-frontend-ikoner-backend/api/icon/display/Line/%23ba3a26/art-knife.svg
-
 export function iconSearchText(search?: string): string {
   return search ? `&search=${search}` : "";
 }

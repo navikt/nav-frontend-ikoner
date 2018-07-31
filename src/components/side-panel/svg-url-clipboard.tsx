@@ -57,9 +57,7 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
       if (!this.state.copied) {
         return (
           <div className="svg-url-clipboard-container">
-            <PanelBase border={true}>
-              {iconCDNRelative(iconStyle, iconColor, icon, "svg")}
-            </PanelBase>
+            <PanelBase border={true}>{svgLink}</PanelBase>
             <CopyToClipboard text={svgLink}>
               <button
                 className="copy-to-clipboard-button"
