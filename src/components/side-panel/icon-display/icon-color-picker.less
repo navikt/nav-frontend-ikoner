@@ -48,6 +48,7 @@
 
 .icon-color-picker-foreground,
 .icon-color-picker-background {
+  outline: 0;
   border: 0px;
   padding: 0px;
   border-radius: 1px;
@@ -57,6 +58,11 @@
   height: 25px;
   width: 25px;
   border-radius: 2px;
+}
+
+.icon-color-picker-foreground:focus,
+.icon-color-picker-background:focus {
+  box-shadow: 0 0 0 3px #ffbd66;
 }
 
 .icon-color-picker-cover {
