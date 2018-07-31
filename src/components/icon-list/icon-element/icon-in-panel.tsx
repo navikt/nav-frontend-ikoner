@@ -27,7 +27,8 @@ function IconInPanel(props: PropTypes) {
       : `url(${selectedIcon.bestLocation.url})`;
   const extension = selectedIcon.bestLocation.extension;
   const style = {
-    backgroundColor: iconBackgroundColor,
+    backgroundColor:
+      iconBackgroundColor !== "original" ? iconBackgroundColor : "white",
     backgroundImage:
       extension === "svg" || extension === "png" ? iconLink : undefined
   };
@@ -39,10 +40,13 @@ function IconInPanel(props: PropTypes) {
         <div className="icon-color-picker-box" />
         <IconColorPicker type={ColorPickerType.FOREGROUND} />
         <IconColorPicker type={ColorPickerType.BACKGROUND} />
-        <IconContrastRatio
-          iconColor={iconColor}
-          iconBackgroundColor={iconBackgroundColor}
-        />
+        {iconColor !== "original" &&
+          iconBackgroundColor !== "original" && (
+            <IconContrastRatio
+              iconColor={iconColor}
+              iconBackgroundColor={iconBackgroundColor}
+            />
+          )}
       </div>
     </div>
   );

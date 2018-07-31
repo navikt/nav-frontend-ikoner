@@ -8,6 +8,7 @@ import {
   IconColorBackgroundAction
 } from "../../../redux/actions-interfaces";
 import { ColorPickerType, Store } from "../../../redux/store-interfaces";
+import "./icon-color-picker-input.less";
 
 interface PropTypes {
   type: ColorPickerType | undefined;

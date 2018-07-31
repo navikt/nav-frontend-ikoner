@@ -34,7 +34,7 @@ function findUniqueExtensions(icon: IconExpanded, style: IconStyle) {
 
 function IconDownloadTypes(props: PropTypes) {
   const uniqueExtensions = findUniqueExtensions(props.icon, props.iconStyle);
-  const defaultColor = "#000000";
+  const defaultColor = "original";
   const checkboxes = uniqueExtensions.map((extension, index) => (
     <div key={index}>
       <a data-tip="" data-for={extension}>

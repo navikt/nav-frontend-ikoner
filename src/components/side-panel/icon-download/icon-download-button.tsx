@@ -8,6 +8,7 @@ import {
   Store
 } from "../../../redux/store-interfaces";
 import { iconDownload } from "../../../utils/api-link-creator";
+import "./icon-download-button.less";
 
 interface PropTypes {
   icon: IconExpanded;
@@ -20,7 +21,11 @@ function IconDownloadButton(props: PropTypes) {
   const { icon, chosenExtensions, iconStyle, iconColor } = props;
   const link = iconDownload(iconStyle, iconColor, icon, chosenExtensions);
   return (
-    <a download={true} className="knapp knapp--hoved" href={link}>
+    <a
+      download={true}
+      className="knapp knapp--hoved icon-download-button"
+      href={link}
+    >
       {Language.DOWNLOAD_ICON}
     </a>
   );
