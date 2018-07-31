@@ -1,13 +1,11 @@
 import * as React from "react";
 import * as Redux from "react-redux";
-import Language from "../../language/norwegian";
-import { ColorPickerType, Store } from "../../redux/store-interfaces";
-import { colors } from "../../utils/colors";
-import "../misc/misc.less";
-import IconColorPickerInput from "./icon-color-picker-input";
-import IconColorPickerSwatch from "./icon-color-picker-swatch";
+import Language from "../../../language/norwegian";
+import { ColorPickerType, Store } from "../../../redux/store-interfaces";
+import { colors } from "../../../utils/colors";
+import IconColorPickerInput from "../../sidebar/icon-color-picker-input";
+import IconColorPickerSwatch from "../../sidebar/icon-color-picker-swatch";
 import "./icon-color-picker.less";
-import "./tags.less";
 
 interface PropTypes {
   iconColor: string;

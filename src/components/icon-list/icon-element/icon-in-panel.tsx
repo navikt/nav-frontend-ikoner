@@ -5,12 +5,12 @@ import {
   IconExpanded,
   IconStyle,
   Store
-} from "../../redux/store-interfaces";
-import { iconDisplay } from "../../utils/api-link-creator";
-import IconColorPicker from "../sidebar/icon-color-picker";
-import IconContrastRatio from "../sidebar/icon-contrast-ratio";
+} from "../../../redux/store-interfaces";
+import { iconDisplay } from "../../../utils/api-link-creator";
+import IconColorPicker from "../../side-panel/icon-display/icon-color-picker";
+import IconContrastRatio from "../../side-panel/icon-display/icon-contrast-ratio";
+import "./icon-in-panel.less";
 import IconUnknownExtension from "./icon-unknown-extension";
-import "./misc.less";
 
 interface PropTypes {
   iconStyle: IconStyle;
