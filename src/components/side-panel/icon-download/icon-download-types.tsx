@@ -1,3 +1,4 @@
+import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import * as React from "react";
 import * as Redux from "react-redux";
 import * as ReactTooltip from "react-tooltip";
@@ -9,7 +10,6 @@ import {
   IconStyle,
   Store
 } from "../../../redux/store-interfaces";
-import Checkbox from "./checkbox-debug";
 import "./icon-download-types.less";
 
 interface PropTypes {

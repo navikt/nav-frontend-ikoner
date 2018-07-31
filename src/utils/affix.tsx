@@ -1,10 +1,9 @@
 import classNames from "classnames";
+import { autobind } from "nav-frontend-js-utils";
 import * as React from "react";
 import { Component } from "react";
-import { autobind } from "./autobind";
 
 /* tslint:disable */
-
 interface PropTypes {
   auto: boolean;
   offset: number;
@@ -56,7 +55,7 @@ class Affix extends Component<PropTypes, StateTypes> {
 
   public componentWillUnmount() {
     document.removeEventListener("scroll", this.handleScroll);
-    window.addEventListener("resize", this.autooffset);
+    window.removeEventListener("resize", this.autooffset);
   }
 
   private autooffset() {

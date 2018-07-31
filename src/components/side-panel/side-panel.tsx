@@ -24,7 +24,7 @@ function SidePanel(props: PropTypes) {
 
   return (
     <div className="icon-side-panel">
-      <Affix auto={true} offset={120} className={"icon-side-panel-container"}>
+      <Affix auto={true} offset={124} className="icon-side-panel-container">
         <div className="icon-side-panel-content">
           <IconTitle />
           <IconInPanel />
