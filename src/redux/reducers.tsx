@@ -22,8 +22,8 @@ const initialState: IconsStore = {
   fetchHasMore: true,
   fetchTo: Config.NAV_ICONS_FETCH_INTERVAL_SIZE,
   fetchingCounter: 0,
-  iconBackgroundColor: "white",
-  iconColor: "#000000",
+  iconBackgroundColor: "original",
+  iconColor: "#3e3832",
   iconStyle: IconStyle.FILLED,
   icons: [],
   lastUpdated: undefined,
@@ -80,10 +80,9 @@ export function iconsReducer<T>(
       return {
         ...state,
         ...{
-          chosenExtensions:
-            action.iconColor === "#000000"
-              ? state.chosenExtensions
-              : { svg: true },
+          chosenExtensions: action.iconColor
+            ? state.chosenExtensions
+            : { svg: true },
           iconColor: action.iconColor
         }
       };

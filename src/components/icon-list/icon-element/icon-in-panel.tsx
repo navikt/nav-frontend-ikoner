@@ -21,12 +21,18 @@ interface PropTypes {
 
 function IconInPanel(props: PropTypes) {
   const { selectedIcon, iconBackgroundColor, iconColor, iconStyle } = props;
-  const iconLink = `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`;
+  const iconLink =
+    iconColor !== "original"
+      ? `url(${iconDisplay(iconStyle, iconColor, selectedIcon)})`
+      : `url(${selectedIcon.bestLocation.url})`;
   const extension = selectedIcon.bestLocation.extension;
+  const backgroundColor =
+    iconBackgroundColor !== "original" ? iconBackgroundColor : "white";
+  const backgroundImage =
+    extension === "svg" || extension === "png" ? iconLink : undefined;
   const style = {
-    backgroundColor: iconBackgroundColor,
-    backgroundImage:
-      extension === "svg" || extension === "png" ? iconLink : undefined
+    backgroundColor,
+    backgroundImage
   };
 
   return (
@@ -36,10 +42,12 @@ function IconInPanel(props: PropTypes) {
         <div className="icon-color-picker-box" />
         <IconColorPicker type={ColorPickerType.FOREGROUND} />
         <IconColorPicker type={ColorPickerType.BACKGROUND} />
-        <IconContrastRatio
-          iconColor={iconColor}
-          iconBackgroundColor={iconBackgroundColor}
-        />
+        {iconColor !== "original" && (
+          <IconContrastRatio
+            iconColor={iconColor}
+            iconBackgroundColor={backgroundColor}
+          />
+        )}
       </div>
     </div>
   );

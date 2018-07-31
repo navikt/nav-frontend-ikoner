@@ -1,19 +1,13 @@
 import * as React from "react";
-import { ColorResult, TwitterPicker } from "react-color";
 import * as Redux from "react-redux";
 import Language from "../../../language/norwegian";
-import { setIconBackgroundColor, setIconColor } from "../../../redux/actions";
-import {
-  IconColorAction,
-  IconColorBackgroundAction
-} from "../../../redux/actions-interfaces";
 import { ColorPickerType, Store } from "../../../redux/store-interfaces";
 import { colors } from "../../../utils/colors";
+import IconColorPickerInput from "./icon-color-picker-input";
+import IconColorPickerSwatch from "./icon-color-picker-swatch";
 import "./icon-color-picker.less";
 
 interface PropTypes {
-  setIconColor: (color: string) => IconColorAction;
-  setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
   iconColor: string;
   iconBackgroundColor: string;
   type?: ColorPickerType;
@@ -29,8 +23,8 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
   constructor(props: PropTypes) {
     super(props);
     this.color = this.color.bind(this);
+    this.keyPress = this.keyPress.bind(this);
     this.buttonStyle = this.buttonStyle.bind(this);
-    this.handleChangeComplete = this.handleChangeComplete.bind(this);
     this.handleHover = this.handleHover.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -47,40 +41,64 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     const { type } = this.props;
     return (
       <>
-        <div
+        <button
           className={this.buttonStyle(type)}
           onClick={this.handleClick}
           style={{ backgroundColor: this.color() }}
         />
         {this.state.displayColorPicker ? (
-          <div className="icon-color-picker-popover">
+          <>
             <div
               className="icon-color-picker-cover"
               onClick={this.handleClose}
             />
-            <TwitterPicker
-              onSwatchHover={this.handleHover}
-              triangle="top-right"
-              color={this.color()}
-              colors={colors.basic}
-              onChange={this.handleChangeComplete}
-            />
-            {this.renderFooter()}
-          </div>
+            <div className="icon-color-picker-popover">
+              <div
+                className="icon-color-picker-swatch-container"
+                onKeyDown={this.keyPress}
+              >
+                {colors.map((NAVcolor, index) => (
+                  <IconColorPickerSwatch
+                    key={index}
+                    color={NAVcolor.color}
+                    type={type}
+                    handleHover={this.handleHover}
+                  />
+                ))}
+                <IconColorPickerInput type={type} />
+              </div>
+              {this.renderFooter()}
+            </div>
+          </>
         ) : null}
       </>
     );
   }
 
+  private keyPress(event: React.KeyboardEvent<HTMLDivElement>) {
+    console.log(event.key);
+    if (event.key === "Escape") {
+      this.handleClose();
+    }
+  }
+
   private color() {
-    return this.props.type === ColorPickerType.FOREGROUND
-      ? this.props.iconColor
-      : this.props.iconBackgroundColor;
+    const { type, iconColor, iconBackgroundColor } = this.props;
+    return type === ColorPickerType.FOREGROUND
+      ? iconColor !== "original"
+        ? iconColor
+        : "white"
+      : iconBackgroundColor !== "original"
+        ? iconBackgroundColor
+        : "white";
   }
 
   private buttonStyle(type: ColorPickerType | undefined) {
     return type === ColorPickerType.FOREGROUND
-      ? "icon-color-picker-foreground"
+      ? "icon-color-picker-foreground" +
+          (this.props.iconColor === "original"
+            ? " icon-color-picker-original"
+            : "")
       : "icon-color-picker-background";
   }
 
@@ -97,17 +115,10 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
     return null;
   }
 
-  private handleChangeComplete(color: ColorResult) {
-    if (this.props.type === ColorPickerType.FOREGROUND) {
-      this.props.setIconColor(color.hex);
-    }
-    if (this.props.type === ColorPickerType.BACKGROUND) {
-      this.props.setIconBackgroundColor(color.hex);
-    }
-  }
-
-  private handleHover = (color: any, event: MouseEvent) => {
-    const detailedColor = colors.detailed.filter(c => c.color === color.hex)[0];
+  private handleHover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const detailedColor = colors.filter(
+      c => c.color === event.currentTarget.title
+    )[0];
 
     this.setState({
       colorDescription: detailedColor.description,
@@ -137,13 +148,4 @@ const mapStateToProps = (state: Store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch) => ({
-  setIconBackgroundColor: (color: string) =>
-    dispatch(setIconBackgroundColor(color)),
-  setIconColor: (color: string) => dispatch(setIconColor(color))
-});
-
-export default Redux.connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IconColorPicker);
+export default Redux.connect(mapStateToProps)(IconColorPicker);

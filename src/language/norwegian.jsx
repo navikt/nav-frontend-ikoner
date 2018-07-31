@@ -7,6 +7,8 @@ export default {
   LINE_ICON: "Line",
   NO_DESCRIPTION: "Ingen beskrivelse",
   NO_RESULTS: "Ingen ikoner passer ditt søk",
+  PICK_COLOR: 'Fargevelger',
+  PICK_COLOR_CLOSE: 'Lukk',
   RATIO: "Forhold : ",
   SEARCH: "Søk",
   WCAG: "WCAG 2.0 Kontrast"
