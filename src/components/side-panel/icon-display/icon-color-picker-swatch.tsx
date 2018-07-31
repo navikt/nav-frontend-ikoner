@@ -1,18 +1,18 @@
 import * as React from "react";
 import { connect, Dispatch } from "react-redux";
-import { setIconBackgroundColor, setIconColor } from "../../redux/actions";
+import { setIconBackgroundColor, setIconColor } from "../../../redux/actions";
 import {
   IconColorAction,
   IconColorBackgroundAction
-} from "../../redux/actions-interfaces";
-import { ColorPickerType, Store } from "../../redux/store-interfaces";
+} from "../../../redux/actions-interfaces";
+import { ColorPickerType, Store } from "../../../redux/store-interfaces";
 
 interface PropTypes {
   color: string;
   setIconColor: (color: string) => IconColorAction;
   setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
   handleHover: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type: ColorPickerType | undefined;
+  type?: ColorPickerType;
   selectedIconColor: string;
   iconBackgroundColor: string;
 }

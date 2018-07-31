@@ -1,17 +1,17 @@
 import * as React from "react";
 import { ChromePicker, ColorResult } from "react-color";
 import { connect, Dispatch } from "react-redux";
-import Language from "../../language/norwegian";
-import { setIconBackgroundColor, setIconColor } from "../../redux/actions";
+import Language from "../../../language/norwegian";
+import { setIconBackgroundColor, setIconColor } from "../../../redux/actions";
 import {
   IconColorAction,
   IconColorBackgroundAction
-} from "../../redux/actions-interfaces";
-import { ColorPickerType, Store } from "../../redux/store-interfaces";
+} from "../../../redux/actions-interfaces";
+import { ColorPickerType, Store } from "../../../redux/store-interfaces";
 import "./icon-color-picker-input.less";
 
 interface PropTypes {
-  type: ColorPickerType | undefined;
+  type?: ColorPickerType;
   setIconColor: (color: string) => IconColorAction;
   setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
   selectedIconColor: string;
