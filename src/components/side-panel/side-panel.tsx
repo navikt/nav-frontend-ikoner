@@ -24,15 +24,17 @@ function SidePanel(props: PropTypes) {
 
   return (
     <div className="icon-side-panel">
-      <div className="icon-side-panel-content">
-        <IconTitle />
-        <IconInPanel />
-        <IconDescription />
-        <IconTagsHandler />
-        <Seperator />
-        <IconDownloadTypes />
-        <IconDownloadButton />
-        <SvgUrlClipboard />
+      <div className="icon-side-panel-container">
+        <div className="icon-side-panel-content">
+          <IconTitle />
+          <IconInPanel />
+          <IconDescription />
+          <IconTagsHandler />
+          <Seperator />
+          <IconDownloadTypes />
+          <IconDownloadButton />
+          <SvgUrlClipboard />
+        </div>
       </div>
     </div>
   );

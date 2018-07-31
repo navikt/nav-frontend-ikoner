@@ -21,7 +21,7 @@ export interface SearchTextAction {
 
 export interface SelectedIconAction {
   type: string;
-  icon: IconExpanded | undefined;
+  icon?: IconExpanded;
 }
 
 export interface SelectedIconIndexAction {

@@ -40,7 +40,7 @@ interface PropTypes {
   fetchIcons: (
     fetchFrom: number,
     fetchTo: number,
-    searchText?: string | undefined
+    searchText?: string
   ) => ThunkAction<void, Store, {}, ReceiveIconsAction | FetchingIconsAction>;
   fetchFrom: number;
   fetchHasMore: boolean;

@@ -12,7 +12,7 @@ interface PropTypes {
   setIconColor: (color: string) => IconColorAction;
   setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
   handleHover: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type: ColorPickerType | undefined;
+  type?: ColorPickerType;
   selectedIconColor: string;
   iconBackgroundColor: string;
 }
