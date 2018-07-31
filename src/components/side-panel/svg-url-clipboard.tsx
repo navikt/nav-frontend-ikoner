@@ -59,7 +59,11 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
           </div>
         );
       } else {
-        return <AlertStripe type="suksess">Kopiert</AlertStripe>;
+        return (
+          <div className="alert-copy-success">
+            <AlertStripe type="suksess">Kopiert</AlertStripe>
+          </div>
+        );
       }
     }
     return <div />;
