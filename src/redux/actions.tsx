@@ -50,9 +50,7 @@ export function receiveTags(tags: Tags): ReceiveTagsAction {
   return { type: RECEIVE_TAGS, tags };
 }
 
-export function setSelectedIcon(
-  icon: IconExpanded | undefined
-): SelectedIconAction {
+export function setSelectedIcon(icon?: IconExpanded): SelectedIconAction {
   return { type: SET_SELECTED_ICON, icon };
 }
 
