@@ -1,8 +1,8 @@
+import { Textarea } from "nav-frontend-skjema";
 import * as React from "react";
 import * as Redux from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { Textarea } from "../../../../node_modules/nav-frontend-skjema/lib/index";
 import Language from "../../../language/norwegian";
 import { editIcon } from "../../../redux/actions";
 import { SelectedIconAction } from "../../../redux/actions-interfaces";
