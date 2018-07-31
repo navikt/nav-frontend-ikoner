@@ -11,7 +11,7 @@ import { ColorPickerType, Store } from "../../../redux/store-interfaces";
 import "./icon-color-picker-input.less";
 
 interface PropTypes {
-  type: ColorPickerType | undefined;
+  type?: ColorPickerType;
   setIconColor: (color: string) => IconColorAction;
   setIconBackgroundColor: (color: string) => IconColorBackgroundAction;
   selectedIconColor: string;

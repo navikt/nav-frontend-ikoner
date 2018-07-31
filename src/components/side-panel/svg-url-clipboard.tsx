@@ -33,14 +33,6 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
     this.setState({ copied: true });
   }
 
-  public shouldComponentUpdate(nextProps: PropTypes, nextState: StateTypes) {
-    return (
-      this.props.icon.id !== nextProps.icon.id ||
-      this.state.copied !== nextState.copied ||
-      this.props.iconColor !== nextProps.iconColor
-    );
-  }
-
   public componentWillReceiveProps(props: PropTypes) {
     if (this.state.copied) {
       this.setState({ copied: false });
