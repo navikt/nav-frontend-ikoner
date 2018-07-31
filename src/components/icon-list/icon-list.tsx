@@ -76,7 +76,7 @@ class IconList extends React.Component<PropTypes, {}> {
     }
 
     const currentIndex = children.indexOf(currentFocus);
-    let newIndex = 0;
+    let newIndex = -1;
     const actions = {
       ArrowDown: () => {
         const iconOnRow = Math.floor(
@@ -110,9 +110,11 @@ class IconList extends React.Component<PropTypes, {}> {
       }
     };
     (actions[event.key] || (() => {}))(); // tslint:disable-line
-    children[newIndex].focus();
-    this.props.setIconIndex(newIndex);
-    this.props.fetchIcon(this.props.icons[newIndex].id);
+    if (newIndex !== -1) {
+      children[newIndex].focus();
+      this.props.setIconIndex(newIndex);
+      this.props.fetchIcon(this.props.icons[newIndex].id);
+    }
   };
 
   public iconOnclickFactory(index: number): () => void {
