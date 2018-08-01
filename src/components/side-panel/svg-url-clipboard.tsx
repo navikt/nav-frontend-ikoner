@@ -53,6 +53,7 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
               className="input-base-clipboard"
               inputClassName="input-clipboard"
               label=""
+              readOnly={true}
               defaultValue={svgLink}
             />
             <CopyToClipboard text={svgLink}>
