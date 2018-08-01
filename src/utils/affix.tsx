@@ -75,7 +75,6 @@ class Affix extends Component<PropTypes, StateTypes> {
   }
 
   private handleScroll() {
-    console.log("Scrolling");
     const affix = this.state.affix;
     const offset = this.state.offset;
     const scrollTop = Math.max(
