@@ -1,5 +1,5 @@
 import AlertStripe from "nav-frontend-alertstriper";
-import PanelBase from "nav-frontend-paneler";
+import { Input } from "nav-frontend-skjema";
 import * as React from "react";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import * as Redux from "react-redux";
@@ -49,7 +49,12 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
       if (!this.state.copied) {
         return (
           <div className="svg-url-clipboard-container">
-            <PanelBase border={true}>{svgLink}</PanelBase>
+            <Input
+              className="input-base-clipboard"
+              inputClassName="input-clipboard"
+              label=""
+              defaultValue={svgLink}
+            />
             <CopyToClipboard text={svgLink}>
               <button
                 className="copy-to-clipboard-button"
