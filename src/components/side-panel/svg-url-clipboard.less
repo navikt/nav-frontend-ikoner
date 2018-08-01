@@ -7,17 +7,16 @@
 }
 .input-base-clipboard,
 .input-clipboard {
-  width: 100% !important;
+  width: 100%;
 }
 
 .input-base-clipboard .input-clipboard {
   height: 2em;
-  border-radius: 5px 0 0 5px !important;
-  border-color: #e7e9e9;
+  border-radius: 5px 0 0 5px;
 }
 
 .copy-to-clipboard-button {
-  min-width: 2em;
+  width: 2em;
   height: 2em;
   margin-top: inherit;
   border-radius: 0 5px 5px 0;
@@ -27,6 +26,11 @@
     url(/nav-frontend-ikoner-backend/api/icons/Line%20Version/SVG/36-text/copy-paste.svg)
     no-repeat center center;
   cursor: pointer;
+}
+
+.copy-to-clipboard-button:hover {
+  border-color: #0067c5;
+  transition: border-color 0.2s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
 
 .alertstripe--suksess,
