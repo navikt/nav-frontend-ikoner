@@ -40,12 +40,18 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
   }
 
   public render() {
-    const { icon, iconStyle, iconColor } = this.props;
     const doesHaveSVG =
-      this.findUniqueExtensions(icon, iconStyle).indexOf("svg") >= 0;
+      this.findUniqueExtensions(this.props.icon, this.props.iconStyle).indexOf(
+        "svg"
+      ) >= 0;
 
     if (doesHaveSVG) {
-      const svgLink = iconCDNRelative(iconStyle, iconColor, icon, "svg");
+      const svgLink = iconCDNRelative(
+        this.props.iconStyle,
+        this.props.iconColor,
+        this.props.icon,
+        "svg"
+      );
       if (!this.state.copied) {
         return (
           <div className="svg-url-clipboard-container">
@@ -54,7 +60,7 @@ class SvgUrlClipboard extends React.Component<PropTypes, StateTypes> {
               inputClassName="input-clipboard"
               label=""
               readOnly={true}
-              defaultValue={svgLink}
+              value={svgLink}
             />
             <CopyToClipboard text={svgLink}>
               <button
