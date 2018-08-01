@@ -25,13 +25,18 @@ div.ReactTags__tagInput input.ReactTags__tagInputField {
   border-radius: 3px;
   width: 100% !important;
   padding-left: 10px;
-  border: 1px solid #eee;
+  border: 1px solid #b7b1a9;
   border-radius: 4px;
 }
 
 div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
   outline: none;
   box-shadow: 0 0 0 3px #ffbd66;
+}
+
+div.ReactTags__tagInput input.ReactTags__tagInputField:hover {
+  border-color: rgb(0, 103, 197);
+  transition: border-color 0.2s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
 
 /* Styles for selected tags */

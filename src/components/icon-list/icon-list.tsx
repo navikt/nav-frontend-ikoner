@@ -71,19 +71,18 @@ class IconList extends React.Component<PropTypes, {}> {
     const container = event.currentTarget;
     const children = Array.from(container.children) as HTMLElement[];
     const currentFocus = container.querySelector(":focus") as HTMLElement;
+    const currentIndex = children.indexOf(currentFocus);
+    const iconsOnRow = this.calculateNumOfIconsOnRow(container, currentFocus);
+
     if (!currentFocus) {
       return;
     }
 
-    const currentIndex = children.indexOf(currentFocus);
     let newIndex = -1;
     const actions = {
       ArrowDown: () => {
-        const iconOnRow = Math.floor(
-          container.offsetWidth / currentFocus.offsetWidth
-        );
-        if (currentIndex + iconOnRow < children.length) {
-          newIndex = currentIndex + iconOnRow;
+        if (currentIndex + iconsOnRow < children.length) {
+          newIndex = currentIndex + iconsOnRow;
         } else {
           newIndex = children.length - 1;
         }
@@ -99,11 +98,8 @@ class IconList extends React.Component<PropTypes, {}> {
         }
       },
       ArrowUp: () => {
-        const iconOnRow = Math.floor(
-          container.offsetWidth / currentFocus.offsetWidth
-        );
-        if (currentIndex - iconOnRow >= 0) {
-          newIndex = currentIndex - iconOnRow;
+        if (currentIndex - iconsOnRow >= 0) {
+          newIndex = currentIndex - iconsOnRow;
         } else {
           newIndex = 0;
         }
@@ -163,6 +159,19 @@ class IconList extends React.Component<PropTypes, {}> {
           </div>
         </InfiniteScroll>
       </div>
+    );
+  }
+
+  private calculateNumOfIconsOnRow(
+    container: HTMLElement,
+    currentFocus: HTMLElement
+  ) {
+    const padding: string = window
+      .getComputedStyle(container)
+      .getPropertyValue("padding");
+    return Math.floor(
+      (container.clientWidth - 2 * parseInt(padding, 10)) /
+        currentFocus.offsetWidth
     );
   }
 
