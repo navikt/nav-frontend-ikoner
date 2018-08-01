@@ -4,18 +4,13 @@ import * as Redux from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { editIcon } from "../../../redux/actions";
-import {
-  IconExpanded,
-  IconStyle,
-  Store
-} from "../../../redux/store-interfaces";
+import { IconExpanded, Store } from "../../../redux/store-interfaces";
 import "./icon-tags-handler.less";
 import "./icon-title.less";
 
 interface PropTypes {
   selectedIcon: IconExpanded;
   editIcon: (id: string, title: string, description: string) => Promise<any>;
-  iconStyle: IconStyle;
 }
 
 class IconTitle extends React.Component<PropTypes> {
@@ -59,12 +54,8 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Store, {}, AnyAction>) => ({
-  editIcon: (
-    id: string,
-    title: string,
-    description: string,
-    style: IconStyle
-  ) => dispatch(editIcon(id, title, description))
+  editIcon: (id: string, title: string, description: string) =>
+    dispatch(editIcon(id, title, description))
 });
 
 export default Redux.connect(
