@@ -37,7 +37,7 @@ function IconDownloadTypes(props: PropTypes) {
   const defaultColor = "#000000";
   const checkboxes = uniqueExtensions.map((extension, index) => (
     <div key={index}>
-      <a data-tip="" data-for={extension}>
+      <div data-tip="" data-for={extension}>
         <Checkbox
           label={extension}
           id={extension}
@@ -45,7 +45,7 @@ function IconDownloadTypes(props: PropTypes) {
           checked={props.chosenExtensions.indexOf(extension) >= 0}
           onChange={props.toggleChosenExtension}
         />
-      </a>
+      </div>
       {extension !== "svg" &&
         props.iconColor !== defaultColor && (
           <ReactTooltip id={extension} place="top" type="dark" effect="solid">

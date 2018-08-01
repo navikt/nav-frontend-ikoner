@@ -30,7 +30,7 @@ class SearchBar extends React.Component<PropTypes> {
             value={this.props.searchText}
             autoFocus={true}
             onChange={this.handleSearchChange}
-            className="search-bar-input"
+            inputClassName="search-bar-input"
           />
           <div aria-live="assertive" role="alert" />
         </div>

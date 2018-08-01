@@ -20,12 +20,17 @@ div.ReactTags__tagInput {
   display: inline-block;
 }
 
-div.ReactTags__tagInput input.ReactTags__tagInputField,
-div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+div.ReactTags__tagInput input.ReactTags__tagInputField {
   height: 35px;
+  border-radius: 3px;
   width: 100% !important;
   padding-left: 10px;
   border: 1px solid #eee;
+}
+
+div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ffbd66;
 }
 
 /* Styles for selected tags */
