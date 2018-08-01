@@ -74,6 +74,7 @@
     }
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.6",
     "@types/jest": "^23.1.1",
     "@types/lodash.debounce": "^4.0.3",
     "@types/node": "^9.6.7",

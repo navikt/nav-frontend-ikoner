@@ -36,23 +36,9 @@ body {
   min-height: 100%;
 }
 
-:focus {
-  outline: 0;
-  -webkit-box-shadow: 0 0 0 3px #ffbd66;
-  box-shadow: 0 0 0 3px #ffbd66;
-}
-
 .spinner {
   margin-left: 5px;
   align-self: center;
-}
-
-.textarea--medMeta {
-  min-height: 100px !important;
-}
-
-.skjemaelement__input {
-  border: 1px solid #e7e9e9 !important;
 }
 
 .chrome-picker {
@@ -60,7 +46,15 @@ body {
 }
 
 /* Responsive layout */
-@media screen and (max-width: 700px) {
+@responsiveWidth: 700px;
+@media screen and (min-width: @responsiveWidth) {
+  .affix {
+    position: fixed;
+    width: inherit;
+  }
+}
+
+@media screen and (max-width: @responsiveWidth) {
   .column-icon-list {
     order: 2;
     width: 100%;

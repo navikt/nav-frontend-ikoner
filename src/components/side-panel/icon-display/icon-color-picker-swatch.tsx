@@ -6,6 +6,7 @@ import {
   IconColorBackgroundAction
 } from "../../../redux/actions-interfaces";
 import { ColorPickerType, Store } from "../../../redux/store-interfaces";
+import "./icon-color-picker-swatch.less";
 
 interface PropTypes {
   color: string;

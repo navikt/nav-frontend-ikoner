@@ -38,6 +38,7 @@ class IconDescription extends React.Component<PropTypes> {
     return (
       <div className="icon-description-container">
         <Textarea
+          textareaClass="icon-description"
           placeholder={Language.ADD_DESCRIPTION}
           label={""}
           onChange={this.handleDescriptionChange}

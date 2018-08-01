@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Redux from "react-redux";
 import { IconExpanded, Store } from "../../redux/store-interfaces";
+import Affix from "../../utils/affix";
 import IconInPanel from "../icon-list/icon-element/icon-in-panel";
 import IconDownloadButton from "./icon-download/icon-download-button";
 import IconDownloadTypes from "./icon-download/icon-download-types";
@@ -24,18 +25,16 @@ function SidePanel(props: PropTypes) {
 
   return (
     <div className="icon-side-panel">
-      <div className="icon-side-panel-container">
-        <div className="icon-side-panel-content">
-          <IconTitle />
-          <IconInPanel />
-          <IconDescription />
-          <IconTagsHandler />
-          <Seperator />
-          <IconDownloadTypes />
-          <IconDownloadButton />
-          <SvgUrlClipboard />
-        </div>
-      </div>
+      <Affix auto={true} offset={124} className="icon-side-panel-container">
+        <IconTitle />
+        <IconInPanel />
+        <IconDescription />
+        <IconTagsHandler />
+        <Seperator />
+        <IconDownloadTypes />
+        <IconDownloadButton />
+        <SvgUrlClipboard />
+      </Affix>
     </div>
   );
 }
