@@ -1,6 +1,6 @@
 export const colors = [
   {
-    // Default sort
+    // Default
     color: "original",
     description: "Ubehandlet ikon i sin originale farge.",
     title: "Original"

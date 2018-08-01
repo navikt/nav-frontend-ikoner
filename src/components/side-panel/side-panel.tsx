@@ -10,6 +10,7 @@ import IconTagsHandler from "./icon-information/icon-tags-handler";
 import IconTitle from "./icon-information/icon-title";
 import Seperator from "./seperator";
 import "./side-panel.less";
+import SvgUrlClipboard from "./svg-url-clipboard";
 
 interface PropTypes {
   selectedIcon: IconExpanded;
@@ -32,6 +33,7 @@ function SidePanel(props: PropTypes) {
         <Seperator />
         <IconDownloadTypes />
         <IconDownloadButton />
+        <SvgUrlClipboard />
       </Affix>
     </div>
   );

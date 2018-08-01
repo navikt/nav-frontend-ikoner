@@ -76,7 +76,6 @@ class IconColorPicker extends React.Component<PropTypes, StateTypes> {
   }
 
   private keyPress(event: React.KeyboardEvent<HTMLDivElement>) {
-    console.log(event.key);
     if (event.key === "Escape") {
       this.handleClose();
     }

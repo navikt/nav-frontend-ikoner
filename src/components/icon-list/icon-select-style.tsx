@@ -1,11 +1,8 @@
+import { ToggleGruppe, ToggleKnapp } from "nav-frontend-skjema";
 import * as React from "react";
 import * as Redux from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import {
-  ToggleGruppe,
-  ToggleKnapp
-} from "../../../node_modules/nav-frontend-skjema/lib/index";
 import Language from "../../language/norwegian";
 import { fetchIcon, setIconStyle } from "../../redux/actions";
 import {
