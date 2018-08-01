@@ -41,13 +41,9 @@ class Affix extends Component<PropTypes, StateTypes> {
 
   public render() {
     const affix = this.state.affix;
-    const { className, children, ...props } = this.props;
+    const { className, children } = this.props;
     return (
-      <div
-        {...props}
-        ref={this.element}
-        className={classNames(className, { affix })}
-      >
+      <div ref={this.element} className={classNames(className, { affix })}>
         {children}
       </div>
     );
