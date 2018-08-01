@@ -1,33 +1,43 @@
 .svg-url-clipboard-container {
-  margin-top: 6px;
+  margin-top: 8px;
+  height: 2em;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
+.input-base-clipboard,
+.input-clipboard {
+  width: 100%;
+}
 
-.panel,
-.panel-base-clipboard {
+.input-base-clipboard .input-clipboard {
   height: 2em;
-  line-height: 1.2em;
-  margin-top: inherit;
-  padding: 0.3rem;
-  border-color: #e7e9e9;
   border-radius: 5px 0 0 5px;
-  white-space: nowrap;
-  overflow: scroll;
+  border-right-width: 0;
 }
 
 .copy-to-clipboard-button {
-  min-width: 2em;
+  width: 2em;
   height: 2em;
   margin-top: inherit;
   border-radius: 0 5px 5px 0;
-  border-color: #e7e9e9;
+  border-color: #b7b1a9;
   background-size: 70%;
   background: #e7e9e9
     url(/nav-frontend-ikoner-backend/api/icons/Line%20Version/SVG/36-text/copy-paste.svg)
     no-repeat center center;
   cursor: pointer;
+}
+
+.copy-to-clipboard-button:hover {
+  border-color: #0067c5;
+  transition: border-color 0.2s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}
+
+.copy-to-clipboard-button:focus {
+  outline: none;
+  -webkit-box-shadow: 0 0 0 3px #ffbd66;
+  box-shadow: 0 0 0 3px #ffbd66;
 }
 
 .alertstripe--suksess,
