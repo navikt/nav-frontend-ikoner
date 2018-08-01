@@ -12,5 +12,5 @@ export default {
   PICK_COLOR_CLOSE: 'Lukk',
   RATIO: "Forhold : ",
   SEARCH: "Søk",
-  WCAG: "WCAG 2.0 Kontrast"
+  WCAG: "WCAG 2.0"
 };
