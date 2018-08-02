@@ -6,11 +6,7 @@ import { ThunkDispatch } from "redux-thunk";
 import Language from "../../../language/norwegian";
 import { editIcon } from "../../../redux/actions";
 import { SelectedIconAction } from "../../../redux/actions-interfaces";
-import {
-  IconExpanded,
-  IconStyle,
-  Store
-} from "../../../redux/store-interfaces";
+import { IconExpanded, Store } from "../../../redux/store-interfaces";
 import "./icon-description.less";
 
 interface PropTypes {
@@ -20,7 +16,6 @@ interface PropTypes {
     title: string,
     description: string
   ) => Promise<SelectedIconAction>;
-  iconStyle: IconStyle;
 }
 
 class IconDescription extends React.Component<PropTypes> {
@@ -60,7 +55,6 @@ class IconDescription extends React.Component<PropTypes> {
 
 const mapStateToProps = (state: Store) => {
   return {
-    iconStyle: state.iconsStore.iconStyle,
     selectedIcon: state.iconsStore.selectedIcon
   };
 };
