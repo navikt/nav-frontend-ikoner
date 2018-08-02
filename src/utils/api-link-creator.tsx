@@ -46,7 +46,7 @@ export function iconCDNRelative(
 }
 
 export function iconSearchText(search?: string): string {
-  return search ? `&search=${encodeURI(search)}` : "";
+  return search ? `&search=${search}` : "";
 }
 
 export function iconFetchInterval(fetchFrom: number, fetchTo: number): string {
