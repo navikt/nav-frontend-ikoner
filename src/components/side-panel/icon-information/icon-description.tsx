@@ -44,7 +44,9 @@ class IconDescription extends React.Component<PropTypes> {
     );
   }
 
-  private handleDescriptionChange(event: React.ChangeEvent<HTMLInputElement>) {
+  private handleDescriptionChange(
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) {
     this.props.editIcon(
       this.props.selectedIcon.id,
       this.props.selectedIcon.title,
