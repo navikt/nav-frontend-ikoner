@@ -38,17 +38,21 @@ function IconInPanel(props: PropTypes) {
   return (
     <div className="icon-in-panel" style={style}>
       <IconUnknownExtension extension={selectedIcon.bestLocation.extension} />
-      <div className="icon-color-picker-container">
-        <div className="icon-color-picker-box" />
-        <IconColorPicker type={ColorPickerType.FOREGROUND} />
-        <IconColorPicker type={ColorPickerType.BACKGROUND} />
-        {iconColor !== "original" && (
-          <IconContrastRatio
-            iconColor={iconColor}
-            iconBackgroundColor={backgroundColor}
-          />
-        )}
-      </div>
+      {selectedIcon.bestLocation.extension === "svg" && (
+        <>
+          <div className="icon-color-picker-container">
+            <div className="icon-color-picker-box" />
+            <IconColorPicker type={ColorPickerType.FOREGROUND} />
+            <IconColorPicker type={ColorPickerType.BACKGROUND} />
+            {iconColor !== "original" && (
+              <IconContrastRatio
+                iconColor={iconColor}
+                iconBackgroundColor={backgroundColor}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
