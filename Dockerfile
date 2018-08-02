@@ -2,7 +2,7 @@
 ARG BASE_IMAGE_PREFIX="docker.adeo.no:5000/pus/"
 FROM ${BASE_IMAGE_PREFIX}node as builder
 
-ADD / /source
+COPY / /source
 ENV CI=true
 WORKDIR /source
 RUN npm ci
