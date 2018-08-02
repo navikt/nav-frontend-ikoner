@@ -166,12 +166,9 @@ class IconList extends React.Component<PropTypes, {}> {
     container: HTMLElement,
     currentFocus: HTMLElement
   ) {
-    const padding: string = window
-      .getComputedStyle(container)
-      .getPropertyValue("padding");
+    // Container width - padding
     return Math.floor(
-      (container.clientWidth - 2 * parseInt(padding, 10)) /
-        currentFocus.offsetWidth
+      (container.clientWidth - 2 * 17) / currentFocus.offsetWidth
     );
   }
 
